@@ -1,0 +1,39 @@
+@import "../shared";
+
+.elementor-widget-pxl_physics {
+    .pxl-physics-item {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pxl-throwable-element {
+        @extend .pxl-iflex-center;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+        height: clamp(52px, 4vw, 83px);
+        padding: 0 clamp(16px, 4vw, 75px);
+        border-radius: clamp(32px, 4vw, 83px);
+        margin-bottom: 0;
+
+        &.pxl-throwable-bg--primary {
+            background-color: $primary_color;
+        }
+
+        &.pxl-throwable-bg--secondary {
+            background-color: $secondary_color;
+        }
+
+        .pxl-icon {
+            width: 28px;
+        }
+
+        svg {
+            height: 28px;
+
+            path {
+                fill: #fff;
+            }
+        }
+    }
+}

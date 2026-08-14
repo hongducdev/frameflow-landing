@@ -1,0 +1,122 @@
+// WPClever wishlist/compare (woosw / woosc). YITH and woosq stripped.
+
+.woosw-item--add .add_to_cart_button {
+    &.loading {
+        opacity: 1 !important;
+        &:before {
+            content: "";
+            width: 20px;
+            height: 20px;
+            @include border-radius(100%);
+            border-color: transparent #fff transparent #fff;
+            border-width: 1px;
+            border-style: solid;
+            position: absolute;
+            top: 0;
+            right: 15px;
+            bottom: 0;
+            margin: auto;
+            animation: pxl_spin 0.6s infinite linear;
+            -webkit-animation: pxl_spin 0.6s infinite linear;
+            box-sizing: border-box;
+            z-index: 2;
+        }
+        &:after {
+            display: none;
+        }
+    }
+}
+
+/* Product Wishlist Popup */
+.woosw-popup {
+    .woosw-item--time {
+        display: none;
+    }
+    .woosw-item--actions {
+        a.button {
+            line-height: 40px;
+            padding: 0 22px;
+        }
+    }
+    .woosw-popup-content-bot {
+        a {
+            color: #000;
+            text-transform: capitalize;
+            &:hover {
+                color: $primary_color;
+                border-color: $primary_color;
+            }
+        }
+    }
+}
+
+/* Product Wishlist Page */
+.woosw-list {
+    max-width: 860px;
+    margin: auto;
+    .woosw-actions {
+        display: none;
+    }
+    .woosw-popup-content-mid-massage {
+        padding: 112px 0 0;
+        background-color: transparent;
+        border: none;
+        text-align: center !important;
+        &:before {
+            content: "\f145";
+            font-family: "Caseicon";
+            width: 100px;
+            height: 100px;
+            border-radius: 100px;
+            line-height: 100px;
+            font-size: 100px;
+            left: 50%;
+            top: 0;
+            transform: translate(-50%, 0);
+            color: rgba(#000, 0.14);
+            position: absolute;
+        }
+    }
+    table.woosw-items {
+        border-left: none;
+        td {
+            border-right: none;
+            background-color: transparent !important;
+        }
+        .woosw-item {
+            .woosw-item--name a {
+                font-weight: 600;
+                color: #000;
+            }
+            .woosw-item--price {
+                font-size: 15px;
+                color: $primary_color;
+                ins {
+                    background-color: transparent;
+                    color: inherit;
+                }
+                del {
+                    color: #888;
+                }
+            }
+            .woosw-item--time {
+                font-size: 15px;
+            }
+            .woosw-item--actions {
+                text-align: right;
+                .woosw-item--add {
+                    a.button {
+                        min-width: 170px;
+                        text-align: center;
+                        &.added {
+                            margin: 0 10px;
+                            &:after {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

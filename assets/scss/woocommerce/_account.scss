@@ -1,0 +1,509 @@
+// Account Page — match cart/checkout tokens (Figma inputs/buttons, sharp corners)
+//--------------------------------------------------
+$account-max-sm: "screen and (max-width: 768px)";
+
+.woocommerce-account #pxl-main #pxl-content-area {
+    .woocommerce-form__label.woocommerce-form__label-for-checkbox.woocommerce-form-login__rememberme {
+        display: block;
+        width: 100%;
+    }
+
+    // Logged-in nav
+    .woocommerce-MyAccount-navigation {
+        margin-bottom: 30px;
+        width: 30%;
+        float: left;
+        padding: 0 15px;
+
+        @media #{$account-max-sm} {
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        ul {
+            margin: 0;
+            list-style: none;
+
+            li {
+                border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+
+                a {
+                    padding: 12px 0;
+                    color: #111;
+                    position: relative;
+                    display: block;
+                    font-size: 15px;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: #111;
+                        opacity: 0.7;
+                    }
+                }
+
+                &.is-active > a,
+                a:hover {
+                    color: #111;
+                    padding-left: 12px;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    .woocommerce-MyAccount-content {
+        margin-bottom: 30px;
+        padding: 0 15px;
+        width: 70%;
+        float: left;
+
+        @media #{$account-max-sm} {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .col-1,
+        .col-2 {
+            flex: inherit;
+            max-width: inherit;
+        }
+
+        .form-row {
+            label {
+                width: 100%;
+            }
+
+            .woocommerce-input-wrapper {
+                width: 100%;
+            }
+        }
+    }
+
+    // Login / Register forms (logged out)
+    .woocommerce-form,
+    form.woocommerce-form-login,
+    form.woocommerce-form-register {
+        border: none;
+        background-color: #f5f5f5;
+        padding: 32px 28px 36px;
+        @include border-radius(0);
+        border: none;
+        max-width: 100%;
+        margin: 0 0 40px;
+        display: block;
+        width: 100%;
+        box-shadow: none;
+        box-sizing: border-box;
+
+        @media #{$max-md} {
+            padding: 28px 24px 32px;
+        }
+
+        @media #{$account-max-sm} {
+            padding: 24px 20px 28px;
+            margin-bottom: 28px;
+        }
+
+        label {
+            font-size: 15px;
+            line-height: 1.4;
+            color: #111;
+            margin-bottom: 8px;
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        .required {
+            color: #111;
+        }
+
+        .form-row {
+            padding: 0 0 16px;
+            margin: 0;
+            width: 100%;
+
+            &.form-row-wide {
+                width: 100%;
+            }
+        }
+
+        input.input-text,
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        textarea,
+        select {
+            height: 50px !important;
+            width: 100%;
+            padding: 0 16px !important;
+            font-size: 15px !important;
+            font-weight: 400;
+            color: #111 !important;
+            background: #fff !important;
+            border: 1px solid rgba(17, 17, 17, 0.13) !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            box-sizing: border-box !important;
+            @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+
+            &:focus {
+                border-color: #111 !important;
+                outline: none;
+                color: #111 !important;
+            }
+
+            &::placeholder {
+                color: #999;
+            }
+        }
+
+        textarea {
+            height: auto !important;
+            min-height: 120px;
+            padding: 14px 16px !important;
+            resize: vertical;
+        }
+
+        .password-input {
+            display: block;
+            width: 100%;
+            position: relative;
+
+            input.input-text {
+                padding-right: 48px !important;
+            }
+
+            .show-password-input {
+                width: 30px;
+                height: 30px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                top: 50%;
+                right: 12px;
+                transform: translate(0, -50%);
+                cursor: pointer;
+
+                &:after {
+                    margin: 0;
+                    color: rgba(17, 17, 17, 0.45);
+                }
+
+                &:hover:after {
+                    color: #111;
+                }
+            }
+        }
+
+        // Figma button — same as cart/checkout
+        .woocommerce-Button.button,
+        .woocommerce-button.button,
+        button.button,
+        button.woocommerce-form-login__submit,
+        button.woocommerce-form-register__submit {
+            height: 50px !important;
+            padding: 0 40px !important;
+            margin: 0 0 16px;
+            border: 1px solid rgba(17, 17, 17, 0.13) !important;
+            border-radius: 0 !important;
+            background: #111 !important;
+            background-image: none !important;
+            background-size: auto !important;
+            color: #fff !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            letter-spacing: 1.3px;
+            line-height: 50px !important;
+            text-transform: uppercase;
+            text-align: center;
+            box-shadow: none !important;
+            float: none;
+            display: inline-block;
+            cursor: pointer;
+            @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+
+            @media #{$account-max-sm} {
+                width: 100%;
+                padding: 0 24px !important;
+            }
+
+            &:hover,
+            &:focus,
+            &:active {
+                background: #111 !important;
+                background-image: none !important;
+                color: #fff !important;
+                opacity: 0.9;
+            }
+        }
+
+        .woocommerce-LostPassword {
+            margin: 0;
+            clear: none;
+
+            a {
+                font-size: 15px;
+                font-weight: 400;
+                text-decoration: underline;
+                color: #111;
+
+                &:hover {
+                    color: #111;
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        .woocommerce-privacy-policy-text {
+            padding-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(17, 17, 17, 0.65);
+
+            a {
+                color: #111;
+                text-decoration: underline;
+
+                &:hover {
+                    color: #111;
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        // Remember me — square checkbox, match checkout
+        .woocommerce-form__label-for-checkbox {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0;
+            margin: 4px 0 20px;
+            position: relative;
+            cursor: pointer;
+
+            span {
+                font-size: 15px;
+                color: #111;
+                display: inline;
+                padding-left: 0;
+                font-weight: 400;
+                line-height: 1.4;
+
+                &:before,
+                &:after {
+                    display: none;
+                    content: none;
+                }
+            }
+
+            input[type="checkbox"],
+            #rememberme {
+                position: static;
+                opacity: 1;
+                width: 18px;
+                height: 18px;
+                margin: 0;
+                flex-shrink: 0;
+                accent-color: #111;
+                cursor: pointer;
+                @include transform(none);
+            }
+        }
+    }
+
+    .woocommerce-form-register {
+        font-size: 14px;
+        line-height: 1.6;
+        color: rgba(17, 17, 17, 0.65);
+
+        > p:not(.form-row):not(.woocommerce-form-row) {
+            margin: 0 0 12px;
+        }
+    }
+
+    .woocommerce-notices-wrapper + h2 {
+        text-align: left;
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 1.2;
+        color: #111;
+        margin: 0 0 24px;
+    }
+
+    // Login | Register — kill WC clearfix ::before/::after (they become grid cells)
+    #customer_login,
+    .u-columns.col2-set#customer_login,
+    .col2-set#customer_login {
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 40px 48px;
+        align-items: start;
+        float: none;
+
+        // ponytail: WC .col2-set clearfix = 2 extra grid items → Login right, Register wrap
+        &::before,
+        &::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        @media #{$max-lg} {
+            gap: 32px 28px;
+        }
+
+        @media #{$account-max-sm} {
+            grid-template-columns: 1fr;
+            gap: 36px;
+        }
+
+        > .u-column1,
+        > .u-column2,
+        > .col-1,
+        > .col-2 {
+            padding: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            float: none !important;
+            clear: none !important;
+            flex: none !important;
+            margin: 0 !important;
+            min-width: 0;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 400;
+            line-height: 1.2;
+            margin: 0 0 24px;
+            padding: 0;
+            color: #111;
+            text-transform: capitalize;
+            border: none;
+
+            @media #{$max-md} {
+                font-size: 28px;
+            }
+
+            @media #{$max-xs} {
+                font-size: 24px;
+                margin-bottom: 16px;
+            }
+        }
+    }
+
+    .woocommerce-password-strength {
+        background-color: transparent;
+        padding: 8px 0;
+        margin: 0;
+
+        &.bad,
+        &.good,
+        &.strong,
+        &.short {
+            background-color: transparent;
+        }
+    }
+
+    .woocommerce-form-row {
+        span em {
+            margin-top: 8px;
+            display: block;
+            font-size: 13px;
+            color: rgba(17, 17, 17, 0.55);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            line-height: normal;
+        }
+    }
+
+    .woocommerce-EditAccountForm {
+        fieldset {
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(17, 17, 17, 0.1);
+            @include border-radius(0);
+            background: #f5f5f5;
+        }
+
+        input.input-text,
+        select {
+            height: 50px !important;
+            padding: 0 16px !important;
+            border: 1px solid rgba(17, 17, 17, 0.13) !important;
+            border-radius: 0 !important;
+            background: #fff !important;
+            box-shadow: none !important;
+        }
+
+        .woocommerce-Button.button {
+            height: 50px !important;
+            padding: 0 40px !important;
+            border-radius: 0 !important;
+            background: #111 !important;
+            background-image: none !important;
+            color: #fff !important;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            line-height: 50px !important;
+            border: 1px solid rgba(17, 17, 17, 0.13) !important;
+            box-shadow: none !important;
+
+            &:hover {
+                background: #111 !important;
+                opacity: 0.9;
+            }
+        }
+    }
+}
+
+/* Notices inside account content */
+.woocommerce-MyAccount-content {
+    .woocommerce-info {
+        text-align: left;
+        padding: 20px 24px;
+        border-radius: 0;
+        border: none;
+        background: #f5f5f5;
+        color: #111;
+
+        &:before {
+            display: none;
+        }
+
+        a.button {
+            position: static;
+            transform: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            padding: 0 40px;
+            margin-top: 16px;
+            border-radius: 0 !important;
+            background: #111 !important;
+            background-image: none !important;
+            color: #fff !important;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            line-height: 50px;
+            box-shadow: none !important;
+
+            &:hover {
+                background: #111 !important;
+                color: #fff !important;
+                opacity: 0.9;
+            }
+        }
+    }
+}

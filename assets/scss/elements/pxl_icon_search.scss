@@ -1,0 +1,428 @@
+@import "../shared";
+/*--------------------------------------------------
+8. Case Search Popup Styles
+--------------------------------------------------*/
+.blog {
+    .pxl-el-divider {
+        background-color: #d7d7d7;
+    }
+}
+
+#pxl-search-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    @include transition(all 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96));
+
+    .pxl-item--logo {
+        position: absolute;
+        top: 0;
+        left: 100px;
+        z-index: 1;
+        -webkit-animation-delay: 0.3s;
+        -moz-animation-delay: 0.3s;
+        -o-animation-delay: 0.3s;
+        animation-delay: 0.3s;
+        opacity: 0;
+        visibility: hidden;
+
+        img {
+            max-height: 42px;
+        }
+    }
+
+    .pxl-item--close {
+        position: absolute;
+        top: 0;
+        right: 60px;
+        width: 50px;
+        height: 50px;
+        background-color: transparent;
+        border-width: 11px;
+        z-index: 99;
+        -webkit-animation-delay: 0.3s;
+        -moz-animation-delay: 0.3s;
+        -o-animation-delay: 0.3s;
+        animation-delay: 0.3s;
+        opacity: 0;
+        visibility: hidden;
+        @include border-radius(45px);
+        @include transform(translate(-50%, 0));
+
+        @media (max-width: 767px) {
+            top: 20px !important;
+            right: auto;
+            left: 50%;
+            transform: translatex(-50%);
+        }
+
+        &:before,
+        &:after {
+            background-color: #000;
+        }
+    }
+
+    .pxl-item--conent {
+        position: absolute;
+        padding: 0 15px;
+        top: -400px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 400px;
+        will-change: top, box-shadow;
+        background-color: rgba(#fff, 0.8);
+        @extend .pxl-item--flex;
+        @include box-shadow(0 1px 6px rgba(0, 0, 0, 000000.1));
+        @include transition(
+            top 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96),
+            box-shadow 0.3s ease-out
+        );
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+
+        @media (max-width: 767px) {
+            max-height: 250px;
+        }
+
+        form {
+            position: relative;
+            max-width: 1290px;
+            margin: 0 auto;
+            width: 100%;
+            -webkit-animation-delay: 0.5s;
+            -moz-animation-delay: 0.5s;
+            -o-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+            opacity: 0;
+            visibility: hidden;
+
+            @media #{$max-xl} {
+                max-width: 1000px;
+            }
+
+            .search-field {
+                height: 95px;
+                padding: 0 40px 0 0;
+                font-size: 25px;
+                font-weight: 400;
+                @include ft_theme_default($ft_theme_default);
+                border: none;
+                color: #000;
+                background-color: transparent;
+
+                @media (max-width: 575px) {
+                    font-size: 20px;
+                    height: 70px;
+                }
+
+                &:focus {
+                    background: none;
+
+                    &::placeholder {
+                        color: $secondary_color;
+                    }
+                }
+            }
+
+            .search-submit {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                text-align: right;
+                border: none;
+                background: none;
+                font-size: 25px;
+                line-height: 92px;
+                color: #000;
+                opacity: 0.9;
+                padding: 0;
+                z-index: 99;
+                cursor: pointer;
+                @include transform(translate(0, -50%));
+            }
+        }
+    }
+
+    .pxl--search-divider {
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        bottom: 0;
+        left: 0;
+        background-color: #000;
+        -webkit-animation-delay: 0.8s;
+        -moz-animation-delay: 0.8s;
+        -o-animation-delay: 0.8s;
+        animation-delay: 0.8s;
+        visibility: hidden;
+        @include transform(scale3d(0, 1, 1));
+        transform-origin: left center;
+    }
+
+    .pxl-item--overlay {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(#000, 0.6);
+        z-index: -1;
+        @include transition(0.5s);
+    }
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+
+        .pxl-item--overlay {
+            opacity: 1;
+        }
+
+        .pxl-item--logo,
+        .pxl-item--close {
+            top: 60px;
+            -webkit-animation-name: pxl_fadein;
+            animation-name: pxl_fadein;
+            -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .pxl-item--conent {
+            top: 0;
+            @include box-shadow(0 1px 6px rgba(0, 0, 0, 0.05));
+            @include transition(
+                top 0.5s cubic-bezier(0.46, 0.03, 0.52, 0.96),
+                box-shadow 0.3s ease-out
+            );
+
+            form {
+                -webkit-animation-name: pxl_fadein;
+                animation-name: pxl_fadein;
+                -webkit-animation-duration: 0.7s;
+                animation-duration: 0.7s;
+                -webkit-animation-fill-mode: both;
+                animation-fill-mode: both;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .pxl--search-divider {
+            -webkit-animation-name: pxl_fade_in_move;
+            animation-name: pxl_fade_in_move;
+            -webkit-animation-duration: 0.7s;
+            animation-duration: 0.7s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            visibility: visible;
+        }
+    }
+}
+
+.pxl-search-out-anim #pxl-search-popup {
+    .pxl-item--conent form {
+        -webkit-animation-name: pxl_fadeout;
+        animation-name: pxl_fadeout;
+        -webkit-animation-duration: 0.6s;
+        animation-duration: 0.6s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation-delay: 0.3s;
+        -moz-animation-delay: 0.3s;
+        -o-animation-delay: 0.3s;
+        animation-delay: 0.3s;
+
+        .pxl--search-divider {
+            -webkit-animation-name: pxl_fade_out_move;
+            animation-name: pxl_fade_out_move;
+            -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            visibility: visible;
+            -webkit-animation-delay: 0.1s;
+            -moz-animation-delay: 0.1s;
+            -o-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+        }
+    }
+
+    .pxl-item--logo,
+    .pxl-item--close {
+        -webkit-animation-name: pxl_fadeout;
+        animation-name: pxl_fadeout;
+        -webkit-animation-duration: 0.3s;
+        animation-duration: 0.3s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation-delay: 0.5s;
+        -moz-animation-delay: 0.5s;
+        -o-animation-delay: 0.5s;
+        animation-delay: 0.5s;
+        visibility: visible;
+    }
+}
+
+.pxl-search-popup-button,
+.pxl-cart-sidebar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+    cursor: pointer;
+    font-size: 21px;
+    position: relative;
+
+    i {
+        color: #8a8a8a;
+        @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+    }
+
+    svg {
+        @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+    }
+
+    &.style-box {
+        .pxl_cart_counter {
+            top: -13px;
+            right: -13px;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+        }
+    }
+
+    .pxl_cart_counter {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        @include ft_theme_default($ft_theme_default);
+        border-radius: 100px;
+        background-color: $primary_color;
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+        top: -4px;
+        right: -14px;
+    }
+}
+
+.pxl-search-popup-button {
+    &.style-box,
+    &.style-box-bd {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        background-color: $primary_color;
+        line-height: 34px;
+        color: $secondary_color;
+        font-size: 20px;
+    }
+
+    &.style-box-bd {
+        border: 1px solid #000;
+    }
+}
+
+.pxl-widget-searchform .searchform-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    position: relative;
+
+    .search-field {
+        font-size: 16px;
+        font-weight: 700;
+        color: #0a0a0b;
+        width: 92px;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        min-width: 92px;
+    }
+
+    .search-submit {
+        width: 30px;
+        min-width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 15px;
+        color: #0a0a0b;
+        font-weight: normal;
+        background-color: transparent;
+
+        &:hover {
+            color: $primary_color;
+        }
+    }
+}
+
+/*--------------------------------------------------
+10. Case Search Form Styles
+--------------------------------------------------*/
+.pxl-search-form1 {
+    .pxl-searchform-wrap {
+        position: relative;
+    }
+
+    .pxl-search-submit {
+        height: 60px;
+        width: 60px;
+        @include background-gradient-button(
+            to right,
+            $gradient_color_from 0%,
+            $gradient_color_to 100%
+        );
+        background-size: 200%, auto;
+        @include transition(all 200ms linear 0ms);
+        top: 0;
+        right: 0;
+        @include border-radius(0 5px 5px 0);
+        padding: 0;
+        position: absolute;
+        color: #fff;
+        line-height: 60px;
+        z-index: 1;
+        font-size: 20px;
+        font-weight: 400;
+        border: none;
+
+        &:before,
+        &:after {
+            display: none;
+        }
+
+        &:hover {
+            background-position: right center;
+        }
+    }
+
+    .pxl-search-field {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 5px 30px rgba(#051b2e, 0.05);
+        font-size: 18px;
+        font-weight: 500;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        @media #{$max-lg} {
+            font-size: 16px;
+        }
+    }
+}

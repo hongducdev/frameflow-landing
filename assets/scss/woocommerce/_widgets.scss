@@ -1,0 +1,394 @@
+// Shop sidebar widgets
+//--------------------------------------------------
+.pxl-sidebar-shop {
+    .widget:not(.widget_pxl_elementor_box) {
+        position: relative;
+        margin-bottom: 0;
+        padding: 0;
+        border: none;
+
+        // 30px + divider + 30px = 60px between widgets
+        & + .widget:not(.widget_pxl_elementor_box) {
+            margin-top: 30px;
+            padding-top: 30px !important;
+            border-top: 1px solid rgba(26, 26, 26, 0.14) !important;
+        }
+    }
+
+    .widget-content {
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .widget-title {
+        position: relative;
+        z-index: 1;
+        font-size: 20px;
+        line-height: 1.4;
+        letter-spacing: 0;
+        margin-bottom: 31px;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+.widget_products {
+    .amount {
+        font-size: 14px;
+        font-weight: 500;
+        color: $primary_color;
+    }
+    del {
+        color: #8f8f8f;
+        .amount {
+            color: #8f8f8f;
+        }
+    }
+    .star-rating-wrap {
+        display: none !important;
+    }
+}
+.widget_rating_filter {
+    .wc-layered-nav-rating {
+        a {
+            font-size: 0px;
+            display: block;
+            padding-left: 28px !important;
+            position: relative;
+            &:before {
+                content: "";
+                height: 18px;
+                width: 18px;
+                border: 1px solid #e6e6e6;
+                @include border-radius(18px);
+                position: absolute;
+                top: 1px;
+                left: 0;
+                @include transition(all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) 0s);
+            }
+            .star-rating {
+                font-size: 18px;
+            }
+            &:hover {
+                &:before {
+                    border-color: $primary_color;
+                    background-color: $primary_color;
+                }
+            }
+        }
+        &.chosen a:before {
+            border-color: $primary_color;
+            background-color: $primary_color;
+        }
+    }
+}
+
+// Filter by attribute — Frameflow Attribute Filter widget (Figma)
+.pxl_widget_attribute_filter.pxl-filter-widget {
+    .widget-title,
+    .pxl_widget_title {
+        margin-bottom: 30px;
+        font-family: var(--primary-font, "Instrument Serif", Georgia, serif);
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: 0;
+        color: #000;
+    }
+
+    .pxl-filter-swatches {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .pxl-filter-swatches__item {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        &::before {
+            display: none;
+        }
+    }
+
+    .pxl-filter-swatch {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-sizing: border-box;
+        @include transition(border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease);
+    }
+
+    &.pxl-filter-widget--color {
+        .pxl-filter-swatches {
+            gap: 10px 12px;
+            max-width: 250px;
+        }
+        .pxl-filter-swatch--color {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 0;
+            background-color: #ddd;
+            &:hover {
+                transform: scale(1.08);
+            }
+        }
+        .pxl-filter-swatches__item.is-chosen .pxl-filter-swatch--color {
+            outline: 1px solid rgba(#111, 0.35);
+            outline-offset: 2px;
+        }
+    }
+
+    &.pxl-filter-widget--size {
+        .pxl-filter-swatches {
+            gap: 8px;
+        }
+        .pxl-filter-swatch--size {
+            min-width: 44px;
+            padding: 10px 17px;
+            border: 1px solid rgba(#111, 0.13);
+            border-radius: 5px;
+            background: #fff;
+            color: #111;
+            font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1;
+            &:hover {
+                border-color: rgba(#111, 0.4);
+            }
+        }
+        .pxl-filter-swatches__item.is-chosen .pxl-filter-swatch--size {
+            border-color: #111;
+        }
+    }
+}
+
+// Product type + Availability — checkbox list (Figma)
+.pxl-filter-checklist {
+    .widget-title,
+    .pxl_widget_title {
+        margin-bottom: 30px;
+        font-family: var(--primary-font, "Instrument Serif", Georgia, serif);
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: 0;
+        color: #000;
+        text-align: left;
+    }
+
+    .pxl-filter-checklist__list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .pxl-filter-checklist__item {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        &::before {
+            display: none;
+        }
+    }
+
+    .pxl-filter-check {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        text-decoration: none;
+        color: #111;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.2;
+        @include transition(opacity 0.2s ease);
+        &:hover {
+            opacity: 0.75;
+        }
+    }
+
+    .pxl-filter-check__box {
+        position: relative;
+        flex: 0 0 auto;
+        width: 25px;
+        height: 25px;
+        box-sizing: border-box;
+        border: 1px solid rgba(#111, 0.13);
+        background: #fff;
+    }
+
+    .pxl-filter-checklist__item.is-chosen .pxl-filter-check__box {
+        border-color: #111;
+        &::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 5px;
+            height: 10px;
+            margin: 0;
+            border: solid #111;
+            border-width: 0 1.5px 1.5px 0;
+            transform: translate(-50%, -60%) rotate(45deg);
+        }
+    }
+
+    .pxl-filter-check__label {
+        color: #111;
+    }
+
+    .pxl-filter-check__count {
+        color: #565656;
+    }
+}
+
+// Filter Price — Frameflow Price Filter widget (Figma)
+.pxl_widget_price_filter.pxl-price-filter {
+    .widget-title,
+    .pxl_widget_title {
+        margin-bottom: 18px;
+        font-family: var(--primary-font, "Instrument Serif", Georgia, serif);
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: 0;
+        color: #000;
+    }
+
+    .pxl-price-filter__hint {
+        margin: 0 0 18px;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.4;
+        color: #565656;
+        .woocommerce-Price-amount,
+        .amount {
+            color: inherit;
+            font-weight: inherit;
+        }
+    }
+
+    .pxl-price-filter__form {
+        margin: 0;
+    }
+
+    .pxl-price-filter__slider {
+        position: relative;
+        height: 2px;
+        margin: 20px 0 32px;
+        border: 0;
+        background: #e6e6e6;
+        border-radius: 0;
+        .ui-slider-range {
+            position: absolute;
+            height: 100%;
+            background: #111;
+            border-radius: 0;
+            z-index: 1;
+        }
+        .ui-slider-handle {
+            position: absolute;
+            top: 50%;
+            z-index: 2;
+            width: 13px;
+            height: 13px;
+            margin-top: -6.5px;
+            margin-left: -6.5px;
+            border: 1px solid #111;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            outline: none;
+            box-shadow: none;
+            &:focus,
+            &:hover,
+            &.ui-state-active {
+                border-color: #111;
+                background: #fff;
+            }
+        }
+    }
+
+    .pxl-price-filter__inputs {
+        display: flex;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .pxl-price-filter__field {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex: 1 1 0;
+        min-width: 0;
+        height: 45px;
+        margin: 0;
+        padding: 0 12px;
+        border: 1px solid rgba(#111, 0.13);
+        border-radius: 5px;
+        background: #fff;
+        box-sizing: border-box;
+        cursor: text;
+    }
+
+    .pxl-price-filter__currency {
+        flex: 0 0 auto;
+        margin-right: 8px;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 15px;
+        line-height: 1;
+        color: #111;
+    }
+
+    .pxl-price-filter__input {
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 0;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1;
+        color: #111;
+        text-align: right;
+        appearance: textfield;
+        outline: none;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            appearance: none;
+            margin: 0;
+        }
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}
+
+// AJAX shop filter loading
+#pxl-content-main.pxl-shop-ajax-loading,
+#pxl-content-area.pxl-shop-ajax-loading,
+#pxl-sidebar-area.pxl-shop-ajax-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.55;
+    @include transition(opacity 0.2s ease);
+}
+body.pxl-shop-ajax-busy {
+    cursor: wait;
+}

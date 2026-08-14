@@ -1,0 +1,34 @@
+// Case Image Carousel — scoped to widget wrapper (loaded as pxl_image_carousel.min.css)
+
+.pxl-image-carousel {
+    position: relative;
+
+    .pxl-item-wrapper {
+        height: 100%;
+    }
+
+    .pxl-item--inner {
+        height: 100%;
+    }
+
+    .pxl-item--image {
+        overflow: hidden;
+        line-height: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            vertical-align: middle;
+        }
+
+        a {
+            display: block;
+            line-height: 0;
+        }
+    }
+
+    .pxl-item--caption {
+        margin: 0;
+    }
+}

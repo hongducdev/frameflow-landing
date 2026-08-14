@@ -1,0 +1,18 @@
+//--------------------------------------------------
+// WooCommerce - standalone entry (not bundled into style.min.css)
+// Vars/mixins only — avoid @import "shared" (would duplicate theme CSS).
+//--------------------------------------------------
+
+@import "options";
+@import "theme-config";
+@import "mixins";
+
+@import "woocommerce/base";
+@import "woocommerce/cart-sidebar";
+@import "woocommerce/widgets";
+@import "woocommerce/archive";
+@import "woocommerce/single";
+@import "woocommerce/cart";
+@import "woocommerce/checkout";
+@import "woocommerce/account";
+@import "woocommerce/plugins";

@@ -1,0 +1,84 @@
+@import "../shared";
+
+// Fill % height: stretch widget + container so .pxl-el-divider height:100% resolves.
+.elementor-widget-pxl_divider.pxl-divider-fill-height-yes {
+    align-self: stretch;
+    flex-grow: 1;
+    height: 100%;
+    min-height: 0;
+
+    > .elementor-widget-container {
+        height: 100%;
+        min-height: inherit;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pxl-el-divider {
+        flex: 1 1 auto;
+        min-height: 1px;
+    }
+}
+
+// ponytail: grid rows collapse when items have no content; :has() keeps scope narrow.
+.e-con.e-grid:has(> .e-con-inner > .elementor-widget-pxl_divider.pxl-divider-fill-height-yes) {
+    > .e-con-inner {
+        min-height: 100%;
+        height: 100%;
+    }
+
+    > .e-con-inner > .elementor-widget-pxl_divider.pxl-divider-fill-height-yes {
+        align-self: stretch;
+        min-height: 100%;
+    }
+}
+
+.pxl-el-divider.pxl-el-divider--scroll {
+    --pxl-divider-duration: 800ms;
+    --pxl-divider-delay: 0ms;
+    --pxl-divider-ease: cubic-bezier(0.645, 0.045, 0.355, 1);
+    visibility: visible;
+    transition: transform var(--pxl-divider-duration) var(--pxl-divider-ease)
+        var(--pxl-divider-delay) !important;
+
+    &.wow {
+        visibility: visible !important;
+        animation: none !important;
+    }
+
+    &.pxl-el-divider--scroll-h {
+        transform: scaleX(0);
+        transform-origin: left center;
+    }
+
+    &.pxl-el-divider--scroll-h.pxl-el-divider--scroll-reverse {
+        transform-origin: right center;
+    }
+
+    &.pxl-el-divider--scroll-v {
+        transform: scaleY(0);
+        transform-origin: top center;
+    }
+
+    &.pxl-el-divider--scroll-v.pxl-el-divider--scroll-reverse {
+        transform-origin: bottom center;
+    }
+
+    &.visible {
+        &.pxl-el-divider--scroll-h {
+            transform: scaleX(1);
+        }
+
+        &.pxl-el-divider--scroll-v {
+            transform: scaleY(1);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transform: none !important;
+
+        &.visible {
+            transform: none !important;
+        }
+    }
+}

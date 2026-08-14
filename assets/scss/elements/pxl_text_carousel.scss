@@ -1,0 +1,59 @@
+@import "../shared";
+/*--------------------------------------------------
+Text Carousel Styles
+--------------------------------------------------*/
+.pxl-text-carousel1 {
+    position: relative;
+    .pxl-item {
+        &--inner {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+        }
+        &--title {
+            padding-left: 17px;
+            position: relative;
+            &:before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background-color: $primary_color;
+            }
+        }
+    }
+    .pxl-swiper-arrow-wrap.style-2 {
+        top: -10px;
+    }
+}
+
+.pxl-text-carousel2 {
+    .pxl-swiper-slide + .pxl-swiper-slide {
+        .pxl-item--inner {
+            border-left: 0px;
+        }
+    }
+    .pxl-item {
+        &--inner {
+            border: 1px solid rgba($third_color_hex, 0.13);
+            text-align: center;
+            &:hover {
+                .pxl-item--icon {
+                    background-color: $primary_color;
+                }
+            }
+        }
+        &--icon {
+            width: 77px;
+            height: 77px;
+            @extend .pxl-iflex-center;
+            background-color: $secondary_color;
+            margin: 0 auto;
+            @include transition(all 0.3s linear 0ms);
+        }
+    }
+}

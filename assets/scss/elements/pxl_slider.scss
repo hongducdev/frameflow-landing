@@ -1,0 +1,55 @@
+@import "../shared";
+
+// Case Slider — template-based slides (.pxl-swiper-slider.pxl-slider)
+
+.pxl-slider {
+    position: relative;
+
+    .pxl-item--inner {
+        position: relative;
+        width: 100%;
+
+        > .elementor,
+        > .elementor-element {
+            width: 100%;
+        }
+    }
+
+    .pxl-item-wrapper {
+        height: 100%;
+    }
+}
+
+.pxl-slider2 {
+    .pxl-item--inner {
+        display: flex;
+        align-items: stretch;
+        gap: 30px;
+        @media #{$max-md2} {
+            flex-direction: column;
+            gap: 80px;
+        }
+    }
+
+    .pxl-item--image,
+    .pxl-item--content {
+        flex: 1 1 50%;
+        @media #{$max-md2} {
+            flex: 1 1 100%;
+        }
+    }
+
+    .pxl-item--image {
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .pxl-item--content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}

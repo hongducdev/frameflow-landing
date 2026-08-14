@@ -1,0 +1,77 @@
+@import "../shared";
+/*--------------------------------------------------
+4. Case Icons Styles
+--------------------------------------------------*/
+.pxl-icon1 {
+    display: flex;
+    align-items: center;
+    svg {
+        height: auto;
+        @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+
+        path {
+            @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+        }
+    }
+
+    a {
+        position: relative;
+        @extend .pxl-flex-center;
+        column-gap: 20px;
+    }
+
+    &.style-2 {
+        --width-box-icon: 45px;
+        display: flex;
+        gap: 10px;
+        a {
+            width: var(--width-box-icon);
+            height: var(--width-box-icon);
+            @extend .pxl-flex-center;
+            border: 1px solid rgba(#fff, 0.15);
+            @include border-radius(50%);
+            background-color: transparent;
+            @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+            i {
+                color: #fff;
+                font-size: 16px;
+                @include transition(
+                    all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                );
+            }
+            svg {
+                width: 16px;
+                height: 16px;
+                path {
+                    @include transition(
+                        all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                    );
+                }
+            }
+            &:hover {
+                background-color: #fff;
+                border-color: #fff;
+            }
+        }
+    }
+
+    &.ani1:hover {
+        i,
+        svg,
+        img {
+            animation-name: scale;
+            animation-duration: 0.7s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+    }
+
+    &.ani2 {
+        i,
+        svg,
+        img {
+            transform-origin: top;
+            animation: ring 1.8s ease-out infinite;
+        }
+    }
+}

@@ -1,0 +1,31 @@
+@import "../shared";
+/*--------------------------------------------------
+2. Case Text Editor Styles
+--------------------------------------------------*/
+.pxl-text-editor {
+    display: inline-block;
+
+    p {
+        margin-bottom: 30px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .pxl-text--highlight {
+        color: $primary_color;
+    }
+
+    &.underline {
+        a {
+            display: inline-block;
+            text-decoration: underline transparent;
+            @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+
+            &:hover {
+                text-decoration: underline $secondary_color;
+            }
+        }
+    }
+}

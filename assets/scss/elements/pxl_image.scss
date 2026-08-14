@@ -1,0 +1,148 @@
+@import "../shared";
+/*--------------------------------------------------
+6. Case Image Styles
+--------------------------------------------------*/
+.pxl-image-single {
+    @include border-radius(inherit);
+
+    *,
+    img {
+        //@include border-radius(inherit);
+    }
+
+    img {
+        //width: auto;
+    }
+
+    &.pxl-hover1 .pxl-item--inner {
+        position: relative;
+        overflow: hidden;
+
+        img {
+            @include transition(transform 1.5s cubic-bezier(0.19, 1, 0.22, 1));
+        }
+
+        &:hover img {
+            @include transform(scale(1.06));
+        }
+    }
+
+    &.pxl-hover2 .pxl-item--inner {
+        img {
+            @include transition(all 0.5s);
+        }
+
+        &:hover img {
+            @include transform(scale(0.95));
+        }
+    }
+
+    &.pxl-image-parallax .pxl-item--image {
+        @include transition(all 150ms linear 0ms);
+    }
+
+    @media #{$max-sm} {
+        &.pxl-disable-parallax-sm {
+            transform: none !important;
+        }
+    }
+
+    .pxl-item--inner {
+        visibility: visible !important;
+        position: relative;
+    }
+
+    .pxl-image-gallery {
+        position: relative;
+        overflow: hidden;
+
+        .pxl-image-gallery-item {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+
+            &:first-child {
+                position: relative;
+            }
+
+            &:not(:first-child) {
+                position: absolute;
+                inset: 0;
+            }
+
+            &.is-active {
+                opacity: 1;
+                pointer-events: auto;
+                z-index: 1;
+            }
+
+            img {
+                width: 100%;
+                display: block;
+            }
+
+            &:not(:first-child) img {
+                height: 100%;
+                object-fit: cover;
+            }
+
+            &.pxl-item--bg {
+                width: 100%;
+                background-repeat: no-repeat;
+            }
+        }
+    }
+
+    .pxl-item--bg.wrap-img-distortion {
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    }
+
+    .pxl-service--icon {
+        position: absolute;
+        bottom: 28px;
+        right: 30px;
+        line-height: 1;
+        font-size: 84px;
+        color: $third_color;
+        z-index: 9;
+
+        &:before {
+            content: "";
+            width: 66px;
+            height: 111px;
+            border-radius: 200%;
+            background-color: $third_color;
+            opacity: 0.2;
+            position: absolute;
+            top: 50%;
+            left: -26px;
+            @include transform(translate(0, -50%));
+            z-index: -1;
+        }
+    }
+}
+
+.pxl-image-tilt {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.pxl-image-tilt-active {
+    overflow: hidden;
+}
+
+.overlay-box {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 222;
+    height: 100%;
+}

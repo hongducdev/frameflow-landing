@@ -1,0 +1,185 @@
+@import "../shared";
+
+/**
+ * Case Collection Slip
+ * Hover expands one panel; content fades in on .active (Figma 3368:345).
+ */
+.pxl-collection-slip {
+    position: relative;
+    width: 100%;
+}
+
+.pxl-collection-slip1 {
+    .pxl-collection-slip--track {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0;
+        width: 100%;
+        height: 815px;
+        overflow: hidden;
+        background-color: #111;
+    }
+
+    .pxl-collection-slip--block {
+        position: relative;
+        flex: 1 0 0%;
+        min-width: 0;
+        height: 100%;
+        overflow: hidden;
+        transition: flex-grow 0.45s cubic-bezier(0.645, 0.045, 0.355, 1);
+        will-change: flex-grow;
+        cursor: pointer;
+
+        &.active,
+        &:hover {
+            .pxl-collection-slip--content {
+                opacity: 1;
+                visibility: visible;
+                @include transform(translateY(0));
+            }
+        }
+
+        @media #{$max-md} {
+            flex: 1 1 100% !important;
+            height: auto;
+            min-height: 420px;
+        }
+    }
+
+    .pxl-collection-slip--image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        @include transform(scale(1.02));
+        transform-origin: center center;
+    }
+
+    .pxl-collection-slip--overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.25);
+        pointer-events: none;
+    }
+
+    .pxl-collection-slip--content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        max-width: 100%;
+        padding: 100px 40px 40px 100px;
+        opacity: 0;
+        visibility: hidden;
+        @include transform(translateY(24px));
+        @include transition(
+            opacity 0.35s cubic-bezier(0.645, 0.045, 0.355, 1),
+            visibility 0.35s cubic-bezier(0.645, 0.045, 0.355, 1),
+            transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1)
+        );
+        pointer-events: none;
+
+        @media #{$max-lg} {
+            padding: 60px 30px 30px 40px;
+        }
+
+        @media #{$max-sm} {
+            padding: 40px 15px;
+        }
+
+        @media #{$max-md} {
+            position: relative;
+            opacity: 1;
+            visibility: visible;
+            @include transform(translateY(0));
+            padding: 40px 24px;
+            pointer-events: auto;
+        }
+    }
+
+    .pxl-collection-slip--block.active .pxl-collection-slip--content {
+        pointer-events: auto;
+    }
+
+    .pxl-collection-slip--subtitle {
+        margin: 0 0 14px;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.6;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+        color: #fff;
+    }
+
+    .pxl-collection-slip--title {
+        margin: 0 0 27px;
+        font-family: var(--primary-font, "Instrument Serif", Georgia, serif);
+        font-size: 65px;
+        font-weight: 400;
+        line-height: 1;
+        color: #fff;
+
+        @media #{$max-xl} {
+            font-size: 48px;
+        }
+
+        @media #{$max-lg} {
+            font-size: 36px;
+            margin-bottom: 18px;
+        }
+
+        @media #{$max-md} {
+            font-size: 32px;
+        }
+    }
+
+    .pxl-collection-slip--description {
+        margin: 0 0 46px;
+        max-width: 405px;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 25px;
+        color: #fff;
+
+        @media #{$max-lg} {
+            margin-bottom: 28px;
+        }
+    }
+
+    .pxl-collection-slip--button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        padding: 0 40px;
+        border: 0;
+        background-color: #fff;
+        color: #111;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+        text-decoration: none;
+        @include transition(background-color 0.3s ease, color 0.3s ease);
+
+        &:hover {
+            background-color: #111;
+            color: #fff;
+        }
+    }
+
+    @media #{$max-md} {
+        .pxl-collection-slip--track {
+            flex-direction: column;
+            height: auto !important;
+        }
+    }
+}

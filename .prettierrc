@@ -1,0 +1,23 @@
+{
+  "endOfLine": "lf",
+  "semi": false,
+  "singleQuote": false,
+  "tabWidth": 4,
+  "trailingComma": "es5",
+  "printWidth": 100,
+  "singleAttributePerLine": false,
+  "plugins": ["@prettier/plugin-php"],
+  "overrides": [
+    {
+      "files": "*.php",
+      "options": {
+        "parser": "php",
+        "phpVersion": "8.1",
+        "singleQuote": true,
+        "trailingCommaPHP": true,
+        "braceStyle": "per-cs",
+        "singleAttributePerLine": true
+      }
+    }
+  ]
+}

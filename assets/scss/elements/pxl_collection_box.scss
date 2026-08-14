@@ -1,0 +1,240 @@
+@import "../shared";
+
+/**
+ * Case Collection Box
+ * Progressive gradient blur (same stack as portfolio-carousel4 / profile).
+ * Figma: 3385:457
+ */
+.pxl-collection-box {
+    --gradient-color: #111111;
+    --gradient-color-transparent: color-mix(in srgb, var(--gradient-color) 0%, transparent);
+    --gradient-color-soft: color-mix(in srgb, var(--gradient-color) 50%, transparent);
+    position: relative;
+    width: 100%;
+}
+
+.pxl-collection-box1 {
+    .pxl-item--inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        &:hover {
+            .pxl-item--front {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .pxl-item--button {
+                opacity: 1;
+                transform: translateY(0);
+                visibility: visible;
+                pointer-events: auto;
+            }
+        }
+    }
+
+    .pxl-item--image {
+        position: relative;
+        width: 100%;
+        height: 438px;
+        overflow: hidden;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .pxl-item--front {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 37%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+            to bottom,
+            var(--gradient-color-transparent) 0%,
+            var(--gradient-color-soft) 51.44%,
+            var(--gradient-color) 100%
+        );
+        opacity: 0;
+        transform: translateY(100%);
+        @include transition(all 0.3s ease);
+        & > span,
+        &:before,
+        &:after {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        &:before {
+            content: "";
+            z-index: 1;
+            backdrop-filter: blur(2px);
+            mask: linear-gradient(
+                to bottom,
+                var(--gradient-color-transparent) 0%,
+                var(--gradient-color) 12.5%,
+                var(--gradient-color) 25%,
+                var(--gradient-color-transparent) 37.5%
+            );
+        }
+
+        & > span:nth-of-type(1) {
+            z-index: 2;
+            backdrop-filter: blur(4px);
+            mask: linear-gradient(
+                to bottom,
+                var(--gradient-color-transparent) 12.5%,
+                var(--gradient-color) 25%,
+                var(--gradient-color) 37.5%,
+                var(--gradient-color-transparent) 50%
+            );
+        }
+
+        & > span:nth-of-type(2) {
+            z-index: 3;
+            backdrop-filter: blur(6px);
+            mask: linear-gradient(
+                to bottom,
+                var(--gradient-color-transparent) 25%,
+                var(--gradient-color) 37.5%,
+                var(--gradient-color) 50%,
+                var(--gradient-color-transparent) 62.5%
+            );
+        }
+
+        & > span:nth-of-type(3) {
+            z-index: 4;
+            backdrop-filter: blur(8px);
+            mask: linear-gradient(
+                to bottom,
+                var(--gradient-color-transparent) 37.5%,
+                var(--gradient-color) 50%,
+                var(--gradient-color) 62.5%,
+                var(--gradient-color-transparent) 75%
+            );
+        }
+
+        & > span:nth-of-type(4) {
+            z-index: 5;
+            backdrop-filter: blur(10px);
+            mask: linear-gradient(
+                to bottom,
+                var(--gradient-color-transparent) 50%,
+                var(--gradient-color) 62.5%,
+                var(--gradient-color) 75%,
+                var(--gradient-color-transparent) 87.5%
+            );
+        }
+
+        & > span:nth-of-type(5) {
+            z-index: 6;
+            backdrop-filter: blur(12px);
+            mask: linear-gradient(
+                to bottom,
+                var(--gradient-color-transparent) 62.5%,
+                var(--gradient-color) 75%,
+                var(--gradient-color) 87.5%,
+                var(--gradient-color-transparent) 100%
+            );
+        }
+
+        & > span:nth-of-type(6) {
+            z-index: 7;
+            backdrop-filter: blur(14px);
+            mask: linear-gradient(
+                to bottom,
+                var(--gradient-color-transparent) 75%,
+                var(--gradient-color) 87.5%,
+                var(--gradient-color) 100%
+            );
+        }
+
+        &:after {
+            content: "";
+            z-index: 8;
+            backdrop-filter: blur(16px);
+            mask: linear-gradient(
+                to bottom,
+                var(--gradient-color-transparent) 87.5%,
+                var(--gradient-color) 100%
+            );
+        }
+    }
+
+    .pxl-item--button {
+        position: relative;
+        z-index: 9;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        padding: 0 40px;
+        border: 0;
+        background-color: #fff;
+        color: #111;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+        text-decoration: none;
+        opacity: 0;
+        transform: translateY(10px);
+        visibility: hidden;
+        pointer-events: none;
+        @include transition(
+            opacity 0.3s ease,
+            transform 0.3s ease,
+            visibility 0.3s ease,
+            pointer-events 0.3s ease
+        );
+
+        &:hover {
+            background-color: #111;
+            color: #fff;
+        }
+    }
+
+    .pxl-item--content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 30px 15px 0;
+        text-align: center;
+    }
+
+    .pxl-item--title {
+        margin: 0 0 17px;
+        font-family: var(--primary-font, "Instrument Serif", Georgia, serif);
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 1;
+        color: #111;
+
+        @media #{$max-xs} {
+            font-size: 24px;
+        }
+    }
+
+    .pxl-item--subtitle {
+        margin: 0;
+        font-family: var(--theme-default-font, "Schibsted Grotesk", sans-serif);
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.6;
+        letter-spacing: 1.1px;
+        text-transform: uppercase;
+        color: #565656;
+    }
+}

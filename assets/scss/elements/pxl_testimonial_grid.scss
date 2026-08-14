@@ -1,0 +1,60 @@
+@import "../shared";
+
+/*--------------------------------------------------
+Case Testimonial Grid Styles
+--------------------------------------------------*/
+.pxl-testimonial-grid1 {
+    --pxl-grid-gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(var(--pxl-col-xs, 1), minmax(0, 1fr));
+    gap: var(--pxl-grid-gap);
+
+    @media #{$min-sm} {
+        grid-template-columns: repeat(var(--pxl-col-sm, 1), minmax(0, 1fr));
+    }
+
+    @media #{$min-md} {
+        grid-template-columns: repeat(var(--pxl-col-md, 2), minmax(0, 1fr));
+    }
+
+    @media #{$min-lg} {
+        grid-template-columns: repeat(var(--pxl-col-lg, 2), minmax(0, 1fr));
+    }
+
+    @media #{$min-xl} {
+        grid-template-columns: repeat(var(--pxl-col-xl, 3), minmax(0, 1fr));
+    }
+
+    @media #{$min-xxl} {
+        grid-template-columns: repeat(var(--pxl-col-xxl, 3), minmax(0, 1fr));
+    }
+
+    .pxl-grid-item {
+        min-width: 0;
+    }
+
+    .pxl-item {
+        height: 100%;
+        border-radius: 20px;
+        border: 1px solid rgba($secondary_color_hex, 0.13);
+        text-align: center;
+
+        &--inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        &--divider {
+            width: 100%;
+            height: 1px;
+            background-color: rgba($secondary_color_hex, 0.13);
+        }
+
+        &--description {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}

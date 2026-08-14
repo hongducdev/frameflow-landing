@@ -1,0 +1,258 @@
+@import "../shared";
+/*--------------------------------------------------
+Case Counter Styles
+--------------------------------------------------*/
+.pxl-counter {
+    .pxl--counter-number {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    // transform (Elementor Transform Y) needs non-inline box
+    .pxl-counter--prefix,
+    .pxl-counter--suffix {
+        display: inline-block;
+    }
+}
+
+.title-full-w {
+    width: 100%;
+}
+
+.pxl-counterslide {
+    display: -moz-inline-box;
+    -moz-box-orient: vertical;
+    display: inline-flex;
+    vertical-align: middle;
+    position: relative;
+
+    .pxl-counterslide-inside {
+        display: inline-flex;
+    }
+
+    .pxl-counterslide-digit-spacer {
+        visibility: hidden;
+    }
+
+    .pxl-counterslide-digit,
+    .pxl-counterslide-digit-spacer {
+        display: -moz-inline-box;
+        -moz-box-orient: vertical;
+        display: inline-flex;
+        vertical-align: middle;
+        position: relative;
+    }
+
+    .pxl-counterslide-digit-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+    }
+
+    .pxl-counterslide-ribbon {
+        display: block;
+    }
+
+    .pxl-counterslide-ribbon-inner {
+        display: block;
+        -webkit-backface-visibility: hidden;
+    }
+
+    .pxl-counterslide-value {
+        display: block;
+        -webkit-transform: translateZ(0);
+    }
+
+    .pxl-counterslide-value.pxl-counterslide-last-value {
+        position: absolute;
+    }
+
+    &.pxl-counterslide-animating-up .pxl-counterslide-ribbon-inner {
+        -webkit-transition: -webkit-transform 2s;
+        -moz-transition: -moz-transform 2s;
+        -ms-transition: -ms-transform 2s;
+        -o-transition: -o-transform 2s;
+        transition: transform 2s;
+    }
+
+    &.pxl-counterslide-animating-up.pxl-counterslide-animating .pxl-counterslide-ribbon-inner {
+        -webkit-transform: translateY(-100%);
+        -moz-transform: translateY(-100%);
+        -ms-transform: translateY(-100%);
+        -o-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+
+    &.pxl-counterslide-animating-down .pxl-counterslide-ribbon-inner {
+        -webkit-transform: translateY(-100%);
+        -moz-transform: translateY(-100%);
+        -ms-transform: translateY(-100%);
+        -o-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+
+    &.pxl-counterslide-animating-down.pxl-counterslide-animating .pxl-counterslide-ribbon-inner {
+        -webkit-transition: -webkit-transform 2s;
+        -moz-transition: -moz-transform 2s;
+        -ms-transition: -ms-transform 2s;
+        -o-transition: -o-transform 2s;
+        transition: transform 2s;
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+.title-full-w {
+    width: 100%;
+}
+
+.pxl-counter1 {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    .pxl-counter {
+        &--number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $secondary_color;
+            font-family: "Schibsted Grotesk";
+            font-size: 50px;
+            font-weight: 400;
+            line-height: 1;
+        }
+        &--title {
+            color: $secondary_color;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.4;
+            text-transform: capitalize;
+            margin-bottom: 0;
+            &.style-1-2 {
+                text-align: left;
+                margin-left: auto;
+            }
+        }
+        &--description {
+            font-size: 15px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+
+.pxl-counter2 {
+    .pxl-counter {
+        &--number {
+            display: flex;
+            align-items: center;
+            font-size: 25px;
+            color: #fff;
+            font-weight: 500;
+            font-family: "Schibsted Grotesk";
+        }
+        &--title {
+            color: rgba(#fff, 0.7);
+            margin-bottom: 0;
+            font-size: 15px;
+            font-weight: 500;
+        }
+    }
+}
+
+.pxl-counter3 {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    .pxl-counter {
+        &--icon {
+            @extend .pxl-iflex-center;
+            width: 56px;
+            height: 56px;
+            @include border-radius(50%);
+            background-color: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 -3px 6.8px 0 rgba(120, 155, 249, 0.72) inset;
+            svg {
+                path {
+                    fill: #fff;
+                }
+            }
+            i {
+                color: #fff;
+            }
+        }
+        &--number {
+            color: #fff;
+            font-size: 45px;
+            font-weight: 500;
+            line-height: 1;
+            font-family: "Satoshi";
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        &--title {
+            font-size: 16px;
+            text-transform: capitalize;
+            font-weight: 500;
+            color: #fff;
+        }
+    }
+}
+
+.pxl-counter4 {
+    padding: 30px 60px 50px 60px;
+    position: relative;
+    @media #{$max-md2} { padding: 30px 30px 50px 30px; }
+    &:hover {
+        &:after {
+            height: 100%;
+            bottom: auto;
+            top: 0;
+        }
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        background-color: #DCE2E1;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 0;
+        left: 0;
+        top: auto;
+        bottom: 0;
+        background-color: #111;
+        @include transition(all 0.3s ease);
+    }
+    .pxl-counter {
+        &--number {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+        }
+        &--title {
+            margin-bottom: 0;
+        }
+        &--description {
+            margin-bottom: 0;
+        }
+    }
+}
+
+body.rtl {
+}

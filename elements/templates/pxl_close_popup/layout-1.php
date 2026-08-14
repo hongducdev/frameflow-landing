@@ -1,0 +1,3 @@
+<div class="pxl-close-popup  pxl-cursor--cta <?php echo esc_attr($settings['pxl_animate']); ?>" data-wow-delay="<?php echo esc_attr($settings['pxl_animate_delay']); ?>ms">
+    <span></span>
+</div>

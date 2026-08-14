@@ -1,0 +1,420 @@
+@import "../shared";
+/*--------------------------------------------------
+3. Case Links Styles
+--------------------------------------------------*/
+.pxl-link {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    i {
+        @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+    }
+
+    &.style-default-vertical {
+        .pxl-item--link {
+            &.active {
+                a {
+                    color: #fff;
+                    padding-left: 12px;
+                    &:before {
+                        transform: translatey(-50%) scale(1);
+                    }
+                    span {
+                        &:after {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+        a {
+            position: relative;
+            color: rgba(#fff, 0.8);
+            @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+            &:before {
+                content: "";
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background-color: #fff;
+                @include border-radius(50%);
+                top: 50%;
+                transform: translatey(-50%) scale(0);
+                left: 0;
+                transform-origin: left;
+                @include transition(all 220ms linear 0ms);
+            }
+            &:hover {
+                padding-left: 12px;
+                color: #fff;
+                &:before {
+                    transform: translatey(-50%) scale(1);
+                }
+                span {
+                    &:after {
+                        width: 100%;
+                    }
+                }
+            }
+            span {
+                color: inherit;
+                position: relative;
+                &:after {
+                    content: "";
+                    position: absolute;
+                    width: 0;
+                    height: 1px;
+                    background-color: #fff;
+                    bottom: 0;
+                    left: 0;
+                    @include transition(
+                        all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                    );
+                }
+            }
+        }
+    }
+
+    &.style-2-vertical {
+        &.sub-style-2-1 {
+            .pxl-item {
+                &--link {
+                    a {
+                        padding: 13px 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        text-transform: capitalize;
+                        @include transition(
+                            all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                        );
+                        &:hover,
+                        &.active {
+                            color: #fff;
+                            svg {
+                                @include transform(rotate(45deg));
+                            }
+                        }
+                    }
+                    &-icon {
+                        svg {
+                            @include transform(rotate(0deg));
+                            @include transition(
+                                all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                            );
+                        }
+                    }
+                    + .pxl-item--link {
+                        border-top: 1px solid rgba(#fff, 0.13);
+                    }
+                    &:first-child {
+                        a {
+                            padding-top: 0;
+                        }
+                    }
+                    &:last-child {
+                        a {
+                            padding-bottom: 0;
+                        }
+                    }
+                }
+            }
+            li + li {
+                margin-top: 0 !important;
+            }
+        }
+        &.sub-style-2-2 {
+            .pxl-item {
+                &--link {
+                    a {
+                        flex-direction: row-reverse;
+                        gap: 12px;
+                        span {
+                            position: relative;
+                            &:after {
+                                content: "";
+                                position: absolute;
+                                width: 0;
+                                height: 1px;
+                                background-color: #fff;
+                                bottom: 0;
+                                left: 0;
+                                @include transition(
+                                    all 0.25s
+                                        cubic-bezier(0.645, 0.045, 0.355, 1)
+                                );
+                            }
+                        }
+                    }
+                    &.active,
+                    &:hover {
+                        a {
+                            span {
+                                &:after {
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.sub-style-2-3 {
+            .pxl-item {
+                &--link {
+                    a {
+                        position: relative;
+                    }
+                    &-icon {
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        color: inherit;
+                        opacity: 0;
+                        @include transition(
+                            all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                        );
+                        @extend .pxl-iflex-center;
+                    }
+                    &:hover,
+                    &.active {
+                        .pxl-item--link-icon {
+                            transform: translateY(-50%) translateX(25px);
+                            opacity: 1;
+                            color: $primary_color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.style-3-vertical {
+        .pxl-item {
+            &--link {
+                a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    height: 55px;
+                    @include border-radius(10px);
+                    border: 1px solid rgba(#fff, 0.15);
+                    color: #fff;
+                    padding: 0 25px;
+                    background-color: transparent;
+                    @include transition(
+                        all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                    );
+                    svg {
+                        opacity: 0;
+                        color: $primary_color;
+                        @include transform(translateX(-10px));
+                        @include transition(
+                            all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                        );
+                    }
+                    &:hover {
+                        background-color: rgba(#fff, 0.15);
+                        svg {
+                            opacity: 1;
+                            @include transform(translateX(0));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.style-4-vertical {
+        .pxl-item {
+            &--link {
+                a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-direction: row-reverse;
+                }
+                &-icon {
+                    width: 46px;
+                    height: 46px;
+                    @include border-radius(50%);
+                    @extend .pxl-iflex-center;
+                    background-color: $secondary_color;
+                }
+            }
+        }
+    }
+
+    &.style-default-horizontal {
+        gap: 45px;
+        @media #{$max-xsx} {
+            gap: 20px;
+        }
+        li {
+            &.active {
+                a {
+                    color: #fff;
+                    span {
+                        &:after {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            + li {
+                a {
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background-color: #fff;
+                        @include border-radius(50%);
+                        top: 50%;
+                        transform: translatey(-50%);
+                        left: -27px;
+                        @media #{$max-xsx} {
+                            left: -10px;
+                        }
+                    }
+                }
+            }
+            &.active {
+                a {
+                    span {
+                        &:after {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+        a {
+            color: rgba(#fff, 0.8);
+            @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+            position: relative;
+            span {
+                color: inherit;
+                position: relative;
+                &:after {
+                    content: "";
+                    position: absolute;
+                    width: 0;
+                    height: 1px;
+                    background-color: #fff;
+                    bottom: 0;
+                    left: 0;
+                    @include transition(
+                        all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                    );
+                }
+            }
+            &:hover {
+                color: #fff;
+                span {
+                    &:after {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    &.style-2-horizontal {
+        display: flex;
+        align-items: center;
+        gap: 55px;
+        .pxl-item {
+            &--link {
+                a {
+                    position: relative;
+                    color: #111;
+                    span {
+                        position: relative;
+                        line-height: 1;
+                        &:before {
+                            content: "";
+                            position: absolute;
+                            width: 0;
+                            height: 1px;
+                            background-color: #111;
+                            bottom: 0;
+                            left: auto;
+                            right: 0;
+                            z-index: -1;
+                            @include transition(
+                                all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                            );
+                        }
+                    }
+                }
+                &-icon {
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    color: $primary_color;
+                    opacity: 0;
+                    @include transition(
+                        all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
+                    );
+                    &:hover {
+                        color: $secondary_color;
+                    }
+                }
+                &:hover,
+                &.active {
+                    a {
+                        span {
+                            &:before {
+                                width: 100%;
+                                left: 0;
+                                right: auto;
+                            }
+                        }
+                    }
+                    .pxl-item--link-icon {
+                        transform: translateY(-50%) translateX(25px);
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    a {
+        display: inline-flex;
+        font-size: 17px;
+        color: rgba(#fff, 0.6);
+
+        @media (max-width: 767px) {
+            font-size: 15px;
+        }
+    }
+
+    i {
+        min-width: 24px;
+        margin-top: 5px;
+        font-size: 15px;
+        display: inline-flex;
+    }
+
+    .pxl-type-gradient i {
+        @extend .text-gradient;
+    }
+
+    &.type-vertical li + li {
+        margin-top: 6px;
+    }
+
+    &.type-horizontal {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

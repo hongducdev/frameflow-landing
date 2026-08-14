@@ -1,0 +1,145 @@
+@import "../shared";
+/*--------------------------------------------------
+1. Case Logo Styles
+--------------------------------------------------*/
+.pxl-logo {
+    a {
+        display: inline-block;
+        position: relative;
+    }
+
+    img {
+        width: auto;
+        vertical-align: middle;
+    }
+    &.style-2 {
+        display: flex;
+        align-items: center;
+        --width-box: 106px;
+        --spacing: 42px;
+        --gradient-color-from: rgba(153, 153, 153, 0);
+        --gradient-color-to: rgba(255, 255, 255, 0.15);
+        @media #{$max-sm} {
+            --width-box: 80px;
+            --spacing: 20px;
+        }
+        gap: var(--spacing);
+        .pxl-logo {
+            &--divider {
+                height: 1px;
+                width: calc(calc(100% - var(--width-box)) / 2);
+                position: relative;
+                &-1 {
+                    background: linear-gradient(
+                        90deg,
+                        var(--gradient-color-from) 25.6%,
+                        var(--gradient-color-to) 100%
+                    );
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        width: 120px;
+                        height: 3px;
+                        border-radius: 1px;
+                        background: linear-gradient(
+                            90deg,
+                            rgba(255, 255, 255, 0) 0%,
+                            #fff 100%
+                        );
+                        left: 0;
+                        transform: translateY(-50%);
+                        animation: pxl-rain-drop 3s linear infinite;
+                        @media #{$max-sm} {
+                            width: 80px;
+                        }
+                    }
+                }
+                &-2 {
+                    background: linear-gradient(
+                        90deg,
+                        var(--gradient-color-to) 0%,
+                        var(--gradient-color-from) 100%
+                    );
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        width: 120px;
+                        height: 3px;
+                        border-radius: 1px;
+                        background: linear-gradient(
+                            270deg,
+                            rgba(255, 255, 255, 0) 0%,
+                            #fff 100%
+                        );
+                        right: 0;
+                        transform: translateY(-50%);
+                        animation: pxl-rain-drop-2 3s linear infinite;
+                        @media #{$max-sm} {
+                            width: 80px;
+                        }
+                    }
+                }
+            }
+            &--inner {
+                width: var(--width-box);
+                height: var(--width-box);
+                @extend .pxl-iflex-center;
+                border-radius: var(--width-box);
+                flex: 0 0 var(--width-box);
+                border: 1px solid rgba(255, 255, 255, 0);
+                background-color: rgba(255, 255, 255, 0.07);
+                box-shadow: 0 -14px 20.1px 0 rgba(255, 255, 255, 0.18) inset;
+                img {
+                    height: 40px;
+                    object-fit: contain;
+                    width: auto;
+                    @media #{$max-sm} {
+                        height: 30px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes pxl-rain-drop {
+    0% {
+        left: 0;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        left: calc(100% - 120px);
+        opacity: 0;
+        @media #{$max-sm} {
+            left: 100%;
+        }
+    }
+}
+
+@keyframes pxl-rain-drop-2 {
+    0% {
+        right: 0;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        right: calc(100% - 120px);
+        opacity: 0;
+        @media #{$max-sm} {
+            right: 100%;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+@import "../shared";
+
+.pxl-gallery-grid {
+    .pxl-item--inner {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .pxl-item--image {
+        overflow: hidden;
+        line-height: 0;
+
+        a {
+            display: block;
+            line-height: 0;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            @include transform(scale(1));
+            @include transition(transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1));
+        }
+    }
+
+    .pxl-item--inner:hover {
+        .pxl-item--image img {
+            @include transform(scale(1.04));
+        }
+    }
+}

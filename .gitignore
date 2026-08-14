@@ -1,0 +1,46 @@
+# OS junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Node / Yarn
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnp.*
+.eslintcache
+
+# Build outputs
+**/*.css.map
+**/*.js.map
+**/*.min.js.map
+**/*.min.css.map
+.cache/
+
+# Logs
+*.log
+logs/
+
+# Editor / IDE
+.idea/
+.vscode/
+.history/
+
+# Cursor / tooling
+.cursor/
+.agents/
+.claude/
+.agents/
+
+# PHP / Composer (if added later)
+vendor/
+composer.lock
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Build zip
+dist/
+docs/

@@ -1,0 +1,143 @@
+@import "../shared";
+/*--------------------------------------------------
+Text Box Grid Styles
+--------------------------------------------------*/
+
+.pxl-text-box-grid1 {
+    --pxl-col-xs: 1;
+    --pxl-col-sm: 2;
+    --pxl-col-md: 2;
+    --pxl-col-lg: 3;
+    --pxl-col-xl: 4;
+    --pxl-col-xxl: 4;
+    --pxl-grid-gap: 24px;
+    --pxl-connector-color: #e6e6e6;
+    --pxl-dot-color: #111111;
+    --pxl-particle-color: var(--pxl-dot-color);
+    --pxl-line-first-vertical: 28px;
+    --pxl-line-curve-depth: 52px;
+    --pxl-line-outer-offset: 22px;
+    --pxl-line-inner-offset: 26px;
+    --pxl-line-trunk-inset: 20px;
+    --pxl-canvas-space: 108px;
+    display: grid;
+    grid-template-columns: repeat(var(--pxl-col-xxl), minmax(0, 1fr));
+    gap: var(--pxl-grid-gap);
+    position: relative;
+    padding-bottom: var(--pxl-canvas-space);
+
+    @media #{$max-xxl} {
+        grid-template-columns: repeat(var(--pxl-col-xl), minmax(0, 1fr));
+    }
+
+    @media #{$max-xl} {
+        grid-template-columns: repeat(var(--pxl-col-lg), minmax(0, 1fr));
+    }
+
+    @media #{$max-md2} {
+        grid-template-columns: repeat(var(--pxl-col-md), minmax(0, 1fr));
+        --pxl-canvas-space: 88px;
+    }
+
+    @media #{$max-md} {
+        grid-template-columns: repeat(var(--pxl-col-sm), minmax(0, 1fr));
+    }
+
+    @media #{$max-xs} {
+        grid-template-columns: repeat(var(--pxl-col-xs), minmax(0, 1fr));
+        --pxl-canvas-space: 0px;
+    }
+
+    .pxl-text-box-grid--canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+
+        @media #{$max-md2} {
+            display: none;
+        }
+    }
+
+    .pxl-item {
+        position: relative;
+        z-index: 1;
+        &--inner {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 35px 28px 54px 28px;
+            border: 1px solid rgba(#111, 0.13);
+            @include border-radius(15px);
+            background-color: transparent;
+            text-decoration: none;
+            position: relative;
+            @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
+
+            &:hover {
+                box-shadow: 0 18px 40px rgba(17, 17, 17, 0.08);
+            }
+        }
+        &--icon {
+            width: 60px;
+            height: 60px;
+            @extend .pxl-iflex-center;
+            @include border-radius(60px);
+            background-color: #111;
+            color: #fff;
+            margin-bottom: 28px;
+        }
+        &--title {
+            font-size: 21px;
+            margin-bottom: 46px;
+            font-weight: 600;
+        }
+        &--description {
+            margin: 0;
+            color: #565656;
+        }
+        &--dot {
+            --size-dot: 25px;
+            width: var(--size-dot);
+            height: var(--size-dot);
+            @include border-radius(50%);
+            background-color: #fff;
+            border: 1px solid #e8e8e8;
+            @extend .pxl-iflex-center;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            @include transform(translateX(-50%));
+            margin-bottom: calc(var(--size-dot) / 2 * -1);
+            span {
+                width: 9px;
+                height: 9px;
+                @include border-radius(50%);
+                background-color: #111;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                @include transform(translate(-50%, -50%) scale(0.5));
+                animation: pxl-item-dot-animation 1s ease-in-out infinite;
+            }
+            @media #{$max-md2} {
+                display: none;
+            }
+        }
+    }
+}
+
+@keyframes pxl-item-dot-animation {
+    0% {
+        opacity: 0.5;
+        @include transform(translate(-50%, -50%) scale(0.5));
+    }
+    100% {
+        opacity: 1;
+        @include transform(translate(-50%, -50%) scale(1));
+    }
+}

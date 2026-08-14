@@ -1,0 +1,39 @@
+//--------------------------------------------------
+// Widgets Elements
+//--------------------------------------------------
+
+.pxl-image-prl {
+    @media (max-width: 1200px) {
+        height: auto !important;
+    }
+}
+
+.swiper-vertical {
+    touch-action: pan-x;
+    margin: -15px 0;
+
+    > .pxl-swiper-wrapper {
+        flex-direction: column;
+    }
+
+    &.swiper-backface-hidden {
+        .pxl-swiper-slide {
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            padding: 15px 0;
+        }
+    }
+}
+
+// reset custom class
+
+.pxl-hover-parallax {
+    &:not(.hovered) .pxl-item-parallax {
+        transform: translate3d(0px, 0px, 0px) !important;
+    }
+
+    .pxl-item-parallax {
+        @include transition(transform 300ms linear 0ms);
+    }
+}
