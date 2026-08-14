@@ -1,6 +1,4 @@
 <?php
-$templates_df = ['0' => esc_html__('None', 'frameflow')];
-$templates = $templates_df + frameflow_get_templates_option('popup');
 pxl_add_custom_widget(
     array(
         'name' => 'pxl_button',
@@ -19,15 +17,6 @@ pxl_add_custom_widget(
                             esc_html__('Type', 'frameflow'),
                             [
                                 'btn-default' => esc_html__('Default', 'frameflow'),
-                                'btn-shadow' => esc_html__('Shadow', 'frameflow'),
-                                'btn-spacing-icon' => esc_html__('Spacing Icon', 'frameflow'),
-                                'btn-circle' => esc_html__('Circle', 'frameflow'),
-                                'btn-svg' => esc_html__('SVG', 'frameflow'),
-                                'btn-triangle-fill' => esc_html__('Triangle Fill', 'frameflow'),
-                                'custom_icon_1' => esc_html__('Custom Icon 1', 'frameflow'),
-                                'btn-arrow-1' => esc_html__('Arrow 1', 'frameflow'),
-                                'btn-arrow-2' => esc_html__('Arrow 2', 'frameflow'),
-                                'btn-square-card' => esc_html__('Square Card', 'frameflow'),
                             ],
                             ['default' => 'btn-default']
                         ),
@@ -36,37 +25,12 @@ pxl_add_custom_widget(
                             esc_html__('Text', 'frameflow'),
                             ['default' => esc_html__('Click Here', 'frameflow')]
                         ),
-                        frameflow_widget_select_control(
-                            'btn_action',
-                            esc_html__('Action', 'frameflow'),
-                            [
-                                'pxl-atc-link' => esc_html__('Link', 'frameflow'),
-                                'pxl-atc-popup' => esc_html__('Popup', 'frameflow'),
-                            ],
-                            ['default' => 'pxl-atc-link']
-                        ),
                         frameflow_widget_url_control(
                             'link',
                             esc_html__('Link', 'frameflow'),
                             [
                                 'default' => [
                                     'url' => '#',
-                                ],
-                                'condition' => [
-                                    'btn_action' => ['pxl-atc-link'],
-                                ],
-                            ]
-                        ),
-
-                        frameflow_widget_select_control(
-                            'popup_template',
-                            esc_html__('Select Popup Template', 'frameflow'),
-                            $templates,
-                            [
-                                'default' => 'df',
-                                'description' => 'Add new tab template: "<a href="' . esc_url(admin_url('edit.php?post_type=pxl-template')) . '" target="_blank">Click Here</a>"',
-                                'condition' => [
-                                    'btn_action' => ['pxl-atc-popup'],
                                 ],
                             ]
                         ),
@@ -133,75 +97,12 @@ pxl_add_custom_widget(
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                     'controls' => array_merge(
                         array(
-                            frameflow_widget_select_control(
-                                'btn_w',
-                                esc_html__('Width', 'frameflow'),
-                                [
-                                    'inline' => esc_html__('Inline', 'frameflow'),
-                                    'full' => esc_html__('Full Width', 'frameflow'),
-                                    'full justify-sb' => esc_html__('Full Width Space Between', 'frameflow'),
-                                ],
-                                [
-                                    'default' => 'inline',
-                                    'condition' => [
-                                        'btn_style!' => ['btn-spacing-icon', 'btn-square-card'],
-                                    ],
-                                ]
-                            ),
-                            array(
-                                'name' => 'btn_max_min_w',
-                                'label' => esc_html__('Width', 'frameflow'),
-                                'type' => \Elementor\Controls_Manager::SLIDER,
-                                'size_units' => ['px'],
-                                'range' => [
-                                    'px' => [
-                                        'min' => 0,
-                                        'max' => 300,
-                                    ],
-                                ],
-                                'selectors' => [
-                                    '{{WRAPPER}} .pxl-button .btn.btn-spacing-icon' => 'max-width: {{SIZE}}{{UNIT}}; min-width: {{SIZE}}{{UNIT}};',
-                                ],
-                                'condition' => [
-                                    'btn_style' => ['btn-spacing-icon'],
-                                ]
-                            ),
-                            array(
-                                'name' => 'square_card_text_max_w',
-                                'label' => esc_html__('Text Max Width', 'frameflow'),
-                                'type' => \Elementor\Controls_Manager::SLIDER,
-                                'control_type' => 'responsive',
-                                'size_units' => ['px', '%', 'em', 'rem'],
-                                'range' => [
-                                    'px' => [
-                                        'min' => 0,
-                                        'max' => 300,
-                                    ],
-                                ],
-                                'default' => [
-                                    'size' => 90,
-                                    'unit' => 'px',
-                                ],
-                                'selectors' => [
-                                    '{{WRAPPER}} .pxl-button .btn.btn-square-card .pxl--btn-text' => 'max-width: {{SIZE}}{{UNIT}};',
-                                ],
-                                'condition' => [
-                                    'btn_style' => ['btn-square-card'],
-                                ],
-                            ),
                             frameflow_widget_slider_control(
                                 'btn_height',
                                 esc_html__('Button Height', 'frameflow'),
                                 [
                                     '{{WRAPPER}} .pxl-button .btn' => 'height: {{SIZE}}{{UNIT}};',
-                                    '{{WRAPPER}} .pxl-button .btn.btn-circle' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
-                                    '{{WRAPPER}} .pxl-button .btn.btn-svg' => 'width: {{SIZE}}{{UNIT}}; min-height: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-                                    '{{WRAPPER}} .pxl-button .btn.btn-arrow-1' => 'height: {{SIZE}}{{UNIT}}',
-                                    '{{WRAPPER}} .pxl-button .btn.btn-square-card' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
                                 ],
-                                [
-                                    'size_units' => ['px', '%', 'em', 'rem'],
-                                ]
                             ),
                             frameflow_widget_slider_control(
                                 'btn_gap',
@@ -232,12 +133,22 @@ pxl_add_custom_widget(
                                                     '{{WRAPPER}} .pxl-button .btn' => 'color: {{VALUE}};',
                                                 ]
                                             ),
-                                            frameflow_widget_color_control(
-                                                'btn_bg_color',
-                                                esc_html__('Background Color', 'frameflow'),
+                                            array(
+                                                'name'         => 'select_background',
+                                                'label'        => esc_html__('Background', 'frameflow'),
+                                                'type'         => \Elementor\Group_Control_Background::get_type(),
+                                                'control_type' => 'group',
+                                                'types'        => ['classic', 'gradient'],
+                                                'selector'     => '{{WRAPPER}} .pxl-button .btn',
+                                            ),
+                                            frameflow_widget_slider_control(
+                                                'backdrop_blur',
+                                                esc_html__('Blur', 'frameflow'),
                                                 [
-                                                    '{{WRAPPER}} .pxl-button .btn' => 'background-color: {{VALUE}};',
-                                                    '{{WRAPPER}} .pxl-button .btn.btn-svg .btn-svg-bg svg path' => 'fill: {{VALUE}};',
+                                                    '{{WRAPPER}} .pxl-button .btn' => 'backdrop-filter: blur({{SIZE}}{{UNIT}});',
+                                                ],
+                                                [
+                                                    'size_units' => ['px'],
                                                 ]
                                             ),
                                             array(
