@@ -31,7 +31,6 @@
         frameflow_submenu_responsive();
         frameflow_panel_anchor_toggle();
         frameflow_slider_column_offset();
-        frameflow_menu_divider_move();
         frameflow_el_parallax();
         if (typeof window.frameflowEnsureStellarParallax === "function") {
             window.frameflowEnsureStellarParallax();
@@ -77,9 +76,6 @@
             frameflow_slider_column_offset();
             frameflow_zoom_point();
             frameflow_footer_fixed();
-            setTimeout(function () {
-                frameflow_menu_divider_move();
-            }, 500);
             resizeTimeout = null;
         }, 150);
     });
@@ -1397,112 +1393,6 @@
                     });
             }
         });
-    }
-
-    /* Menu Divider Move */
-    function frameflow_menu_divider_move() {
-        $(".pxl-nav-menu1.fr-style-box").each(
-            function () {
-                var current = $(this).find(
-                    ".pxl-menu-primary > .current-menu-item, .pxl-menu-primary > .current-menu-parent, .pxl-menu-primary > .current-menu-ancestor",
-                );
-                if (current.length > 0) {
-                    var marker = $(this).find(".pxl-divider-move");
-                    marker.css({
-                        left: current.position().left,
-                        width: current.outerWidth(),
-                        display: "block",
-                    });
-                    marker.addClass("active");
-                    current.addClass("pxl-shape-active");
-                    if (Modernizr.csstransitions) {
-                        $(this)
-                            .find(".pxl-menu-primary > li")
-                            .on("mouseenter", function () {
-                                var self = $(this),
-                                    offsetLeft = self.position().left,
-                                    width =
-                                        self.outerWidth() ||
-                                        current.outerWidth(),
-                                    left =
-                                        offsetLeft == 0
-                                            ? 0
-                                            : offsetLeft ||
-                                              current.position().left;
-                                marker.css({
-                                    left: left,
-                                    width: width,
-                                });
-                                marker.addClass("active");
-                                current.removeClass("pxl-shape-active");
-                                // Add hover color class
-                                $(".pxl-menu-primary > li").removeClass("pxl-hover-active");
-                                self.addClass("pxl-hover-active");
-                            })
-                            .on("mouseleave", function () {
-                                $(this).removeClass("pxl-hover-active");
-                            });
-                        $(this)
-                            .find(".pxl-menu-primary")
-                            .mouseleave(function () {
-                                marker.css({
-                                    left: current.position().left,
-                                    width: current.outerWidth(),
-                                });
-                                current.addClass("pxl-shape-active");
-                                $(".pxl-menu-primary > li").removeClass("pxl-hover-active");
-                            });
-                    }
-                } else {
-                    var marker = $(this).find(".pxl-divider-move");
-                    var current = $(this).find(
-                        ".pxl-menu-primary > li:nth-child(1)",
-                    );
-                    marker.css({
-                        left: current.position().left,
-                        width: current.outerWidth(),
-                        display: "block",
-                    });
-                    if (Modernizr.csstransitions) {
-                        $(this)
-                            .find(".pxl-menu-primary > li")
-                            .on("mouseenter", function () {
-                                var self = $(this),
-                                    offsetLeft = self.position().left,
-                                    width =
-                                        self.outerWidth() ||
-                                        current.outerWidth(),
-                                    left =
-                                        offsetLeft == 0
-                                            ? 0
-                                            : offsetLeft ||
-                                              current.position().left;
-                                marker.css({
-                                    left: left,
-                                    width: width,
-                                });
-                                marker.addClass("active");
-                                // Add hover color class
-                                $(".pxl-menu-primary > li").removeClass("pxl-hover-active");
-                                self.addClass("pxl-hover-active");
-                            })
-                            .on("mouseleave", function () {
-                                $(this).removeClass("pxl-hover-active");
-                            });
-                        $(this)
-                            .find(".pxl-menu-primary")
-                            .mouseleave(function () {
-                                marker.css({
-                                    left: current.position().left,
-                                    width: current.outerWidth(),
-                                });
-                                marker.removeClass("active");
-                                $(".pxl-menu-primary > li").removeClass("pxl-hover-active");
-                            });
-                    }
-                }
-            },
-        );
     }
 
     /* Back To Top Progress Bar */

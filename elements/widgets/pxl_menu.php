@@ -115,80 +115,6 @@ pxl_add_custom_widget(
                     'label' => esc_html__('First Level', 'frameflow'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                     'controls' => array(
-                        frameflow_widget_select_control(
-                            'hover_active_style',
-                            esc_html__('Style', 'frameflow'),
-                            [
-                                'fr-style-default' => 'Default',
-                                'fr-style-divider' => 'Divider Top',
-                                'fr-style-divider1' => 'Divider Bottom',
-                                'fr-style-box' => 'Box',
-                            ],
-                            [
-                                'default' => 'fr-style-default',
-                                'condition' => [
-                                    'menu_type' => 'horizontal',
-                                ],
-                            ]
-                        ),
-                        frameflow_widget_color_control(
-                            'box_color',
-                            esc_html__('Box Color', 'frameflow'),
-                            [
-                                '{{WRAPPER}} .pxl-nav-menu.fr-style-box .pxl-divider-move' => 'background-color: {{VALUE}} !important;',
-                            ],
-                            [
-                                'condition' => [
-                                    'hover_active_style' => ['fr-style-box'],
-                                ],
-                            ]
-                        ),
-                        frameflow_widget_dimensions_control(
-                            'box_border_radius',
-                            esc_html__('Box Border Radius', 'frameflow'),
-                            [
-                                '{{WRAPPER}} .pxl-nav-menu.fr-style-box .pxl-divider-move' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                            ],
-                            [
-                                'condition' => [
-                                    'hover_active_style' => ['fr-style-box'],
-                                ],
-                            ]
-                        ),
-                        frameflow_widget_color_control(
-                            'dcolor',
-                            esc_html__('Divider Color', 'frameflow'),
-                            [
-                                '{{WRAPPER}} .pxl-nav-menu.fr-style-divider1 .pxl-menu-primary > li > a:before' => 'background-color: {{VALUE}} !important;',
-                            ],
-                            [
-                                'separator' => 'before',
-                                'condition' => [
-                                    'hover_active_style' => ['fr-style-divider'],
-                                ],
-                            ]
-                        ),
-                        array(
-                            'name' => 'p_d',
-                            'label' => esc_html__('Divider Position', 'frameflow'),
-                            'type' => \Elementor\Controls_Manager::SLIDER,
-                            'control_type' => 'responsive',
-                            'size_units' => ['px'],
-                            'range' => [
-                                'px' => [
-                                    'min' => 0,
-                                    'max' => 300,
-                                ],
-                            ],
-                            'selectors' => [
-                                '{{WRAPPER}} .pxl-nav-menu.fr-style-divider1 .pxl-menu-primary > li > a:before' => 'bottom: {{SIZE}}{{UNIT}};',
-                                '{{WRAPPER}} .pxl-nav-menu.fr-style-divider3 .pxl-menu-primary > li > a:before' => 'bottom: {{SIZE}}{{UNIT}};',
-                            ],
-
-                            'condition' => [
-                                'hover_active_style' => ['fr-style-divider1'],
-                            ],
-                        ),
                         frameflow_widget_control_tabs(
                             'first_level_style_tabs',
                             [
@@ -201,7 +127,6 @@ pxl_add_custom_widget(
                                             esc_html__('Color', 'frameflow'),
                                             [
                                                 '{{WRAPPER}} .pxl-nav-menu .pxl-menu-primary > li > a' => 'color: {{VALUE}};',
-                                                '{{WRAPPER}} .pxl-nav-menu.fr-style-box .pxl-menu-primary > li' => 'color: {{VALUE}};',
                                             ]
                                         ),
                                         frameflow_widget_color_control(
@@ -226,10 +151,8 @@ pxl_add_custom_widget(
                                             'color_hover',
                                             esc_html__('Color Hover', 'frameflow'),
                                             [
-                                                '{{WRAPPER}} .pxl-nav-menu:not(.fr-style-box) .pxl-menu-primary > li > a:hover' => 'color: {{VALUE}};',
-                                                '{{WRAPPER}} .pxl-nav-menu:not(.fr-style-box) .pxl-menu-primary > li > a:hover i' => 'color: {{VALUE}};',
-                                                '{{WRAPPER}} .pxl-nav-menu.fr-style-box .pxl-menu-primary > li.pxl-hover-active > a' => 'color: {{VALUE}} !important;',
-                                                '{{WRAPPER}} .pxl-nav-menu.fr-style-box .pxl-menu-primary > li.pxl-hover-active > a i' => 'color: {{VALUE}} !important;',
+                                                '{{WRAPPER}} .pxl-nav-menu .pxl-menu-primary > li > a:hover' => 'color: {{VALUE}};',
+                                                '{{WRAPPER}} .pxl-nav-menu .pxl-menu-primary > li > a:hover i' => 'color: {{VALUE}};',
                                             ]
                                         ),
                                     ],
@@ -242,8 +165,7 @@ pxl_add_custom_widget(
                                             'color_active',
                                             esc_html__('Color Active', 'frameflow'),
                                             [
-                                                '{{WRAPPER}} .pxl-nav-menu:not(.fr-style-box) .pxl-menu-primary > li.current-menu-ancestor > a:not(.is-one-page),{{WRAPPER}} .pxl-nav-menu:not(.fr-style-box) .pxl-menu-primary > li.current-menu-parent > a:not(.is-one-page), {{WRAPPER}} .pxl-nav-menu:not(.fr-style-box) .pxl-menu-primary > li.current_page_item > a:not(.is-one-page), {{WRAPPER}} .pxl-nav-menu:not(.fr-style-box) .pxl-menu-primary > li > a.pxl-onepage-active' => 'color: {{VALUE}} !important;',
-                                                '{{WRAPPER}} .pxl-nav-menu.fr-style-box .pxl-menu-primary > li.pxl-shape-active > a:not(.is-one-page)' => 'color: {{VALUE}} !important;',
+                                                '{{WRAPPER}} .pxl-nav-menu .pxl-menu-primary > li.current-menu-ancestor > a:not(.is-one-page),{{WRAPPER}} .pxl-nav-menu .pxl-menu-primary > li.current-menu-parent > a:not(.is-one-page), {{WRAPPER}} .pxl-nav-menu .pxl-menu-primary > li.current_page_item > a:not(.is-one-page), {{WRAPPER}} .pxl-nav-menu .pxl-menu-primary > li > a.pxl-onepage-active' => 'color: {{VALUE}} !important;',
                                             ]
                                         ),
                                     ],
