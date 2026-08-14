@@ -6,7 +6,7 @@
         </div>
     <?php endif; ?>
     <?php if ($settings['icon_type'] == 'image' && !empty($settings['icon_image']['id'])) : ?>
-        <div class="pxl-item--icon pxl-flex-center pxl-mr-25">
+        <div class="pxl-item--icon">
             <?php $img_icon  = pxl_get_image_by_size(array(
                 'attach_id'  => $settings['icon_image']['id'],
                 'thumb_size' => 'full',
