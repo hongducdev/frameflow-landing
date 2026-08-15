@@ -13,7 +13,7 @@
 
         $marquee.each(function () {
             var $instance = $(this);
-            var $track = $instance.find(".pxl-client-marquee__track");
+            var $track = $instance.find(".pxl-items--track");
 
             if (!$track.length) {
                 return;
