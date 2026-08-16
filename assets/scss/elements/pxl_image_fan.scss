@@ -1,0 +1,128 @@
+@import "../shared";
+/*--------------------------------------------------
+Case Image Fan Styles
+--------------------------------------------------*/
+.pxl-image-fan {
+    --fan-frame-w: 220px;
+    --fan-frame-h: 312px;
+    --fan-radius: 10px;
+    --fan-angle: 19.8deg;
+    --fan-offset-x: 72px;
+    --fan-center-y: -28px;
+    --fan-border: #e4e4e4;
+    --fan-glass: rgba(255, 255, 255, 0.28);
+    --fan-blur: 15px;
+    --fan-pad: 8px;
+
+    position: relative;
+    width: 100%;
+    max-width: calc(var(--fan-frame-w) + (var(--fan-offset-x) * 2) + 48px);
+    margin-inline: auto;
+
+    &__stage {
+        position: relative;
+        width: 100%;
+        height: calc(var(--fan-frame-h) + 56px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__card {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+
+        &--left {
+            z-index: 1;
+        }
+
+        &--right {
+            z-index: 1;
+        }
+
+        &--center {
+            z-index: 2;
+            transform: translateY(var(--fan-center-y));
+        }
+    }
+
+    &__motion {
+        will-change: transform, opacity;
+        transform-origin: center center;
+    }
+
+    &__frame {
+        position: relative;
+        width: var(--fan-frame-w);
+        height: var(--fan-frame-h);
+        padding: var(--fan-pad);
+        box-sizing: border-box;
+        background: transparent;
+        border: 0;
+        overflow: visible;
+
+        // Frosted glass border layer (matches Figma backdrop-blur frame)
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: var(--fan-radius);
+            border: 1px solid var(--fan-border);
+            background: var(--fan-glass);
+            backdrop-filter: blur(var(--fan-blur)) saturate(1.15);
+            -webkit-backdrop-filter: blur(var(--fan-blur)) saturate(1.15);
+            box-shadow:
+                0 18px 40px rgba(17, 17, 17, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.45);
+            pointer-events: none;
+        }
+    }
+
+    &__frame img {
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        border-radius: calc(var(--fan-radius) - 2px);
+    }
+}
+
+@media (max-width: 767px) {
+    .pxl-image-fan {
+        --fan-frame-w: 160px;
+        --fan-frame-h: 228px;
+        --fan-offset-x: 48px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pxl-image-fan.is-reduced-motion {
+        .pxl-image-fan__card--left .pxl-image-fan__motion {
+            transform: translateX(calc(var(--fan-offset-x) * -1))
+                rotate(calc(var(--fan-angle) * -1));
+            opacity: 1;
+        }
+
+        .pxl-image-fan__card--right .pxl-image-fan__motion {
+            transform: translateX(var(--fan-offset-x)) rotate(var(--fan-angle));
+            opacity: 1;
+        }
+
+        .pxl-image-fan__card--center .pxl-image-fan__motion {
+            transform: none;
+            opacity: 1;
+        }
+
+        .pxl-image-fan__card--center {
+            transform: translateY(var(--fan-center-y));
+        }
+    }
+}

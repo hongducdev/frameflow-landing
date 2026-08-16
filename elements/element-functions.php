@@ -42,6 +42,7 @@ if (!function_exists('frameflow_register_element_scripts')) {
         wp_register_script('frameflow-tabs', get_template_directory_uri() . '/elements/widgets/js/tabs.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('frameflow-client-marquee', get_template_directory_uri() . '/elements/widgets/js/client-marquee.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);
         wp_register_script('frameflow-image-marquee', get_template_directory_uri() . '/elements/widgets/js/image-marquee.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);
+        wp_register_script('frameflow-image-fan', get_template_directory_uri() . '/elements/widgets/js/image-fan.min.js', ['jquery', 'gsap', 'pxl-scroll-trigger'], $theme->get('Version'), true);
         wp_register_script('frameflow-process', get_template_directory_uri() . '/elements/widgets/js/process.min.js', ['jquery', 'gsap', 'pxl-scroll-trigger'], $theme->get('Version'), true);
         wp_register_script('frameflow-text-box-grid', get_template_directory_uri() . '/elements/widgets/js/text-box-grid.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('frameflow-text-marquee', get_template_directory_uri() . '/elements/widgets/js/text-marquee.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);

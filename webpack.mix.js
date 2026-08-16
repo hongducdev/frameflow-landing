@@ -82,6 +82,7 @@ const jsFiles = [
     "elements/widgets/js/carousel.js",
     "elements/widgets/js/client-marquee.js",
     "elements/widgets/js/image-marquee.js",
+    "elements/widgets/js/image-fan.js",
     "elements/widgets/js/countdown.js",
     "elements/widgets/js/counter.js",
     "elements/widgets/js/elementor.js",

@@ -30,18 +30,6 @@ pxl_add_custom_widget(
                                     'label' => esc_html__('Layout 1', 'frameflow'),
                                     'image' => get_template_directory_uri() . '/elements/widgets/img-layout/pxl_counter/layout1.webp'
                                 ],
-                                '2' => [
-                                    'label' => esc_html__('Layout 2', 'frameflow'),
-                                    'image' => get_template_directory_uri() . '/elements/widgets/img-layout/pxl_counter/layout2.webp'
-                                ],
-                                '3' => [
-                                    'label' => esc_html__('Layout 3', 'frameflow'),
-                                    'image' => get_template_directory_uri() . '/elements/widgets/img-layout/pxl_counter/layout3.webp'
-                                ],
-                                '4' => [
-                                    'label' => esc_html__('Layout 4', 'frameflow'),
-                                    'image' => get_template_directory_uri() . '/elements/widgets/img-layout/pxl_counter/layout4.webp'
-                                ],
                             ],
                         ),
                     ),
@@ -55,16 +43,6 @@ pxl_add_custom_widget(
                             'title',
                             esc_html__('Title', 'frameflow'),
                             ['label_block' => true]
-                        ),
-                        frameflow_widget_textarea_control(
-                            'description',
-                            esc_html__('Description', 'frameflow'),
-                            [
-                                'default' => '',
-                                'condition' => [
-                                    'layout' => ['1', '4'],
-                                ],
-                            ]
                         ),
                         frameflow_widget_number_control(
                             'starting_number',
@@ -90,39 +68,6 @@ pxl_add_custom_widget(
                                 ' ' => 'Space',
                             ],
                             ['default' => '']
-                        ),
-                        frameflow_widget_select_control(
-                            'icon_type',
-                            esc_html__('Icon Type', 'frameflow'),
-                            [
-                                'icon' => 'Icon',
-                                'image' => 'Image',
-                            ],
-                            [
-                                'default' => 'icon',
-                                'condition' => [
-                                    'layout' => ['3'],
-                                ],
-                            ]
-                        ),
-                        frameflow_widget_icons_control(
-                            'pxl_icon',
-                            esc_html__('Icon', 'frameflow'),
-                            [
-                                'condition' => [
-                                    'icon_type' => ['icon'],
-                                ],
-                            ]
-                        ),
-                        frameflow_widget_media_control(
-                            'icon_image',
-                            esc_html__('Icon Image', 'frameflow'),
-                            [
-                                'description' => esc_html__('Select image icon.', 'frameflow'),
-                                'condition' => [
-                                    'icon_type' => ['image'],
-                                ],
-                            ]
                         ),
                     ),
                 ),

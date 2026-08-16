@@ -22,7 +22,4 @@ $animate_class = trim((!empty($settings['pxl_animate']) ? $settings['pxl_animate
     <?php if (!empty($settings['title'])) : ?>
         <h6 class="pxl-counter--title <?php echo esc_attr($settings['title_w']); ?> <?php echo esc_attr($settings['title_style_1']); ?>"><?php echo pxl_print_html($settings['title']); ?></h6>
     <?php endif; ?>
-    <?php if (!empty($settings['description'])) : ?>
-        <p class="pxl-counter--description"><?php echo pxl_print_html($settings['description']); ?></p>
-    <?php endif; ?>
 </div>
