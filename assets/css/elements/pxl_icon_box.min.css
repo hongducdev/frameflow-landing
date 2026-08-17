@@ -2907,7 +2907,7 @@ blockquote:not(.pxl-blockquote).wp-block-quote.has-text-align-right cite {
   border-radius: 0;
 }
 
-.pxl-iflex-center, .pxl-contact.style-4 .pxl-item--header, .pxl-contact.style-4 .pxl-item--icon, .pxl-contact.style-3 .pxl-item--link a, .pxl-contact.style-3 .pxl-item--link, .pxl-contact.style-3 .pxl-item--icon, .pxl-contact.style-2 .pxl-item--icon, .pxl-contact.style-2, .pxl-contact.style-1 .pxl-item--icon, .pxl-icon-box-carousel1 .pxl-item--icon, .pxl-icon-box1 .pxl-item--icon, .pxl-swiper-arrow-wrap.style-1 .pxl-swiper-arrow, .pxl-swiper-arrow-wrap.style-2 .pxl-swiper-arrow, .pxl-swiper-arrow-wrap.style-4 .pxl-swiper-arrow, .pxl-swiper-arrow-wrap.style-5 .pxl-swiper-arrow, .pxl-swiper-arrow-wrap.style-7 .pxl-swiper-arrow {
+.pxl-iflex-center, .pxl-contact.style-4 .pxl-item--header, .pxl-contact.style-4 .pxl-item--icon, .pxl-contact.style-3 .pxl-item--link a, .pxl-contact.style-3 .pxl-item--link, .pxl-contact.style-3 .pxl-item--icon, .pxl-contact.style-2 .pxl-item--icon, .pxl-contact.style-2, .pxl-contact.style-1 .pxl-item--icon, .pxl-icon-box-carousel1 .pxl-item--icon, .pxl-icon-box2 .pxl-item--icon, .pxl-icon-box1 .pxl-item--icon, .pxl-swiper-arrow-wrap.style-1 .pxl-swiper-arrow, .pxl-swiper-arrow-wrap.style-2 .pxl-swiper-arrow, .pxl-swiper-arrow-wrap.style-4 .pxl-swiper-arrow, .pxl-swiper-arrow-wrap.style-5 .pxl-swiper-arrow, .pxl-swiper-arrow-wrap.style-7 .pxl-swiper-arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3644,6 +3644,25 @@ Case Iconbox Styles
 }
 .pxl-icon-box1 .pxl-item--description {
   color: #565656;
+}
+
+.pxl-icon-box2 {
+  --size-box-icon: 50px;
+  --size-icon: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+}
+.pxl-icon-box2 .pxl-item--icon {
+  width: var(--size-box-icon);
+  height: var(--size-box-icon);
+  border-radius: var(--size-box-icon);
+  overflow: hidden;
+  border: 1px solid #e4e4e4;
+}
+.pxl-icon-box2 .pxl-item--icon svg {
+  width: var(--size-icon);
+  height: var(--size-icon);
 }
 
 /*--------------------------------------------------

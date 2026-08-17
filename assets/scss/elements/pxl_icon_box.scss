@@ -66,6 +66,28 @@ Case Iconbox Styles
     }
 }
 
+.pxl-icon-box2 {
+    --size-box-icon: 50px;
+    --size-icon: 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    .pxl-item {
+        &--icon {
+            width: var(--size-box-icon);
+            height: var(--size-box-icon);
+            @extend .pxl-iflex-center;
+            @include border-radius(var(--size-box-icon));
+            overflow: hidden;
+            border: 1px solid #e4e4e4;
+            svg {
+                width: var(--size-icon);
+                height: var(--size-icon);
+            }
+        }
+    }
+}
+
 /*--------------------------------------------------
 Case Icon Box Carousel
 --------------------------------------------------*/
