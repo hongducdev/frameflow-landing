@@ -3694,6 +3694,29 @@ Case Counter Styles
   box-shadow: -2px -2px 9.5px 0 #fff inset;
 }
 
+.pxl-counter2 {
+  overflow: visible;
+}
+.pxl-counter2 .pxl-counter--holder,
+.pxl-counter2 .pxl-counter--number,
+.pxl-counter2 .pxl-counter--value {
+  overflow: visible;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: none;
+}
+.pxl-counter2 .pxl-counter--number {
+  flex-wrap: nowrap;
+}
+.pxl-counter2 .pxl-counter--value {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.elementor-widget-pxl_counter .elementor-widget-container {
+  overflow: visible;
+}
+
 @keyframes pxl-counter-ring {
   0% {
     transform: scale(var(--ring-scale));

@@ -147,6 +147,34 @@ Case Counter Styles
     }
 }
 
+// Layout 2 — no fixed circle; keep full number width when positioned absolute
+.pxl-counter2 {
+    overflow: visible;
+
+    .pxl-counter--holder,
+    .pxl-counter--number,
+    .pxl-counter--value {
+        overflow: visible;
+        width: max-content;
+        max-width: none;
+    }
+
+    .pxl-counter--number {
+        flex-wrap: nowrap;
+    }
+
+    .pxl-counter--value {
+        display: inline-block;
+        white-space: nowrap;
+    }
+}
+
+.elementor-widget-pxl_counter {
+    .elementor-widget-container {
+        overflow: visible;
+    }
+}
+
 @keyframes pxl-counter-ring {
     0% {
         transform: scale(var(--ring-scale));
