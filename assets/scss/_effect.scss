@@ -290,3 +290,28 @@ body.rtl {
 		}
 	}
 }
+
+/* jquery.ripples on Elementor container — canvas under content, not under overlay */
+.water-effect,
+.pxl-bg-water-effect {
+	position: relative;
+	z-index: 0;
+
+	> canvas {
+		z-index: 0 !important;
+		background: transparent !important;
+		pointer-events: none;
+	}
+
+	> .elementor-background-overlay {
+		z-index: 0;
+		pointer-events: none;
+	}
+
+	> .e-con-inner,
+	> .elementor-container,
+	> .elementor-widget-wrap {
+		position: relative;
+		z-index: 1;
+	}
+}

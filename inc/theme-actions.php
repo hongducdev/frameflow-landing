@@ -233,6 +233,15 @@ function frameflow_scripts()
         true,
     );
 
+    /* jquery.ripples — always available for water-effect containers */
+    wp_enqueue_script(
+        'jquery-ripples',
+        get_template_directory_uri() . '/assets/js/libs/ripples.min.js',
+        ['jquery'],
+        '0.5.3',
+        true,
+    );
+
     /* Woocommerce JS — split by context; enqueue .min.js from Mix */
     if (class_exists('WooCommerce') && function_exists('is_woocommerce')) {
         $is_wc =
@@ -386,7 +395,7 @@ function frameflow_scripts()
     wp_enqueue_script(
         'pxl-main',
         get_template_directory_uri() . '/assets/js/theme.min.js',
-        ['jquery'],
+        ['jquery', 'jquery-ripples'],
         $frameflow_version->get('Version'),
         true,
     );

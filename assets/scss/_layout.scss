@@ -1949,6 +1949,7 @@ body:not(.elementor-editor-active) .pxl-section-parallax-overflow {
     &.is-loaded {
         opacity: 0;
         visibility: hidden;
+        pointer-events: none;
     }
 
     .loader-circle {

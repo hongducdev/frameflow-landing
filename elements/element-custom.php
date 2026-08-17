@@ -177,6 +177,76 @@ class Hub_Elementor_Custom_Controls
                 );
 
                 $element->add_control(
+                    'pxl_container_animation_background',
+                    [
+                        'label' => esc_html__('Animation Cursor Background', 'frameflow'),
+                        'type' => \Elementor\Controls_Manager::SELECT,
+                        'options' => [
+                            'none' => esc_html__('None', 'frameflow'),
+                            'water-effect' => esc_html__('Water Effect', 'frameflow'),
+                        ],
+                        'default' => 'none',
+                        'prefix_class' => 'pxl-bg-',
+                    ]
+                );
+
+                $element->add_control(
+                    'pxl_water_resolution',
+                    [
+                        'label' => esc_html__('Water Resolution', 'frameflow'),
+                        'type' => \Elementor\Controls_Manager::NUMBER,
+                        'default' => 512,
+                        'min' => 128,
+                        'max' => 1024,
+                        'step' => 128,
+                        'condition' => [
+                            'pxl_container_animation_background' => 'water-effect',
+                        ],
+                    ]
+                );
+
+                $element->add_control(
+                    'pxl_water_drop_radius',
+                    [
+                        'label' => esc_html__('Water Drop Radius', 'frameflow'),
+                        'type' => \Elementor\Controls_Manager::NUMBER,
+                        'default' => 20,
+                        'min' => 1,
+                        'max' => 100,
+                        'condition' => [
+                            'pxl_container_animation_background' => 'water-effect',
+                        ],
+                    ]
+                );
+
+                $element->add_control(
+                    'pxl_water_perturbance',
+                    [
+                        'label' => esc_html__('Water Perturbance', 'frameflow'),
+                        'type' => \Elementor\Controls_Manager::NUMBER,
+                        'default' => 0.04,
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.01,
+                        'condition' => [
+                            'pxl_container_animation_background' => 'water-effect',
+                        ],
+                    ]
+                );
+
+                $element->add_control(
+                    'pxl_water_interactive',
+                    [
+                        'label' => esc_html__('Water Interactive', 'frameflow'),
+                        'type' => \Elementor\Controls_Manager::SWITCHER,
+                        'default' => 'yes',
+                        'condition' => [
+                            'pxl_container_animation_background' => 'water-effect',
+                        ],
+                    ]
+                );
+
+                $element->add_control(
                     'pxl_parallax_bg_img',
                     [
                         'label' => esc_html__('Parallax Background Image', 'frameflow'),
@@ -1548,6 +1618,34 @@ class Hub_Elementor_Custom_Controls
         }
         if ($element->get_settings('pxl_section_border_animated') && $element->get_settings('pxl_section_border_animated') === 'yes') {
             $element->add_render_attribute('_wrapper', 'class', 'pxl-border-section-anm');
+        }
+
+        if (
+            $element->get_name() === 'container' &&
+            $element->get_settings('pxl_container_animation_background') === 'water-effect'
+        ) {
+            $resolution = (int) $element->get_settings('pxl_water_resolution');
+            $drop_radius = (float) $element->get_settings('pxl_water_drop_radius');
+            $perturbance = (float) $element->get_settings('pxl_water_perturbance');
+            $interactive = $element->get_settings('pxl_water_interactive') === 'yes' ? 'true' : 'false';
+
+            if ($resolution < 128) {
+                $resolution = 512;
+            }
+            if ($drop_radius <= 0) {
+                $drop_radius = 20;
+            }
+            if ($perturbance < 0) {
+                $perturbance = 0.04;
+            }
+
+            $element->add_render_attribute('_wrapper', 'class', 'water-effect');
+            $element->add_render_attribute('_wrapper', [
+                'data-resolution' => $resolution,
+                'data-drop-radius' => $drop_radius,
+                'data-perturbance' => $perturbance,
+                'data-interactive' => $interactive,
+            ]);
         }
 
         if ($element->get_name() === 'container' && function_exists('frameflow_elementor_apply_animation_attributes')) {

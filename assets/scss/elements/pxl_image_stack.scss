@@ -1,0 +1,66 @@
+@import "../shared";
+/*--------------------------------------------------
+Case Image Stack — shuffle stack
+--------------------------------------------------*/
+.elementor-widget-pxl_image_stack {
+    overflow: visible;
+
+    .elementor-widget-container {
+        overflow: visible;
+    }
+}
+
+.pxl-image-stack {
+    --pxl-stack-visible: 3;
+    --pxl-stack-height: 420px;
+    --pxl-stack-gap: 30px;
+    --pxl-stack-pad: 8px;
+
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    padding: 0;
+    padding-top: calc((var(--pxl-stack-visible) - 1) * var(--pxl-stack-gap));
+    margin: 0;
+
+    &__stage {
+        position: relative;
+        width: 100%;
+        height: var(--pxl-stack-height);
+    }
+
+    &__card {
+        position: absolute;
+        inset: 0;
+        box-sizing: border-box;
+        padding: var(--pxl-stack-pad);
+        border: 1px solid rgba(#fff, 0.25);
+        border-radius: 12px;
+        background: rgba(#fff, 0.28);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 16px 40px rgba(#111, 0.14);
+        transform-origin: 50% 50%;
+        will-change: transform, opacity;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    &__media {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 8px;
+        background: #fff;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            pointer-events: none;
+        }
+    }
+}
