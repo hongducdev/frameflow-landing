@@ -5,6 +5,7 @@
 	}
 	$plugin_page_url = admin_url( 'admin.php?page=pxlart-plugins' );
 	$import_demos_page_url = admin_url( 'admin.php?page=pxlart-import-demos' );
+	$widget_usage_page_url = admin_url( 'admin.php?page=pxlart-widget-usage' );
 
 	$pxl_server_info = apply_filters( 'pxl_server_info', 
 		[
@@ -36,6 +37,11 @@
 			<li class="<?php echo ( isset( $_GET['page'] ) && 'pxlart-import-demos' === sanitize_text_field($_GET['page']) ) ? 'is-active' : ''; ?>">
 				<a href="<?php echo esc_url($import_demos_page_url); ?>">
 					<span><?php esc_html_e( 'Import Demo', 'frameflow' ); ?></span>
+				</a>
+			</li>
+			<li class="<?php echo ( isset( $_GET['page'] ) && 'pxlart-widget-usage' === sanitize_text_field($_GET['page']) ) ? 'is-active' : ''; ?>">
+				<a href="<?php echo esc_url($widget_usage_page_url); ?>">
+					<span><?php esc_html_e( 'Widget Usage', 'frameflow' ); ?></span>
 				</a>
 			</li>
 		</ul>

@@ -33,6 +33,7 @@ class Frameflow_Admin extends Frameflow_Base
 		require_once get_template_directory() . '/inc/admin/admin-dashboard.php';
 		require_once get_template_directory() . '/inc/admin/admin-plugins.php';
 		require_once get_template_directory() . '/inc/admin/admin-import.php';
+		require_once get_template_directory() . '/inc/admin/admin-widget-usage.php';
 		if (class_exists('Pxltheme_Core'))
 			require_once get_template_directory() . '/inc/admin/admin-templates.php';
 	}

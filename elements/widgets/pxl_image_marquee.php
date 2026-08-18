@@ -71,14 +71,14 @@ pxl_add_custom_widget(
                     "controls" => [
                         [
                             "name" => "image_size",
-                            "label" => esc_html__("Image Size", "frameflow"),
+                            "label" => esc_html__("Image Width", "frameflow"),
                             "type" => \Elementor\Controls_Manager::SLIDER,
                             "control_type" => "responsive",
                             "size_units" => ["px"],
                             "range" => [
                                 "px" => [
                                     "min" => 80,
-                                    "max" => 600,
+                                    "max" => 1200,
                                 ],
                             ],
                             "default" => [
@@ -87,7 +87,28 @@ pxl_add_custom_widget(
                             ],
                             "selectors" => [
                                 "{{WRAPPER}} .pxl-image-marquee__item" =>
-                                    "width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};",
+                                    "width: {{SIZE}}{{UNIT}};",
+                            ],
+                        ],
+                        [
+                            "name" => "image_height",
+                            "label" => esc_html__("Image Height", "frameflow"),
+                            "type" => \Elementor\Controls_Manager::SLIDER,
+                            "control_type" => "responsive",
+                            "size_units" => ["px"],
+                            "range" => [
+                                "px" => [
+                                    "min" => 80,
+                                    "max" => 1200,
+                                ],
+                            ],
+                            "default" => [
+                                "size" => 445,
+                                "unit" => "px",
+                            ],
+                            "selectors" => [
+                                "{{WRAPPER}} .pxl-image-marquee__item" =>
+                                    "height: {{SIZE}}{{UNIT}};",
                             ],
                         ],
                         [
@@ -114,9 +135,45 @@ pxl_add_custom_widget(
                             "image_border_radius",
                             esc_html__("Border Radius", "frameflow"),
                             [
-                                "{{WRAPPER}} .pxl-image-marquee__item img" =>
+                                "{{WRAPPER}} .pxl-image-marquee__item, {{WRAPPER}} .pxl-image-marquee__item img" =>
                                     "border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};",
                             ],
+                        ),
+                        frameflow_widget_select_control(
+                            "image_border_type",
+                            esc_html__("Border Type", "frameflow"),
+                            [
+                                "" => esc_html__("None", "frameflow"),
+                                "solid" => esc_html__("Solid", "frameflow"),
+                                "double" => esc_html__("Double", "frameflow"),
+                                "dotted" => esc_html__("Dotted", "frameflow"),
+                                "dashed" => esc_html__("Dashed", "frameflow"),
+                                "groove" => esc_html__("Groove", "frameflow"),
+                            ],
+                            [
+                                "selectors" => [
+                                    "{{WRAPPER}} .pxl-image-marquee__item" =>
+                                        "border-style: {{VALUE}};",
+                                ],
+                            ],
+                        ),
+                        frameflow_widget_dimensions_control(
+                            "image_border_width",
+                            esc_html__("Border Width", "frameflow"),
+                            [
+                                "{{WRAPPER}} .pxl-image-marquee__item" =>
+                                    "border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};",
+                            ],
+                            ["condition" => ["image_border_type!" => ""]],
+                        ),
+                        frameflow_widget_color_control(
+                            "image_border_color",
+                            esc_html__("Border Color", "frameflow"),
+                            [
+                                "{{WRAPPER}} .pxl-image-marquee__item" =>
+                                    "border-color: {{VALUE}};",
+                            ],
+                            ["condition" => ["image_border_type!" => ""]],
                         ),
                         [
                             "name" => "show_edge_fade",
