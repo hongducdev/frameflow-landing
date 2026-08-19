@@ -1,0 +1,189 @@
+@import "../shared";
+/*--------------------------------------------------
+Case Line Styles
+Figma: 3740:1050 (dot), 3859:889 (beam)
+--------------------------------------------------*/
+
+.elementor-widget-pxl_line,
+.elementor-widget-pxl_line > .elementor-widget-container {
+    overflow: visible;
+}
+
+.elementor-widget-pxl_line.pxl-line-fill-height-yes {
+    align-self: stretch;
+    flex-grow: 1;
+    height: 100%;
+    min-height: 0;
+
+    > .elementor-widget-container {
+        height: 100%;
+        min-height: inherit;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pxl-line {
+        flex: 1 1 auto;
+        min-height: 1px;
+        height: 100%;
+    }
+}
+
+// ponytail: grid rows collapse when items have no content; :has() keeps scope narrow.
+.e-con.e-grid:has(> .e-con-inner > .elementor-widget-pxl_line.pxl-line-fill-height-yes) {
+    > .e-con-inner {
+        min-height: 100%;
+        height: 100%;
+    }
+
+    > .e-con-inner > .elementor-widget-pxl_line.pxl-line-fill-height-yes {
+        align-self: stretch;
+        min-height: 100%;
+    }
+}
+
+.pxl-line {
+    --line-color: #e4e4e4;
+    --line-thickness: 1px;
+    --line-duration: 4s;
+    --line-marker-color: #111111;
+    --line-marker-size: 5px;
+    --line-marker-width: 3px;
+    --line-marker-length: 77px;
+    --line-marker-fade-range: 15%;
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+
+    &__track {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: var(--line-thickness);
+        transform: translateX(-50%);
+        background-color: var(--line-color);
+    }
+
+    &__marker-wrap {
+        position: absolute;
+        inset: 0;
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    &__marker {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        z-index: 1;
+        animation: pxl-line-travel-down var(--line-duration) linear infinite;
+    }
+
+    &--dot &__marker-wrap {
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            #000 var(--line-marker-fade-range),
+            #000 calc(100% - var(--line-marker-fade-range)),
+            transparent 100%
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            #000 var(--line-marker-fade-range),
+            #000 calc(100% - var(--line-marker-fade-range)),
+            transparent 100%
+        );
+    }
+
+    &--dot &__marker {
+        width: var(--line-marker-size);
+        height: var(--line-marker-size);
+        border-radius: 50%;
+        background-color: var(--line-marker-color);
+    }
+
+    &--beam {
+        --line-color: rgba(255, 255, 255, 0.07);
+        --line-marker-color: #ffffff;
+    }
+
+    &--beam &__marker {
+        width: var(--line-marker-width);
+        height: var(--line-marker-length);
+        border-radius: 0 0 2px 2px;
+        clip-path: polygon(28% 0, 72% 0, 100% 100%, 0 100%);
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            color-mix(in srgb, var(--line-marker-color) 37%, transparent) 63.8%,
+            var(--line-marker-color)
+        );
+    }
+}
+
+.elementor-widget-pxl_line.pxl-line-dir-up .pxl-line__marker {
+    animation-name: pxl-line-travel-up;
+}
+
+.elementor-widget-pxl_line.pxl-line-dir-down .pxl-line__marker {
+    animation-name: pxl-line-travel-down;
+}
+
+.elementor-widget-pxl_line.pxl-line-dot-fade-no .pxl-line--dot .pxl-line__marker-wrap {
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+.elementor-widget-pxl_line.pxl-line-dir-up.pxl-line-dot-fade-yes .pxl-line--dot .pxl-line__marker-wrap {
+    -webkit-mask-image: linear-gradient(
+        to top,
+        transparent 0%,
+        #000 var(--line-marker-fade-range),
+        #000 calc(100% - var(--line-marker-fade-range)),
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to top,
+        transparent 0%,
+        #000 var(--line-marker-fade-range),
+        #000 calc(100% - var(--line-marker-fade-range)),
+        transparent 100%
+    );
+}
+
+@keyframes pxl-line-travel-down {
+    from {
+        top: 0;
+        transform: translate(-50%, -100%);
+    }
+
+    to {
+        top: 100%;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes pxl-line-travel-up {
+    from {
+        top: 100%;
+        transform: translate(-50%, 0);
+    }
+
+    to {
+        top: 0;
+        transform: translate(-50%, -100%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pxl-line__marker {
+        animation: none;
+        top: 30%;
+        transform: translate(-50%, 0);
+    }
+}
