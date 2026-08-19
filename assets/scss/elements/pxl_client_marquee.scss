@@ -6,7 +6,7 @@ Case Client Marquee Styles
     overflow: hidden;
     width: 100%;
     --gradient-color-1: rgba(217, 217, 217, 0);
-    --gradient-color-2: #F6F6F6;
+    --gradient-color-2: #f6f6f6;
     --size-gradient: 30%;
     --size-item: 100px;
 
@@ -15,24 +15,34 @@ Case Client Marquee Styles
             width: 100%;
             position: relative;
             &:before {
-                content: '';
+                content: "";
                 position: absolute;
                 top: 0;
                 left: 0;
                 height: 100%;
-                width: 30%;
-                background: linear-gradient(to right, var(--gradient-color-2) 0%, var(--gradient-color-1) 100%);
+                width: var(--size-gradient);
+                background: linear-gradient(
+                    to right,
+                    var(--gradient-color-2) 0%,
+                    var(--gradient-color-1) 100%
+                );
                 z-index: 10;
+                pointer-events: none;
             }
             &:after {
-                content: '';
+                content: "";
                 position: absolute;
                 top: 0;
                 right: 0;
                 height: 100%;
-                width: 30%;
-                background: linear-gradient(to left, var(--gradient-color-2) 0%, var(--gradient-color-1) 100%);
+                width: var(--size-gradient);
+                background: linear-gradient(
+                    to left,
+                    var(--gradient-color-2) 0%,
+                    var(--gradient-color-1) 100%
+                );
                 z-index: 10;
+                pointer-events: none;
             }
         }
         &--track {
@@ -56,6 +66,7 @@ Case Client Marquee Styles
             background-color: #fff;
             border: 1px solid rgba(#111, 0.13);
             @include border-radius(20px);
+            @include transition(all 0.3s linear 0s);
         }
         &--logo {
             display: inline-flex;
@@ -74,6 +85,67 @@ Case Client Marquee Styles
         &--name {
             font-size: 14px;
             color: #000;
+        }
+    }
+
+    // Figma 3776:681 normal / 3776:674 hover
+    &.style-2 {
+        .pxl-item--inner {
+            flex-direction: row;
+            width: auto;
+            height: auto;
+            padding: 17px 25px;
+            gap: 11px;
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 0;
+            border-radius: 8px;
+        }
+
+        .pxl-item--logo {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+            color: inherit;
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                height: var(--pxl-logo-h, 28px);
+                filter: brightness(0) invert(1);
+                @include transition(all 0.3s linear 0s);
+            }
+
+            svg,
+            i {
+                width: 28px;
+                height: 28px;
+                font-size: 28px;
+                color: inherit;
+                fill: currentColor;
+            }
+
+            svg path {
+                fill: currentColor;
+            }
+        }
+
+        .pxl-item--name {
+            font-family: "Inter", var(--body-font, sans-serif);
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1;
+            color: inherit;
+            white-space: nowrap;
+        }
+
+        .pxl-item:hover .pxl-item--inner {
+            color: #111;
+            background-color: #fff;
+        }
+
+        .pxl-item:hover .pxl-item--logo img {
+            filter: brightness(0);
         }
     }
 }
