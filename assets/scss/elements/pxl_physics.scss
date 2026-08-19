@@ -11,9 +11,10 @@
         position: relative;
         overflow: hidden;
         box-sizing: border-box;
-        height: clamp(52px, 4vw, 83px);
-        padding: 0 clamp(16px, 4vw, 75px);
-        border-radius: clamp(32px, 4vw, 83px);
+        min-height: 49px;
+        padding: 12px 25px;
+        gap: 10px;
+        border-radius: 38px;
         margin-bottom: 0;
 
         &.pxl-throwable-bg--primary {
@@ -25,15 +26,26 @@
         }
 
         .pxl-icon {
-            width: 28px;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
         }
 
         svg {
-            height: 28px;
+            width: 22px;
+            height: 22px;
 
             path {
                 fill: #fff;
             }
         }
+    }
+
+    .pxl-throwable-label {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 25px;
+        white-space: nowrap;
     }
 }

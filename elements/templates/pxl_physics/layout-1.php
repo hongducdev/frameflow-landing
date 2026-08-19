@@ -1,5 +1,5 @@
 <?php
-$allowed_bg = [ 'primary', 'secondary' ];
+$allowed_bg = ['primary', 'secondary'];
 
 $raw_rows = isset($settings['texts']) && is_array($settings['texts']) ? $settings['texts'] : [];
 $display_rows = [];
@@ -16,27 +16,56 @@ for ($i = 0; $i < $row_count; $i++) {
 }
 
 $list_icon = [];
-$list_bg_class = [];
+$list_labels = [];
+$list_bgs = [];
 
-if (!empty($text_rows)) :
+if (!empty($text_rows)):
+
     foreach ($text_rows as $value) {
         if (!is_array($value)) {
             $value = [];
         }
+
         $list_icon[] = $value['pxl_icon'] ?? '';
+        $list_labels[] = isset($value['text']) ? (string) $value['text'] : '';
+
+        $from = isset($value['gradient_from']) ? trim((string) $value['gradient_from']) : '';
+        $to = isset($value['gradient_to']) ? trim((string) $value['gradient_to']) : '';
+        $type = isset($value['background_type']) ? (string) $value['background_type'] : '';
+        if ($type === '') {
+            $type = $from !== '' || $to !== '' ? 'gradient' : 'theme';
+        }
+
+        if ($type === 'gradient') {
+            $list_bgs[] = [
+                'type' => 'gradient',
+                'from' => $from,
+                'to' => $to !== '' ? $to : $from,
+            ];
+            continue;
+        }
+
         $slug = isset($value['background_color']) ? (string) $value['background_color'] : 'primary';
         $slug = trim($slug);
         if (!in_array($slug, $allowed_bg, true)) {
             $slug = 'primary';
         }
-        $list_bg_class[] = $slug;
+        $list_bgs[] = [
+            'type' => 'theme',
+            'slug' => $slug,
+        ];
     }
     $widget->add_render_attribute('lists_text', [
         'class' => 'pxl-physics pxl-physics-item',
         'data-icons' => wp_json_encode($list_icon, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-        'data-bg-classes' => wp_json_encode($list_bg_class, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+        'data-labels' => wp_json_encode(
+            $list_labels,
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES,
+        ),
+        'data-bgs' => wp_json_encode($list_bgs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
     ]);
     ?>
     <div <?php pxl_print_html($widget->get_render_attribute_string('lists_text')); ?>>
     </div>
-<?php endif; ?>
+<?php
+endif; ?>
