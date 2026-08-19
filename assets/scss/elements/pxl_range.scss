@@ -1,0 +1,149 @@
+@import "../shared";
+/*--------------------------------------------------
+Case Range Styles
+Figma: 6003:224
+--------------------------------------------------*/
+
+.elementor-widget-pxl_range,
+.elementor-widget-pxl_range > .elementor-widget-container {
+    overflow: visible;
+}
+
+.pxl-range {
+    --pxl-range-percent: 88%;
+    --pxl-range-duration: 1.2s;
+    --pxl-range-height: 21px;
+    --pxl-range-track: rgba(255, 255, 255, 0.05);
+    --pxl-range-track-border: rgba(255, 255, 255, 0.1);
+    --pxl-range-from: #50e787;
+    --pxl-range-to: #94fc72;
+    --pxl-range-thumb: #ffffff;
+    --pxl-range-thumb-size: 15px;
+    --pxl-range-thumb-dot: #111111;
+    --pxl-range-tooltip-bg: #ffffff;
+    --pxl-range-gap: 1px;
+
+    position: relative;
+    width: 100%;
+    overflow: visible;
+}
+
+.pxl-range__tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    top: auto;
+    left: calc(
+        var(--pxl-range-gap) +
+            max(
+                var(--pxl-range-thumb-size),
+                calc(var(--pxl-range-percent) - var(--pxl-range-gap) * 2)
+            ) - var(--pxl-range-thumb-size) /
+            2
+    );
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 81px;
+    height: 22px;
+    padding: 0 6px;
+    background: var(--pxl-range-tooltip-bg);
+    border-radius: 3px;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.pxl-range.is-complete .pxl-range__tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pxl-range__label {
+    font-family: "Inter", var(--body-font, sans-serif);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    color: #000;
+    white-space: nowrap;
+}
+
+.pxl-range__caret {
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    width: 11px;
+    height: 7px;
+    background: var(--pxl-range-tooltip-bg);
+    transform: translateX(-50%);
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
+
+.pxl-range__bar {
+    position: relative;
+    width: 100%;
+    height: var(--pxl-range-height);
+    overflow: visible;
+    background: var(--pxl-range-track);
+    border: 1px solid var(--pxl-range-track-border);
+    border-radius: 22px;
+    box-sizing: border-box;
+}
+
+.pxl-range__fill {
+    position: absolute;
+    top: var(--pxl-range-gap);
+    right: auto;
+    bottom: var(--pxl-range-gap);
+    left: var(--pxl-range-gap);
+    z-index: 0;
+    width: var(--pxl-range-thumb-size);
+    height: auto;
+    overflow: visible;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--pxl-range-from) 0%, var(--pxl-range-to) 100%);
+    box-shadow: 0 10px 14px -6px var(--pxl-range-from);
+    transition: width var(--pxl-range-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pxl-range.is-animated .pxl-range__fill {
+    width: max(
+        var(--pxl-range-thumb-size),
+        calc(var(--pxl-range-percent) - var(--pxl-range-gap) * 2)
+    );
+}
+
+.pxl-range__thumb {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: var(--pxl-range-thumb-size);
+    height: var(--pxl-range-thumb-size);
+    padding: var(--pxl-range-gap);
+    background: var(--pxl-range-thumb);
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.pxl-range__thumb-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--pxl-range-thumb-dot);
+    border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pxl-range__fill,
+    .pxl-range__tooltip {
+        transition: none;
+    }
+}

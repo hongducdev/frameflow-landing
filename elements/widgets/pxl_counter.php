@@ -34,6 +34,10 @@ pxl_add_custom_widget(
                                     'label' => esc_html__('Layout 2', 'frameflow'),
                                     'image' => get_template_directory_uri() . '/elements/widgets/img-layout/pxl_counter/layout2.webp'
                                 ],
+                                '3' => [
+                                    'label' => esc_html__('Layout 3', 'frameflow'),
+                                    'image' => get_template_directory_uri() . '/elements/widgets/img-layout/pxl_counter/layout3.webp'
+                                ],
                             ],
                         ),
                     ),
@@ -115,6 +119,7 @@ pxl_add_custom_widget(
                             ],
                             'selectors' => [
                                 '{{WRAPPER}} .pxl-counter .pxl-counter--number' => 'justify-content: {{VALUE}};',
+                                '{{WRAPPER}} .pxl-counter3' => 'align-items: {{VALUE}};',
                                 '{{WRAPPER}} .pxl-counter .pxl-counter--inner .pxl-counter--title,{{WRAPPER}} .pxl-counter' => 'text-align: {{VALUE}};',
                             ],
                         ),

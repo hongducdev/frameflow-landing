@@ -94,6 +94,7 @@ const jsFiles = [
     "elements/widgets/js/phsics.js",
     "elements/widgets/js/pie-chart.js",
     "elements/widgets/js/process.js",
+    "elements/widgets/js/range.js",
     "elements/widgets/js/pxl-countdown.js",
     "elements/widgets/js/tabs.js",
     "elements/widgets/js/text-box-grid.js",

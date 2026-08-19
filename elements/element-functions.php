@@ -38,6 +38,7 @@ if (!function_exists('frameflow_register_element_scripts')) {
         wp_register_script('pxl-swiper', get_template_directory_uri() . '/elements/widgets/js/carousel.min.js', ['jquery', 'pxl-carousel-helpers'], $theme->get('Version'), true);
         wp_register_script('frameflow-image', get_template_directory_uri() . '/elements/widgets/js/image.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('frameflow-counter', get_template_directory_uri() . '/elements/widgets/js/counter.min.js', ['jquery'], $theme->get('Version'), true);
+        wp_register_script('frameflow-range', get_template_directory_uri() . '/elements/widgets/js/range.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('frameflow-accordion', get_template_directory_uri() . '/elements/widgets/js/accordion.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('frameflow-tabs', get_template_directory_uri() . '/elements/widgets/js/tabs.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('frameflow-client-marquee', get_template_directory_uri() . '/elements/widgets/js/client-marquee.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);

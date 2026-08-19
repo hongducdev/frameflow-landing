@@ -119,7 +119,7 @@ Case Counter Styles
 
 .pxl-counter1 {
     --size: 105px;
-    --ring-color: rgba(17, 17, 17, 0.10);
+    --ring-color: rgba(17, 17, 17, 0.1);
     --ring-opacity: 0.55;
     --ring-scale: 1;
     --ring-scale-end: 1.25;
@@ -166,6 +166,67 @@ Case Counter Styles
     .pxl-counter--value {
         display: inline-block;
         white-space: nowrap;
+    }
+}
+
+// Layout 3 — Figma 3776:605: title above fading number, smaller top-aligned suffix
+.pxl-counter3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: visible;
+
+    .pxl-counter--title {
+        margin: 0;
+        font-family: "Inter", var(--body-font, sans-serif);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .pxl-counter--holder,
+    .pxl-counter--number,
+    .pxl-counter--value {
+        overflow: visible;
+        width: max-content;
+        max-width: none;
+    }
+
+    .pxl-counter--number {
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        font-family: "Inter", var(--body-font, sans-serif);
+        font-size: 55px;
+        font-weight: 400;
+        line-height: 0.73;
+        background-image: linear-gradient(
+            180deg,
+            #ffffff 0%,
+            rgba(188, 188, 188, 0.7) 65.33%,
+            rgba(153, 153, 153, 0) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .pxl-counter--prefix,
+    .pxl-counter--value {
+        display: inline-block;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+        -webkit-text-fill-color: inherit;
+        white-space: nowrap;
+    }
+
+    .pxl-counter--suffix {
+        font-size: 0.645em;
+        line-height: inherit;
+        color: inherit;
+        -webkit-text-fill-color: inherit;
     }
 }
 
