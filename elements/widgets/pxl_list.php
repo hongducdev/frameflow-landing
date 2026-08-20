@@ -215,7 +215,7 @@ pxl_add_custom_widget(
                         frameflow_widget_typography_control(
                             'content_typography',
                             esc_html__('Content Typography', 'frameflow'),
-                            '{{WRAPPER}} .pxl-list .pxl-item--content-text',
+                            '{{WRAPPER}} .pxl-list .pxl-item--content-text, {{WRAPPER}} .pxl-list .pxl-item--content',
                         ),
                         frameflow_widget_typography_control(
                             'content_typography_strong',

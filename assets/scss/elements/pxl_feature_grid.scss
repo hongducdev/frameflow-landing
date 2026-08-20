@@ -1,0 +1,157 @@
+@import "../shared";
+/*--------------------------------------------------
+Case Feature Grid Styles — Figma 3817:280
+--------------------------------------------------*/
+
+.pxl-feature-grid1 {
+    --pxl-col-xs: 1;
+    --pxl-col-sm: 1;
+    --pxl-col-md: 2;
+    --pxl-col-lg: 3;
+    --pxl-col-xl: 3;
+    --pxl-col-xxl: 3;
+    --pxl-grid-gap: 30px;
+    --pxl-connector-color: #fff;
+    --size-icon-box: 97px;
+    --size-icon: 45px;
+    display: grid;
+    grid-template-columns: repeat(var(--pxl-col-xxl), minmax(0, 1fr));
+    gap: var(--pxl-grid-gap);
+
+    @media #{$max-xxl} {
+        grid-template-columns: repeat(var(--pxl-col-xl), minmax(0, 1fr));
+    }
+
+    @media #{$max-xl} {
+        grid-template-columns: repeat(var(--pxl-col-lg), minmax(0, 1fr));
+    }
+
+    @media #{$max-md2} {
+        grid-template-columns: repeat(var(--pxl-col-md), minmax(0, 1fr));
+    }
+
+    @media #{$max-md} {
+        grid-template-columns: repeat(var(--pxl-col-sm), minmax(0, 1fr));
+    }
+
+    @media #{$max-xs} {
+        grid-template-columns: repeat(var(--pxl-col-xs), minmax(0, 1fr));
+    }
+
+    .pxl-item {
+        &--inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        &--header {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 28px;
+
+            &:before,
+            &:after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: calc(50% - calc(var(--size-icon-box) / 2) - 32px);
+                height: 1px;
+                display: none;
+                pointer-events: none;
+
+                @media #{$max-md} {
+                    display: none !important;
+                }
+            }
+
+            &:before {
+                left: 0;
+                background: linear-gradient(
+                    to right,
+                    var(--pxl-connector-color) 0%,
+                    rgba(17, 17, 17, 0) 100%
+                );
+            }
+
+            &:after {
+                right: 0;
+                background: linear-gradient(
+                    to right,
+                    rgba(17, 17, 17, 0) 0%,
+                    var(--pxl-connector-color) 100%,
+                );
+            }
+
+            &.show-divider-left {
+                &:before {
+                    display: block;
+                }
+            }
+
+            &.show-divider-right {
+                &:after {
+                    display: block;
+                }
+            }
+        }
+
+        &--icon {
+            width: var(--size-icon-box);
+            height: var(--size-icon-box);
+            flex: 0 0 var(--size-icon-box);
+            @extend .pxl-iflex-center;
+            @include border-radius(50%);
+            background-color: #111;
+            color: #fff;
+            box-shadow: -2px 4px 7.3px 0 rgba(255, 255, 255, 0.61) inset;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+
+            svg {
+                width: var(--size-icon);
+                height: var(--size-icon);
+
+                path {
+                    fill: currentColor;
+                }
+            }
+
+            i {
+                font-size: var(--size-icon);
+                line-height: 1;
+            }
+        }
+
+        &--title {
+            margin: 0 auto 17px;
+            max-width: 254px;
+            color: #fff;
+            font-size: 21px;
+            font-weight: 600;
+            line-height: 1.48;
+        }
+
+        &--description {
+            margin: 0 auto;
+            max-width: 382px;
+            color: rgba(#fff, 0.8);
+            font-size: 15px;
+            line-height: 1.67;
+        }
+    }
+
+    &:not(.has-connector) {
+        .pxl-item--header {
+            &:before,
+            &:after {
+                display: none !important;
+            }
+        }
+    }
+}
