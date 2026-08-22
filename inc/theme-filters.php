@@ -67,6 +67,11 @@ function frameflow_body_classes($classes)
 			$classes[] = $body_custom_class;
 		}
 	}
+
+	if (function_exists('frameflow_is_site_loader_active') && frameflow_is_site_loader_active()) {
+		$classes[] = 'pxl-is-loading';
+	}
+
 	return $classes;
 }
 add_filter('body_class', 'frameflow_body_classes');

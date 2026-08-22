@@ -10,15 +10,38 @@
 
     // Already-loaded script URLs (avoid double-loading)
     var _loadedUrls = {};
-    // Already-injected CSS URLs
+    // CSS URL state: true = ready, "loading" = in flight
     var _loadedCss = {};
+    var _cssWaiters = {};
 
     /**
      * Dynamically inject a <script> tag and call `callback` when loaded.
      * If the script was already loaded, callback fires immediately.
      */
+    function filePart(url) {
+        return String(url || "").split("?")[0];
+    }
+
+    function scriptAlreadyOnPage(url) {
+        if (!url) {
+            return true;
+        }
+        if (_loadedUrls[url] || _loadedUrls[filePart(url)]) {
+            return true;
+        }
+        var file = filePart(url);
+        var nodes = document.querySelectorAll("script[src]");
+        for (var i = 0; i < nodes.length; i++) {
+            if (nodes[i].src && nodes[i].src.indexOf(file) !== -1) {
+                _loadedUrls[url] = true;
+                return true;
+            }
+        }
+        return false;
+    }
+
     function loadScript(url, callback) {
-        if (_loadedUrls[url]) {
+        if (scriptAlreadyOnPage(url)) {
             if (typeof callback === "function") callback();
             return;
         }
@@ -36,16 +59,93 @@
         document.body.appendChild(script);
     }
 
+    function flushCssWaiters(url) {
+        var waiters = _cssWaiters[url] || [];
+        delete _cssWaiters[url];
+        waiters.forEach(function (cb) {
+            if (typeof cb === "function") cb();
+        });
+    }
+
     /**
      * Dynamically inject a <link rel="stylesheet"> if not already injected.
+     * Calls `callback` after the stylesheet is applied (or immediately if already present).
      */
-    function loadCss(url) {
-        if (_loadedCss[url] || !url) return;
-        _loadedCss[url] = true;
+    function loadCss(url, callback) {
+        function done() {
+            if (typeof callback === "function") callback();
+        }
+
+        if (!url) {
+            done();
+            return;
+        }
+
+        if (_loadedCss[url] === true) {
+            done();
+            return;
+        }
+
+        if (_loadedCss[url] === "loading") {
+            if (typeof callback === "function") {
+                _cssWaiters[url] = _cssWaiters[url] || [];
+                _cssWaiters[url].push(callback);
+            }
+            return;
+        }
+
+        var file = filePart(url);
+        var links = document.querySelectorAll('link[rel="stylesheet"]');
+        for (var i = 0; i < links.length; i++) {
+            if (links[i].href && links[i].href.indexOf(file) !== -1) {
+                _loadedCss[url] = true;
+                done();
+                return;
+            }
+        }
+
+        _loadedCss[url] = "loading";
+        _cssWaiters[url] = typeof callback === "function" ? [callback] : [];
+
         var link = document.createElement("link");
+        var finished = false;
         link.rel = "stylesheet";
         link.href = url;
+        function finish() {
+            if (finished) {
+                return;
+            }
+            finished = true;
+            _loadedCss[url] = true;
+            flushCssWaiters(url);
+        }
+        link.onload = finish;
+        link.onerror = finish;
         document.head.appendChild(link);
+        if (link.sheet) {
+            finish();
+        }
+    }
+
+    function loadStylesheets(urls, done) {
+        urls = (urls || []).filter(Boolean);
+        if (!urls.length) {
+            if (typeof done === "function") done();
+            return;
+        }
+        var remaining = urls.length;
+        urls.forEach(function (url) {
+            loadCss(url, function () {
+                remaining--;
+                if (remaining === 0 && typeof done === "function") done();
+            });
+        });
+    }
+
+    function loadRuleAssets(rule, done) {
+        loadStylesheets(rule && rule.css, function () {
+            loadScripts(rule && rule.js, done);
+        });
     }
 
     /**
@@ -92,8 +192,16 @@
             js: [scripts.wow],
             once: true, // init once globally
             onLoaded: function () {
+                // wow.min.js already constructs and inits a global `wow` on load.
+                // A second WOW() re-hides boxes the first instance already revealed
+                // (visibility:hidden + animation-name:none), which cancels Case Animate.
+                if (window.wow && typeof window.wow.sync === "function") {
+                    window.wow.sync();
+                    return;
+                }
                 if (typeof WOW === "function") {
-                    new WOW({ animateClass: "animated", offset: 80 }).init();
+                    window.wow = new WOW({ animateClass: "animated", offset: 80 });
+                    window.wow.init();
                 }
             },
         });
@@ -218,6 +326,26 @@
     // rootMargin: pre-load 300px before the element enters viewport
     var OBSERVER_MARGIN = "300px";
 
+    window.frameflowOnPageReady =
+        window.frameflowOnPageReady ||
+        function (fn) {
+            if (typeof fn !== "function") {
+                return;
+            }
+            if (window.frameflowPageReady) {
+                fn();
+                return;
+            }
+            var loader = document.getElementById("pxl-loadding");
+            var loading = document.body && document.body.classList.contains("pxl-is-loading");
+            if ((!loader && !loading) || (loader && loader.classList.contains("is-loaded"))) {
+                window.frameflowPageReady = true;
+                fn();
+                return;
+            }
+            $(document).one("frameflow/loader/done", fn);
+        };
+
     function frameflowIsElementorContext() {
         if (document.body.classList.contains("elementor-editor-active")) {
             return true;
@@ -267,8 +395,7 @@
     if (frameflowIsElementorContext()) {
         // Load everything immediately in editor
         rules.forEach(function (rule) {
-            if (rule.css) rule.css.forEach(loadCss);
-            loadScripts(rule.js, function () {
+            loadRuleAssets(rule, function () {
                 if (typeof rule.onLoaded === "function") {
                     rule.onLoaded();
                 }
@@ -302,11 +429,8 @@
                     observer.disconnect();
                 }
 
-                // Load CSS first (non-blocking, fire and forget)
-                if (rule.css) rule.css.forEach(loadCss);
-
-                // Load JS then fire callback
-                loadScripts(rule.js, rule.onLoaded || function () {});
+                // Load CSS first so WOW can cache animation names, then JS.
+                loadRuleAssets(rule, rule.onLoaded || function () {});
             },
             { rootMargin: OBSERVER_MARGIN, threshold: 0 }
         );
@@ -316,19 +440,147 @@
         });
     }
 
-    // Kick off once DOM is ready
-    $(function () {
-        if (!("IntersectionObserver" in window)) {
-            // Fallback: load everything immediately on older browsers
-            rules.forEach(function (rule) {
-                if (rule.css) rule.css.forEach(loadCss);
-                loadScripts(rule.js, rule.onLoaded || function () {});
+    var _elementorFrontendReady = false;
+    var _origOn = null;
+    var _patchDepth = 0;
+
+    $(window).on("elementor/frontend/init", function () {
+        _elementorFrontendReady = true;
+    });
+
+    function patchedOn(types) {
+        var fn = arguments[arguments.length - 1];
+        if (
+            _elementorFrontendReady &&
+            this[0] === window &&
+            typeof types === "string" &&
+            types.indexOf("elementor/frontend/init") !== -1 &&
+            typeof fn === "function"
+        ) {
+            fn.call(window);
+            return this;
+        }
+        return _origOn.apply(this, arguments);
+    }
+
+    function withElementorInitPatch(run) {
+        _patchDepth++;
+        if (_patchDepth === 1) {
+            _origOn = $.fn.on;
+            $.fn.on = patchedOn;
+        }
+        run(function () {
+            _patchDepth--;
+            if (_patchDepth <= 0) {
+                _patchDepth = 0;
+                if (_origOn) {
+                    $.fn.on = _origOn;
+                }
+            }
+        });
+    }
+
+    function activateLazyWidget(el) {
+        if (!el || el.getAttribute("data-pxl-lazy-done") === "1") {
+            return;
+        }
+        el.setAttribute("data-pxl-lazy-done", "1");
+
+        var css = el.getAttribute("data-pxl-css");
+        var urls = [];
+        try {
+            urls = JSON.parse(el.getAttribute("data-pxl-js") || "[]") || [];
+        } catch (e) {
+            urls = [];
+        }
+        urls = urls.filter(Boolean);
+        var missing = urls.filter(function (url) {
+            return !scriptAlreadyOnPage(url);
+        });
+
+        function afterAssets() {
+            var needsReadyTrigger =
+                urls.length > 0 ||
+                !!el.querySelector(
+                    ".wow, .pxl-split-text, .TextOutlineAnimation, .text-scroll-reveal"
+                );
+            if (
+                needsReadyTrigger &&
+                window.elementorFrontend &&
+                elementorFrontend.elementsHandler &&
+                typeof elementorFrontend.elementsHandler.runReadyTrigger === "function"
+            ) {
+                elementorFrontend.elementsHandler.runReadyTrigger(el);
+            }
+            if (
+                window.ScrollTrigger &&
+                typeof ScrollTrigger.refresh === "function"
+            ) {
+                ScrollTrigger.refresh();
+            }
+            el.classList.add("pxl-lazy-widget--ready");
+        }
+
+        loadCss(css, function () {
+            if (!missing.length) {
+                afterAssets();
+                return;
+            }
+
+            withElementorInitPatch(function (done) {
+                loadScripts(missing, function () {
+                    afterAssets();
+                    done();
+                });
             });
+        });
+    }
+
+    function setupLazyWidgets() {
+        var widgets = document.querySelectorAll(".pxl-lazy-widget");
+        if (!widgets.length) {
             return;
         }
 
-        rules.forEach(function (rule) {
-            setupObserver(rule);
+        if (!("IntersectionObserver" in window)) {
+            widgets.forEach(activateLazyWidget);
+            return;
+        }
+
+        var observer = new IntersectionObserver(
+            function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+                    observer.unobserve(entry.target);
+                    activateLazyWidget(entry.target);
+                });
+            },
+            { rootMargin: OBSERVER_MARGIN, threshold: 0 }
+        );
+
+        widgets.forEach(function (el) {
+            observer.observe(el);
+        });
+    }
+
+    // Kick off once DOM is ready, but wait out the site loader so
+    // WOW/GSAP entrance effects do not finish behind the overlay.
+    $(function () {
+        window.frameflowOnPageReady(function () {
+            if (!("IntersectionObserver" in window)) {
+                rules.forEach(function (rule) {
+                    loadRuleAssets(rule, rule.onLoaded || function () {});
+                });
+                setupLazyWidgets();
+                return;
+            }
+
+            rules.forEach(function (rule) {
+                setupObserver(rule);
+            });
+            setupLazyWidgets();
         });
     });
 

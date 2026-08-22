@@ -1,13 +1,37 @@
 <?php
 
+if (!function_exists('frameflow_is_site_loader_active')) {
+    function frameflow_is_site_loader_active()
+    {
+        if (is_admin() || wp_doing_ajax()) {
+            return false;
+        }
+
+        if (isset($_GET['elementor-preview'])) {
+            return false;
+        }
+
+        if (!function_exists('frameflow')) {
+            return false;
+        }
+
+        $site_loader = frameflow()->get_opt('site_loader', false);
+        $loader_logo = frameflow()->get_opt('loader_logo');
+
+        return !empty($site_loader) && is_array($loader_logo) && !empty($loader_logo['url']);
+    }
+}
+
 if (!class_exists('Frameflow_Page')) {
 
     class Frameflow_Page
     {
         public function get_site_loader()
         {
+            if (!frameflow_is_site_loader_active()) {
+                return;
+            }
 
-            $site_loader = frameflow()->get_opt('site_loader', false);
             $loader_logo = frameflow()->get_opt('loader_logo');
             $loader_logo_height = frameflow()->get_opt('loader_logo_height', []);
             $loader_logo_height_style = '';
@@ -25,7 +49,7 @@ if (!class_exists('Frameflow_Page')) {
                 }
             }
 
-            if ($site_loader && !empty($loader_logo['url'])) { ?>
+            if (!empty($loader_logo['url'])) { ?>
                 <div id="pxl-loadding" class="pxl-loader">
                     <div class="loader-circle">
                         <div class="loader-line-mask">

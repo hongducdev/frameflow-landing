@@ -11,10 +11,50 @@
     var $pinSpacer = null
     var resizeTimeout = null
 
+    window.frameflowOnPageReady =
+        window.frameflowOnPageReady ||
+        function (fn) {
+            if (typeof fn !== "function") {
+                return
+            }
+            if (window.frameflowPageReady) {
+                fn()
+                return
+            }
+            var loader = document.getElementById("pxl-loadding")
+            var loading = document.body && document.body.classList.contains("pxl-is-loading")
+            if ((!loader && !loading) || (loader && loader.classList.contains("is-loaded"))) {
+                window.frameflowPageReady = true
+                fn()
+                return
+            }
+            $(document).one("frameflow/loader/done", fn)
+        }
+
+    function frameflowNotifyPageReady() {
+        if (window.frameflowPageReady) {
+            return
+        }
+        window.frameflowPageReady = true
+        if (document.body) {
+            document.body.classList.remove("pxl-is-loading")
+        }
+        $(document).trigger("frameflow/loader/done")
+        if (typeof gsap !== "undefined" && gsap.ticker && typeof gsap.ticker.wake === "function") {
+            gsap.ticker.wake()
+        }
+        if (window.ScrollTrigger && typeof ScrollTrigger.refresh === "function") {
+            ScrollTrigger.refresh()
+        }
+    }
+
+    function frameflowDismissLoader() {
+        $(".pxl-loader").addClass("is-loaded")
+        frameflowNotifyPageReady()
+    }
+
     $(window).on("load", function () {
-        setTimeout(function () {
-            $(".pxl-loader").addClass("is-loaded")
-        }, 60)
+        setTimeout(frameflowDismissLoader, 60)
         $(".pxl-swiper-slider, .pxl-header-mobile-elementor").css("opacity", "1")
         pxl_window_width = $(window).width()
         pxl_window_height = $(window).height()
@@ -45,7 +85,7 @@
         if (!e.originalEvent || !e.originalEvent.persisted) {
             return
         }
-        $(".pxl-loader").addClass("is-loaded")
+        frameflowDismissLoader()
         $(".water-effect, .pxl-bg-water-effect").each(function () {
             frameflowCleanupRipples($(this))
         })

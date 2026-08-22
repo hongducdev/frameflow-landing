@@ -2017,6 +2017,13 @@ body:not(.elementor-editor-active) .pxl-section-parallax-overflow {
     }
 }
 
+body.pxl-is-loading {
+    .wow,
+    .TextOutlineAnimation {
+        animation-play-state: paused !important;
+    }
+}
+
 .elementor > .pin-spacer {
     width: 100% !important;
 

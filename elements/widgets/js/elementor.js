@@ -7,6 +7,43 @@
         gsap.registerPlugin(ScrollTrigger, SplitText)
     }
 
+    window.frameflowOnPageReady =
+        window.frameflowOnPageReady ||
+        function (fn) {
+            if (typeof fn !== "function") {
+                return
+            }
+            if (window.frameflowPageReady) {
+                fn()
+                return
+            }
+            var loader = document.getElementById("pxl-loadding")
+            var loading = document.body && document.body.classList.contains("pxl-is-loading")
+            if ((!loader && !loading) || (loader && loader.classList.contains("is-loaded"))) {
+                window.frameflowPageReady = true
+                fn()
+                return
+            }
+            $(document).one("frameflow/loader/done", fn)
+        }
+
+    if (
+        typeof gsap !== "undefined" &&
+        gsap.ticker &&
+        document.body &&
+        document.body.classList.contains("pxl-is-loading")
+    ) {
+        gsap.ticker.sleep()
+        window.frameflowOnPageReady(function () {
+            if (gsap.ticker && typeof gsap.ticker.wake === "function") {
+                gsap.ticker.wake()
+            }
+            if (window.ScrollTrigger && typeof ScrollTrigger.refresh === "function") {
+                ScrollTrigger.refresh()
+            }
+        })
+    }
+
     const PXLDIV_MAX_DIST = 140
     const PXLDIV_PEAK = 0.75
     const PXLDIV_SPREAD_MIN = 170
@@ -2293,9 +2330,11 @@
     }
 
     $(document).ready(function () {
-        if (window.elementorFrontend && typeof elementorFrontend.waypoint === "function") {
-            frameflow_animation_handler()
-        }
+        window.frameflowOnPageReady(function () {
+            if (window.elementorFrontend && typeof elementorFrontend.waypoint === "function") {
+                frameflow_animation_handler()
+            }
+        })
         frameflow_section_divider_glow()
         frameflow_border_glow()
     })
@@ -2304,8 +2343,10 @@
         frameflow_polyfill_waypoint()
         elementorFrontend.hooks.addAction("frontend/element_ready/global", function ($scope) {
             frameflow_divider_scroll_draw($scope)
-            frameflow_animation_handler($scope)
-            frameflowReplayWowInScope($scope)
+            window.frameflowOnPageReady(function () {
+                frameflow_animation_handler($scope)
+                frameflowReplayWowInScope($scope)
+            })
             frameflow_section_divider_glow($scope)
             frameflow_border_glow($scope)
             renderOrbit($scope)
@@ -2345,17 +2386,21 @@
         elementorFrontend.hooks.addAction(
             "frontend/element_ready/pxl_heading.default",
             function ($scope) {
-                frameflow_split_text($scope)
-                frameflow_scroll_text($scope)
-                frameflow_heading_text_scroll_reveal($scope)
-                frameflowReplayWowInScope($scope)
+                window.frameflowOnPageReady(function () {
+                    frameflow_split_text($scope)
+                    frameflow_scroll_text($scope)
+                    frameflow_heading_text_scroll_reveal($scope)
+                    frameflowReplayWowInScope($scope)
+                })
             }
         )
         elementorFrontend.hooks.addAction(
             "frontend/element_ready/pxl_text_editor.default",
             function ($scope) {
-                frameflow_split_text($scope)
-                frameflowReplayWowInScope($scope)
+                window.frameflowOnPageReady(function () {
+                    frameflow_split_text($scope)
+                    frameflowReplayWowInScope($scope)
+                })
             }
         )
         elementorFrontend.hooks.addAction(
