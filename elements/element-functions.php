@@ -41,14 +41,16 @@ if (!function_exists('frameflow_register_element_scripts')) {
         wp_register_script('frameflow-range', get_template_directory_uri() . '/elements/widgets/js/range.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('frameflow-accordion', get_template_directory_uri() . '/elements/widgets/js/accordion.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('frameflow-tabs', get_template_directory_uri() . '/elements/widgets/js/tabs.min.js', ['jquery'], $theme->get('Version'), true);
-        wp_register_script('frameflow-client-marquee', get_template_directory_uri() . '/elements/widgets/js/client-marquee.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);
-        wp_register_script('frameflow-image-marquee', get_template_directory_uri() . '/elements/widgets/js/image-marquee.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);
+        wp_register_script('pxl-marquee-helpers', get_template_directory_uri() . '/elements/widgets/js/marquee-helpers.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);
+        wp_register_script('frameflow-client-marquee', get_template_directory_uri() . '/elements/widgets/js/client-marquee.min.js', ['jquery', 'gsap', 'pxl-marquee-helpers'], $theme->get('Version'), true);
+        wp_register_script('frameflow-image-marquee', get_template_directory_uri() . '/elements/widgets/js/image-marquee.min.js', ['jquery', 'gsap', 'pxl-marquee-helpers'], $theme->get('Version'), true);
         wp_register_script('frameflow-image-stack', get_template_directory_uri() . '/elements/widgets/js/image-stack.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);
         wp_register_script('frameflow-image-fan', get_template_directory_uri() . '/elements/widgets/js/image-fan.min.js', ['jquery', 'gsap', 'pxl-scroll-trigger'], $theme->get('Version'), true);
+        wp_register_script('frameflow-image-scatter', get_template_directory_uri() . '/elements/widgets/js/image-scatter.min.js', ['jquery', 'gsap', 'pxl-scroll-trigger'], $theme->get('Version'), true);
         wp_register_script('frameflow-process', get_template_directory_uri() . '/elements/widgets/js/process.min.js', ['jquery', 'gsap', 'pxl-scroll-trigger'], $theme->get('Version'), true);
         wp_register_script('frameflow-text-box-grid', get_template_directory_uri() . '/elements/widgets/js/text-box-grid.min.js', ['jquery'], $theme->get('Version'), true);
-        wp_register_script('frameflow-text-marquee', get_template_directory_uri() . '/elements/widgets/js/text-marquee.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);
-        wp_register_script('frameflow-testimonial-marquee', get_template_directory_uri() . '/elements/widgets/js/testimonial-marquee.min.js', ['jquery', 'gsap'], $theme->get('Version'), true);
+        wp_register_script('frameflow-text-marquee', get_template_directory_uri() . '/elements/widgets/js/text-marquee.min.js', ['jquery', 'gsap', 'pxl-marquee-helpers'], $theme->get('Version'), true);
+        wp_register_script('frameflow-testimonial-marquee', get_template_directory_uri() . '/elements/widgets/js/testimonial-marquee.min.js', ['jquery', 'gsap', 'pxl-marquee-helpers'], $theme->get('Version'), true);
         wp_register_script('frameflow-countdown', get_template_directory_uri() . '/elements/widgets/js/countdown.min.js', ['jquery'], $theme->get('Version'), true);
         wp_register_script('pxl-countdown', get_template_directory_uri() . '/elements/widgets/js/pxl-countdown.min.js', ['jquery'], $theme->get('Version'), true);
         if (!wp_script_is('stellar-parallax', 'registered')) {

@@ -561,6 +561,12 @@ function frameflow_is_lazy_widget_script_handle($handle)
         'pxl-splitText',
         'pxl-bundled-lenis',
         'pxl-matter',
+        'pxl-marquee-helpers',
+        'pxl-carousel-helpers',
+        'frameflow-client-marquee',
+        'frameflow-image-marquee',
+        'frameflow-text-marquee',
+        'frameflow-testimonial-marquee',
         'frameflow-elementor',
         'frameflow-distortion',
         'elementor-frontend',
@@ -572,6 +578,26 @@ function frameflow_is_lazy_widget_script_handle($handle)
     }
 
     return (bool) apply_filters('frameflow_is_lazy_widget_script_handle', true, $handle);
+}
+
+function frameflow_enqueue_kept_script_dependencies($handle)
+{
+    $scripts = wp_scripts();
+    if (!is_string($handle) || $handle === '' || !isset($scripts->registered[$handle])) {
+        return;
+    }
+
+    foreach ((array) $scripts->registered[$handle]->deps as $dep) {
+        if (!is_string($dep) || $dep === '') {
+            continue;
+        }
+
+        frameflow_enqueue_kept_script_dependencies($dep);
+
+        if (!frameflow_is_lazy_widget_script_handle($dep) && wp_script_is($dep, 'registered')) {
+            wp_enqueue_script($dep);
+        }
+    }
 }
 
 function frameflow_remember_widget_script_handles($handles, $eager)
@@ -619,7 +645,12 @@ function frameflow_mark_lazy_widget_assets($element)
     $scripts = [];
 
     foreach ($script_handles as $handle) {
+        frameflow_enqueue_kept_script_dependencies($handle);
+
         if (!frameflow_is_lazy_widget_script_handle($handle)) {
+            if (wp_script_is($handle, 'registered')) {
+                wp_enqueue_script($handle);
+            }
             continue;
         }
         $src = frameflow_get_registered_script_src($handle);

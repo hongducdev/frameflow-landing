@@ -48,6 +48,7 @@ Case Testimonial Marquee Styles — Figma 6026:305
             display: flex;
             flex-wrap: nowrap;
             align-items: stretch;
+            width: max-content;
             will-change: transform;
             gap: 20px;
         }

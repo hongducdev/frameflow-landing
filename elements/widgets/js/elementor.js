@@ -27,23 +27,6 @@
             $(document).one("frameflow/loader/done", fn)
         }
 
-    if (
-        typeof gsap !== "undefined" &&
-        gsap.ticker &&
-        document.body &&
-        document.body.classList.contains("pxl-is-loading")
-    ) {
-        gsap.ticker.sleep()
-        window.frameflowOnPageReady(function () {
-            if (gsap.ticker && typeof gsap.ticker.wake === "function") {
-                gsap.ticker.wake()
-            }
-            if (window.ScrollTrigger && typeof ScrollTrigger.refresh === "function") {
-                ScrollTrigger.refresh()
-            }
-        })
-    }
-
     const PXLDIV_MAX_DIST = 140
     const PXLDIV_PEAK = 0.75
     const PXLDIV_SPREAD_MIN = 170

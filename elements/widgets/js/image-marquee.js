@@ -31,12 +31,29 @@
 
             $instance.off(".pxlImageMarquee")
 
+            function retrySetup(attachResize) {
+                if (!attachResize) {
+                    return
+                }
+
+                var n = parseInt($instance.data("pxlMarqueeRetries"), 10) || 0
+                if (n >= 30) {
+                    return
+                }
+
+                $instance.data("pxlMarqueeRetries", n + 1)
+                setTimeout(function () {
+                    setupMarquee(true)
+                }, n < 10 ? 50 : 200)
+            }
+
             function setupMarquee(attachResize) {
                 if (attachResize === undefined) {
                     attachResize = true
                 }
 
                 if (!$instance.is(":visible")) {
+                    retrySetup(attachResize)
                     return
                 }
 
@@ -56,36 +73,40 @@
                     return
                 }
 
-                var $children = $track.children()
-                if ($children.length <= 1) {
+                if (
+                    !window.frameflowMarqueeHelpers ||
+                    typeof window.frameflowMarqueeHelpers.fillTrack !== "function"
+                ) {
+                    retrySetup(attachResize)
                     return
                 }
 
-                var half = Math.floor($children.length / 2)
-                var distance = 0
-
-                for (var i = 0; i < half; i++) {
-                    distance += $children.eq(i).outerWidth(true)
-                }
-
-                distance = Math.round(distance)
-                if (!distance || distance <= 0) {
-                    return
-                }
-
-                var duration = distance / speed
-                var fromX = direction === "left" ? 0 : -distance
-                var toX = direction === "left" ? -distance : 0
-
-                var tl = gsap.fromTo(
+                var distance = window.frameflowMarqueeHelpers.fillTrack(
                     $track,
-                    { x: fromX },
-                    {
-                        x: toX,
-                        duration: duration,
-                        ease: "none",
-                        repeat: -1,
-                    },
+                    $instance.get(0),
+                    function ($item) {
+                        $item.find(".pxl-image-marquee__link").each(function () {
+                            $(this)
+                                .attr("data-pxl-marquee-proxy", "true")
+                                .attr("tabindex", "-1")
+                                .removeAttr("data-elementor-open-lightbox")
+                                .removeAttr("data-elementor-lightbox-slideshow")
+                                .removeAttr("data-elementor-lightbox-title")
+                        })
+                    }
+                )
+                if (!distance || distance <= 0) {
+                    retrySetup(attachResize)
+                    return
+                }
+
+                $instance.data("pxlMarqueeRetries", 0)
+
+                var tl = window.frameflowMarqueeHelpers.createTween(
+                    $track,
+                    distance,
+                    speed,
+                    direction
                 )
 
                 $instance.data("pxlMarqueeTimeline", tl)
@@ -161,5 +182,11 @@
             "frontend/element_ready/pxl_image_marquee.default",
             pxl_widget_image_marquee_handler,
         )
+    })
+
+    $(function () {
+        $(".elementor-widget-pxl_image_marquee").each(function () {
+            pxl_widget_image_marquee_handler($(this), $)
+        })
     })
 })(jQuery)

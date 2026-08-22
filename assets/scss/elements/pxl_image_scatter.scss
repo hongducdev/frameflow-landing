@@ -1,0 +1,137 @@
+@import "../shared";
+/*--------------------------------------------------
+Case Image Scatter — overlapping tilted screenshot cards
+Figma: Frameflow Copy / all image (3524:699)
+--------------------------------------------------*/
+.elementor-widget-pxl_image_scatter {
+    overflow: visible;
+
+    .elementor-widget-container {
+        overflow: visible;
+    }
+}
+
+.pxl-image-scatter {
+    --scatter-radius: 10px;
+    --scatter-border: rgba(255, 255, 255, 0.1);
+    --scatter-glass: rgba(255, 255, 255, 0.05);
+    --scatter-blur: 25px;
+    --scatter-pad: 10px;
+    --scatter-card-w: 46.34%;
+    --scatter-ratio: 470.48 / 275.708;
+
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+
+    &__stage {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1015 / 778;
+    }
+
+    &__card {
+        --scatter-x: 27.44%;
+        --scatter-y: 11.38%;
+        --scatter-rotate: -7.3deg;
+        --scatter-z: 1;
+
+        position: absolute;
+        left: var(--scatter-x);
+        top: var(--scatter-y);
+        z-index: var(--scatter-z);
+        width: var(--scatter-card-w);
+        pointer-events: none;
+
+        &:nth-child(5n + 1) {
+            --scatter-x: 27.44%;
+            --scatter-y: 11.38%;
+            --scatter-rotate: -7.3deg;
+            --scatter-z: 1;
+        }
+
+        &:nth-child(5n + 2) {
+            --scatter-x: 12.54%;
+            --scatter-y: 29.85%;
+            --scatter-rotate: 6.36deg;
+            --scatter-z: 2;
+        }
+
+        &:nth-child(5n + 3) {
+            --scatter-x: 52.88%;
+            --scatter-y: 25.77%;
+            --scatter-rotate: -3.48deg;
+            --scatter-z: 3;
+        }
+
+        &:nth-child(5n + 4) {
+            --scatter-x: 2.42%;
+            --scatter-y: 48.08%;
+            --scatter-rotate: 3.47deg;
+            --scatter-z: 4;
+        }
+
+        &:nth-child(5n + 5) {
+            --scatter-x: 45.99%;
+            --scatter-y: 59.7%;
+            --scatter-rotate: -9.74deg;
+            --scatter-z: 5;
+        }
+    }
+
+    &__motion {
+        width: 100%;
+        opacity: 0;
+        will-change: transform, opacity;
+        transform-origin: center center;
+    }
+
+    &__frame {
+        position: relative;
+        width: 100%;
+        aspect-ratio: var(--scatter-ratio);
+        padding: var(--scatter-pad);
+        box-sizing: border-box;
+        transform: rotate(var(--scatter-rotate));
+        transform-origin: center center;
+        overflow: visible;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: var(--scatter-radius);
+            border: 1px solid var(--scatter-border);
+            background: var(--scatter-glass);
+            backdrop-filter: blur(var(--scatter-blur)) saturate(1.15);
+            -webkit-backdrop-filter: blur(var(--scatter-blur)) saturate(1.15);
+            box-shadow:
+                0 18px 40px rgba(17, 17, 17, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            pointer-events: none;
+        }
+    }
+
+    &__frame img {
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        border-radius: calc(var(--scatter-radius) - 2px);
+    }
+}
+
+@media (max-width: 767px) {
+    .pxl-image-scatter {
+        --scatter-pad: 6px;
+    }
+}
+
+.pxl-image-scatter.is-reduced-motion .pxl-image-scatter__motion {
+    opacity: 1;
+    transform: none;
+}
