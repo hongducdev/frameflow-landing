@@ -50,6 +50,67 @@
     body:not(.elementor-editor-active) .elementor .elementor-hidden-mobile {
         display: none !important;
     }
+
+    // Image Scatter must stay in flow on mobile. Hide-on-mobile + lazy CSS
+    // is a dead lock: display:none never intersects, so widget CSS never loads.
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-widget-pxl_image_scatter.elementor-hidden-mobile,
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-widget-pxl_image_scatter.elementor-hidden-phone {
+        display: block !important;
+        position: relative !important;
+        inset: auto !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-column.elementor-hidden-mobile:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-column.elementor-hidden-phone:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-section.elementor-hidden-mobile:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-section.elementor-hidden-phone:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .e-con.elementor-hidden-mobile:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .e-con.elementor-hidden-phone:has(.pxl-image-scatter) {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .elementor-widget-pxl_image_scatter {
+        position: relative !important;
+        inset: auto !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+    }
 }
 
 .pxl-wapper {
@@ -219,11 +280,7 @@ body.elementor-editor-active .pxl-column-sticky {
             display: block;
             @include border-radius(8px);
             height: 637px;
-            background: linear-gradient(
-                180deg,
-                #faf7f2 0%,
-                rgba(250, 247, 242, 0) 100%
-            );
+            background: linear-gradient(180deg, #faf7f2 0%, rgba(250, 247, 242, 0) 100%);
         }
     }
     .pxl-page-title--content {
@@ -467,15 +524,11 @@ body.elementor-editor-active .pxl-column-sticky {
         background-color: rgba(0, 0, 0, 0.1);
     }
 
-    .elementor-inner-section
-        > .elementor-element-overlay
-        > .elementor-editor-element-settings {
+    .elementor-inner-section > .elementor-element-overlay > .elementor-editor-element-settings {
         margin-left: 84px;
     }
 
-    .elementor-inner-section
-        .elementor-column
-        .elementor-editor-element-settings {
+    .elementor-inner-section .elementor-column .elementor-editor-element-settings {
         margin-left: 12px;
     }
 }
@@ -526,9 +579,7 @@ body {
                     left: 0;
                     margin-top: -1px;
                     transform-origin: 50% 50%;
-                    @include transition(
-                        all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1)
-                    );
+                    @include transition(all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1));
                     background-color: #fff;
                 }
 
@@ -600,9 +651,7 @@ body {
 
 @media #{$min-lg} {
     body.blog,
-    body.archive:not(.post-type-archive):not(.tax-product_cat):not(
-            .tax-product_tag
-        ),
+    body.archive:not(.post-type-archive):not(.tax-product_cat):not(.tax-product_tag),
     body.single-post {
         .pxl-content-wrap.no-sidebar .pxl-content-area {
             max-width: 850px;
@@ -1025,14 +1074,7 @@ body {
     }
 
     50% {
-        clip-path: polygon(
-            50% 50%,
-            0 0,
-            100% 0,
-            100% 100%,
-            100% 100%,
-            100% 100%
-        );
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
     }
 
     75% {
@@ -1583,9 +1625,7 @@ body {
 
     &.pxl-effect-fade-slide {
         .pxl-popup--content {
-            @include transform(
-                translateY(-20px) perspective(600px) rotateX(14deg)
-            );
+            @include transform(translateY(-20px) perspective(600px) rotateX(14deg));
         }
     }
 
@@ -1981,10 +2021,7 @@ body:not(.elementor-editor-active) .pxl-section-parallax-overflow {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            @include background-gradient-bottom(
-                rgba(#fff, 0.44),
-                rgba(#fff, 0)
-            );
+            @include background-gradient-bottom(rgba(#fff, 0.44), rgba(#fff, 0));
             background-color: transparent;
             position: relative;
 

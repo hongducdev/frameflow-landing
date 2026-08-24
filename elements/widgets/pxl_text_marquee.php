@@ -21,6 +21,7 @@ pxl_add_custom_widget(
                             array(
                                 'style-1' => esc_html__('Style 1', 'frameflow'),
                                 'style-2' => esc_html__('Style 2', 'frameflow'),
+                                'style-3' => esc_html__('Style 3', 'frameflow'),
                             ),
                             ['default' => 'style-1']
                         ),
@@ -95,6 +96,54 @@ pxl_add_custom_widget(
                             esc_html__('Item Gap', 'frameflow'),
                             [
                                 '{{WRAPPER}} .pxl-text-marquee__item' => 'gap: {{SIZE}}{{UNIT}};',
+                            ]
+                        ),
+                        frameflow_widget_slider_control(
+                            'item_spacing',
+                            esc_html__('Item Spacing', 'frameflow'),
+                            [
+                                '{{WRAPPER}} .pxl-text-marquee.style-3 .pxl-text-marquee__track' => 'gap: {{SIZE}}{{UNIT}};',
+                            ],
+                            [
+                                'condition' => [
+                                    'style' => 'style-3',
+                                ],
+                            ]
+                        ),
+                        frameflow_widget_color_control(
+                            'item_bg_color',
+                            esc_html__('Item Background', 'frameflow'),
+                            [
+                                '{{WRAPPER}} .pxl-text-marquee.style-3 .pxl-text-marquee__item' => 'background-color: {{VALUE}};',
+                            ],
+                            [
+                                'condition' => [
+                                    'style' => 'style-3',
+                                ],
+                            ]
+                        ),
+                        frameflow_widget_color_control(
+                            'item_border_color',
+                            esc_html__('Item Border Color', 'frameflow'),
+                            [
+                                '{{WRAPPER}} .pxl-text-marquee.style-3 .pxl-text-marquee__item' => 'border-color: {{VALUE}};',
+                            ],
+                            [
+                                'condition' => [
+                                    'style' => 'style-3',
+                                ],
+                            ]
+                        ),
+                        frameflow_widget_dimensions_control(
+                            'item_border_radius',
+                            esc_html__('Item Border Radius', 'frameflow'),
+                            [
+                                '{{WRAPPER}} .pxl-text-marquee.style-3 .pxl-text-marquee__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                            ],
+                            [
+                                'condition' => [
+                                    'style' => 'style-3',
+                                ],
                             ]
                         ),
                         frameflow_widget_color_control(

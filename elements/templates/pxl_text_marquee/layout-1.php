@@ -6,8 +6,9 @@ if (!empty($items)) :
     $speed     = $speed_raw > 0 ? $speed_raw : 80;
     $direction = !empty($settings['marquee_direction']) ? $settings['marquee_direction'] : 'left';
     $icon_html = '';
+    $style = isset($settings['style']) ? $settings['style'] : 'style-1';
     $wrapper_class = trim(
-        (isset($settings['style']) ? $settings['style'] : '') . ' ' .
+        $style . ' ' .
         (isset($settings['pxl_animate']) ? $settings['pxl_animate'] : '')
     );
     $animate_delay = isset($settings['pxl_animate_delay']) ? $settings['pxl_animate_delay'] : 0;
@@ -16,6 +17,11 @@ if (!empty($items)) :
         ob_start();
         \Elementor\Icons_Manager::render_icon($settings['marquee_icon'], ['aria-hidden' => 'true']);
         $icon_html = ob_get_clean();
+    }
+
+    if (trim($icon_html) === '' && $style === 'style-3') {
+        $check_src = get_template_directory_uri() . '/assets/imgs/text-marquee/check.svg';
+        $icon_html = '<img src="' . esc_url($check_src) . '" alt="" width="23" height="23" />';
     }
 ?>
     <div id="<?php echo esc_attr($html_id); ?>" class="pxl-text-marquee pxl-text-marquee1 <?php echo esc_attr($wrapper_class); ?>" data-wow-delay="<?php echo esc_attr($animate_delay); ?>ms" data-marquee-speed="<?php echo esc_attr($speed); ?>" data-marquee-direction="<?php echo esc_attr($direction); ?>">

@@ -70,6 +70,13 @@
         killInstance($root)
 
         if (window.innerWidth <= 767) {
+            if (typeof gsap !== "undefined") {
+                gsap.set(motions, {
+                    autoAlpha: 1,
+                    y: 0,
+                    clearProps: "visibility,opacity,transform",
+                })
+            }
             return
         }
 
@@ -155,4 +162,21 @@
             pxl_widget_image_scatter_handler
         )
     })
+
+    if (window.matchMedia) {
+        var mobileMq = window.matchMedia("(max-width: 767px)")
+        var onMobileChange = function (event) {
+            if (!event.matches) {
+                return
+            }
+            $(".pxl-image-scatter").each(function () {
+                setupScatter($(this))
+            })
+        }
+        if (typeof mobileMq.addEventListener === "function") {
+            mobileMq.addEventListener("change", onMobileChange)
+        } else if (typeof mobileMq.addListener === "function") {
+            mobileMq.addListener(onMobileChange)
+        }
+    }
 })(jQuery)

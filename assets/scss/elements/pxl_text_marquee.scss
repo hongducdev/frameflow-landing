@@ -82,4 +82,63 @@ Case Text Marquee Styles
             }
         }
     }
+
+    // Figma 3765:819 — glass pills with check badge
+    &.style-3 {
+        overflow: hidden;
+        width: 100%;
+
+        .pxl-text-marquee {
+            &__track {
+                gap: 11px;
+            }
+
+            &__item {
+                box-sizing: border-box;
+                height: 39px;
+                padding: 0 20px 0 8px;
+                gap: 14px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.13);
+                @include border-radius(29px);
+            }
+
+            &__icon {
+                width: 23px;
+                height: 23px;
+                flex-shrink: 0;
+                overflow: hidden;
+                background-color: #7bf942;
+                color: #111;
+                @include border-radius(50%);
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    object-fit: cover;
+                }
+
+                svg {
+                    width: 13px;
+                    height: 13px;
+                    fill: currentColor;
+                }
+
+                i {
+                    font-size: 11px;
+                    line-height: 1;
+                    color: inherit;
+                }
+            }
+
+            &__label {
+                font-family: "Inter", var(--body-font, sans-serif);
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 25px;
+                color: #fff;
+            }
+        }
+    }
 }

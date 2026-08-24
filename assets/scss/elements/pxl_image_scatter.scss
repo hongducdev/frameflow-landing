@@ -134,22 +134,75 @@ Figma: Frameflow Copy / all image (3524:699)
 }
 
 @media (max-width: 767px) {
-    .elementor-widget-pxl_image_scatter,
+    body:not(.elementor-editor-active) .elementor .elementor-widget-pxl_image_scatter,
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-widget-pxl_image_scatter.elementor-hidden-mobile,
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-widget-pxl_image_scatter.elementor-hidden-phone {
+        display: block !important;
+        position: relative !important;
+        inset: auto !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-column.elementor-hidden-mobile:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-column.elementor-hidden-phone:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-section.elementor-hidden-mobile:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .elementor-section.elementor-hidden-phone:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .e-con.elementor-hidden-mobile:has(.pxl-image-scatter),
+    body:not(.elementor-editor-active)
+        .elementor
+        .e-con.elementor-hidden-phone:has(.pxl-image-scatter) {
+        display: flex !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
     .elementor-widget-pxl_image_scatter .elementor-widget-container,
-    .pxl-image-scatter {
+    .pxl-image-scatter,
+    .pxl-image-scatter__stage {
         overflow: hidden;
         max-width: 100%;
     }
 
     .pxl-image-scatter {
         --scatter-pad: 6px;
-        --scatter-card-w: 52%;
+        --scatter-card-w: 56%;
+        min-height: 200px;
+    }
+
+    .pxl-image-scatter__card,
+    .pxl-image-scatter__motion,
+    .pxl-image-scatter__frame {
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .pxl-image-scatter__motion {
-        opacity: 1;
-        visibility: visible;
-        animation: pxl-scatter-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation: pxl-scatter-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .pxl-image-scatter__card:nth-child(5n + 5) .pxl-image-scatter__motion {
@@ -157,30 +210,28 @@ Figma: Frameflow Copy / all image (3524:699)
     }
 
     .pxl-image-scatter__card:nth-child(5n + 4) .pxl-image-scatter__motion {
-        animation-delay: 0.1s;
+        animation-delay: 0.08s;
     }
 
     .pxl-image-scatter__card:nth-child(5n + 2) .pxl-image-scatter__motion {
-        animation-delay: 0.2s;
+        animation-delay: 0.16s;
     }
 
     .pxl-image-scatter__card:nth-child(5n + 3) .pxl-image-scatter__motion {
-        animation-delay: 0.3s;
+        animation-delay: 0.24s;
     }
 
     .pxl-image-scatter__card:nth-child(5n + 1) .pxl-image-scatter__motion {
-        animation-delay: 0.4s;
+        animation-delay: 0.32s;
     }
 }
 
 @keyframes pxl-scatter-rise {
     from {
-        opacity: 0;
-        transform: translateY(32px);
+        transform: translateY(24px);
     }
 
     to {
-        opacity: 1;
         transform: translateY(0);
     }
 }
@@ -188,6 +239,7 @@ Figma: Frameflow Copy / all image (3524:699)
 @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
     .pxl-image-scatter__motion {
         animation: none !important;
+        transform: none !important;
     }
 }
 
