@@ -4,10 +4,10 @@ Case Image Scatter — overlapping tilted screenshot cards
 Figma: Frameflow Copy / all image (3524:699)
 --------------------------------------------------*/
 .elementor-widget-pxl_image_scatter {
-    overflow: visible;
+    max-width: 100%;
 
     .elementor-widget-container {
-        overflow: visible;
+        max-width: 100%;
     }
 }
 
@@ -27,7 +27,9 @@ Figma: Frameflow Copy / all image (3524:699)
     &__stage {
         position: relative;
         width: 100%;
+        max-width: 100%;
         aspect-ratio: 1015 / 778;
+        overflow: hidden;
     }
 
     &__card {
@@ -81,7 +83,7 @@ Figma: Frameflow Copy / all image (3524:699)
 
     &__motion {
         width: 100%;
-        opacity: 0;
+        opacity: 1;
         will-change: transform, opacity;
         transform-origin: center center;
     }
@@ -125,13 +127,73 @@ Figma: Frameflow Copy / all image (3524:699)
     }
 }
 
+@media (min-width: 768px) {
+    .pxl-image-scatter:not(.is-reduced-motion) .pxl-image-scatter__motion {
+        opacity: 0;
+    }
+}
+
 @media (max-width: 767px) {
+    .elementor-widget-pxl_image_scatter,
+    .elementor-widget-pxl_image_scatter .elementor-widget-container,
+    .pxl-image-scatter {
+        overflow: hidden;
+        max-width: 100%;
+    }
+
     .pxl-image-scatter {
         --scatter-pad: 6px;
+        --scatter-card-w: 52%;
+    }
+
+    .pxl-image-scatter__motion {
+        opacity: 1;
+        visibility: visible;
+        animation: pxl-scatter-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .pxl-image-scatter__card:nth-child(5n + 5) .pxl-image-scatter__motion {
+        animation-delay: 0s;
+    }
+
+    .pxl-image-scatter__card:nth-child(5n + 4) .pxl-image-scatter__motion {
+        animation-delay: 0.1s;
+    }
+
+    .pxl-image-scatter__card:nth-child(5n + 2) .pxl-image-scatter__motion {
+        animation-delay: 0.2s;
+    }
+
+    .pxl-image-scatter__card:nth-child(5n + 3) .pxl-image-scatter__motion {
+        animation-delay: 0.3s;
+    }
+
+    .pxl-image-scatter__card:nth-child(5n + 1) .pxl-image-scatter__motion {
+        animation-delay: 0.4s;
+    }
+}
+
+@keyframes pxl-scatter-rise {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+    .pxl-image-scatter__motion {
+        animation: none !important;
     }
 }
 
 .pxl-image-scatter.is-reduced-motion .pxl-image-scatter__motion {
-    opacity: 1;
+    opacity: 1 !important;
+    visibility: visible !important;
     transform: none;
+    animation: none;
 }

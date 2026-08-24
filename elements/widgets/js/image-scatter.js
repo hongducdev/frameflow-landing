@@ -13,6 +13,14 @@
         return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches
     }
 
+    function isInViewport(el) {
+        var rect = el.getBoundingClientRect()
+        return (
+            rect.bottom > 0 &&
+            rect.top < (window.innerHeight || document.documentElement.clientHeight)
+        )
+    }
+
     function killInstance($root) {
         var tl = $root.data("pxlImageScatterTimeline")
         if (tl) {
@@ -61,6 +69,10 @@
 
         killInstance($root)
 
+        if (window.innerWidth <= 767) {
+            return
+        }
+
         if (prefersReducedMotion()) {
             $root.addClass("is-reduced-motion")
             gsap.set(motions, { autoAlpha: 1, y: 0 })
@@ -89,25 +101,37 @@
 
         $root.data("pxlImageScatterTimeline", tl)
 
+        function play() {
+            if (tl.progress() === 0 && !tl.isActive()) {
+                tl.play(0)
+            }
+        }
+
         if (typeof ScrollTrigger === "undefined") {
-            tl.play(0)
+            play()
             return
         }
 
         var st = ScrollTrigger.create({
             trigger: rootEl,
-            start: "top 82%",
+            start: "top 95%",
             once: true,
-            onEnter: function () {
-                tl.play(0)
-            },
+            onEnter: play,
         })
 
         $root.data("pxlImageScatterScrollTrigger", st)
 
-        if (st.isActive) {
-            tl.play(0)
+        function playIfVisible() {
+            if (st.isActive || isInViewport(rootEl)) {
+                play()
+            }
         }
+
+        playIfVisible()
+        requestAnimationFrame(function () {
+            ScrollTrigger.refresh()
+            playIfVisible()
+        })
     }
 
     var pxl_widget_image_scatter_handler = function ($scope) {

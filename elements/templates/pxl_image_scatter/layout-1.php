@@ -35,7 +35,7 @@ $stagger_order = [4, 2, 3, 1, 0];
     data-duration="<?php echo esc_attr($duration); ?>"
     data-stagger="<?php echo esc_attr($stagger); ?>"
 >
-    <div class="pxl-image-scatter__stage">
+    <div class="pxl-image-scatter__stage" style="aspect-ratio: 1015 / 778">
         <?php foreach ($valid as $index => $item):
 
             $slot = $index % 5;

@@ -49,13 +49,13 @@
 
         @media (max-width: 767px) {
             flex-wrap: wrap;
-            justify-content: center;
             padding: 18px 16px;
             gap: 12px;
         }
 
         @media #{$max-xs} {
             flex-direction: column;
+            justify-content: center;
         }
     }
 

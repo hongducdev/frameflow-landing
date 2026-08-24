@@ -2,6 +2,14 @@
 /*--------------------------------------------------
 Case Image Fan Styles
 --------------------------------------------------*/
+.elementor-widget-pxl_image_fan {
+    overflow: visible;
+
+    .elementor-widget-container {
+        overflow: visible;
+    }
+}
+
 .pxl-image-fan {
     --fan-frame-w: 220px;
     --fan-frame-h: 312px;
@@ -26,6 +34,7 @@ Case Image Fan Styles
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: visible;
     }
 
     &__card {
@@ -96,10 +105,26 @@ Case Image Fan Styles
 }
 
 @media (max-width: 767px) {
-    .pxl-image-fan {
-        --fan-frame-w: 160px;
-        --fan-frame-h: 228px;
-        --fan-offset-x: 48px;
+    .elementor-widget-pxl_image_fan .pxl-image-fan {
+        --fan-frame-w: clamp(110px, 36vw, 160px) !important;
+        --fan-frame-h: clamp(156px, 51vw, 228px) !important;
+        --fan-offset-x: clamp(22px, 9vw, 40px) !important;
+        --fan-center-y: -16px !important;
+        --fan-angle: 14deg !important;
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+    }
+
+    .pxl-image-fan__stage {
+        overflow: visible;
+        height: calc(var(--fan-frame-h) + 80px);
+    }
+
+    .pxl-image-fan.is-open .pxl-image-fan__motion,
+    .pxl-image-fan.is-reduced-motion .pxl-image-fan__motion {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
