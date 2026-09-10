@@ -72,7 +72,7 @@ pxl_add_custom_widget(
                             'img_size',
                             esc_html__('Image Size', 'frameflow'),
                             [
-                                'description' => 'Enter image size (Example: "thumbnail", "medium", "large", "full" or other sizes defined by theme). Alternatively enter size in pixels (Example: 200x100 (Width x Height).',
+                                'description' => 'Enter image size (Example: "thumbnail", "medium", "large", "full" or other sizes defined by theme). Alternatively enter size in pixels (Example: 200x100 (Width x Height). Animated GIF always uses the original file.',
                                 'condition' => [
                                     'image_type' => ['img'],
                                 ],

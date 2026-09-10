@@ -676,15 +676,6 @@
             height: calc(100vh - var(--header-sticky-height));
             top: var(--header-sticky-height);
         }
-
-        > .elementor-element.elementor-widget-pxl_image_carousel {
-            min-height: 0;
-
-            .pxl-image-carousel2,
-            .pxl-item-wrapper {
-                height: inherit;
-            }
-        }
     }
 }
 

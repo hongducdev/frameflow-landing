@@ -347,6 +347,18 @@ function frameflow_comment_field_to_bottom($fields)
 /* ------Disable Lazy loading---- */
 add_filter('wp_lazy_loading_enabled', '__return_false');
 
+/* GIF: skip srcset so browsers do not pick a flattened resized frame */
+add_filter('wp_calculate_image_srcset', 'frameflow_disable_gif_srcset', 10, 5);
+function frameflow_disable_gif_srcset($sources, $size_array, $image_src, $image_meta, $attachment_id)
+{
+	if ($attachment_id && frameflow_attachment_is_gif($attachment_id)) {
+		return false;
+	}
+	return $sources;
+}
+
+add_filter('pxl_el_getimagesize', 'frameflow_keep_gif_animation', 10, 3);
+
 /* ------ Export Settings ---- */
 add_filter('pxl_export_wp_settings', 'frameflow_export_wp_settings');
 function frameflow_export_wp_settings($wp_options)

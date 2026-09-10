@@ -2,7 +2,8 @@
     /**
      * Elementor Swiper bootstrap for theme carousels.
      *
-     * Each widget registers: frontend/element_ready/{widget_name}.default
+     * Remaining Elementor carousel widgets and related-post markup
+     * register: frontend/element_ready/{widget_name}.default
      * → pxl_swiper_handler($scope). Product carousel also runs
      * frameflowSyncProductCarouselArrowInsets() for negative-margin bleed.
      *
@@ -82,133 +83,6 @@
             var ro = new ResizeObserver(apply)
             ro.observe($widget[0])
             $carousel[0]._pxlArrowRO = ro
-        }
-    }
-
-    function frameflowSyncTestimonial15Shapes($scope) {
-        var $cards = $scope.find(
-            ".pxl-testimonial-carousel15 .pxl-item--inner"
-        )
-        if (!$cards.length) {
-            return
-        }
-
-        var draw = function (el) {
-            var svg = el.querySelector(".pxl-item--shape")
-            if (!svg) {
-                return
-            }
-            var w = el.offsetWidth
-            var h = el.offsetHeight
-            if (w < 2 || h < 2) {
-                return
-            }
-
-            var style = window.getComputedStyle(el)
-            // Figma Rectangle 117: fixed 50×43 notch, 10px radii
-            var nw = parseFloat(style.getPropertyValue("--pxl-notch-w")) || 50
-            var nh = parseFloat(style.getPropertyValue("--pxl-notch-h")) || 43
-            var r = parseFloat(style.getPropertyValue("--pxl-notch-r")) || 10
-            nw = Math.min(nw, Math.max(0, w - r * 2))
-            nh = Math.min(nh, Math.max(0, h - r * 2))
-            r = Math.min(r, nw / 2, nh / 2)
-
-            // Figma path: fixed 50×43 top-right notch with 10px corner radii
-            // Use cubics (not arcs) so corner sweep matches Figma exactly.
-            var c = r * 0.5523
-            var d = [
-                "M" + (w - nw - r) + " 0",
-                "C" +
-                    (w - nw - r + c) +
-                    " 0 " +
-                    (w - nw) +
-                    " " +
-                    (r - c) +
-                    " " +
-                    (w - nw) +
-                    " " +
-                    r,
-                "V" + (nh - r),
-                "C" +
-                    (w - nw) +
-                    " " +
-                    (nh - r + c) +
-                    " " +
-                    (w - nw + r - c) +
-                    " " +
-                    nh +
-                    " " +
-                    (w - nw + r) +
-                    " " +
-                    nh,
-                "H" + (w - r),
-                "C" +
-                    (w - r + c) +
-                    " " +
-                    nh +
-                    " " +
-                    w +
-                    " " +
-                    (nh + r - c) +
-                    " " +
-                    w +
-                    " " +
-                    (nh + r),
-                "V" + (h - r),
-                "C" +
-                    w +
-                    " " +
-                    (h - r + c) +
-                    " " +
-                    (w - r + c) +
-                    " " +
-                    h +
-                    " " +
-                    (w - r) +
-                    " " +
-                    h,
-                "H" + r,
-                "C" +
-                    (r - c) +
-                    " " +
-                    h +
-                    " 0 " +
-                    (h - r + c) +
-                    " 0 " +
-                    (h - r),
-                "V" + r,
-                "C0 " + (r - c) + " " + (r - c) + " 0 " + r + " 0",
-                "Z",
-            ].join(" ")
-
-            svg.setAttribute("viewBox", "0 0 " + w + " " + h)
-            svg.querySelectorAll("path").forEach(function (path) {
-                path.setAttribute("d", d)
-            })
-        }
-
-        var apply = function () {
-            $cards.each(function () {
-                draw(this)
-            })
-        }
-
-        apply()
-        setTimeout(apply, 50)
-        setTimeout(apply, 300)
-
-        if (typeof ResizeObserver !== "undefined") {
-            $cards.each(function () {
-                var el = this
-                if (el._pxlShapeRO) {
-                    el._pxlShapeRO.disconnect()
-                }
-                var ro = new ResizeObserver(function () {
-                    draw(el)
-                })
-                ro.observe(el)
-                el._pxlShapeRO = ro
-            })
         }
     }
 
@@ -894,50 +768,7 @@
         )
 
         elementorFrontend.hooks.addAction(
-            "frontend/element_ready/pxl_slider.default",
-            function ($scope) {
-                pxl_swiper_handler($scope)
-            }
-        )
-
-        elementorFrontend.hooks.addAction(
             "frontend/element_ready/pxl_team_carousel.default",
-            function ($scope) {
-                pxl_swiper_handler($scope)
-            }
-        )
-
-        elementorFrontend.hooks.addAction(
-            "frontend/element_ready/pxl_process.default",
-            function ($scope) {
-                pxl_swiper_handler($scope)
-            }
-        )
-
-        elementorFrontend.hooks.addAction(
-            "frontend/element_ready/pxl_image_carousel.default",
-            function ($scope) {
-                pxl_swiper_handler($scope)
-            }
-        )
-
-        elementorFrontend.hooks.addAction(
-            "frontend/element_ready/pxl_testimonial_carousel.default",
-            function ($scope) {
-                pxl_swiper_handler($scope)
-                frameflowSyncTestimonial15Shapes($scope)
-            }
-        )
-
-        elementorFrontend.hooks.addAction(
-            "frontend/element_ready/pxl_text_carousel.default",
-            function ($scope) {
-                pxl_swiper_handler($scope)
-            }
-        )
-
-        elementorFrontend.hooks.addAction(
-            "frontend/element_ready/pxl_icon_box_carousel.default",
             function ($scope) {
                 pxl_swiper_handler($scope)
             }

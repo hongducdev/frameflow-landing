@@ -1,9 +1,14 @@
 // Start Main
 //--------------------------------------------------
-//Scroll
+// Native hash links (#demos) scroll on the document (html), not body.
+// Lenis owns animation when active, so keep native smooth off in that case.
 @media (prefers-reduced-motion: no-preference) {
     html {
-        scroll-behavior: inherit;
+        scroll-behavior: smooth;
+    }
+
+    html.lenis {
+        scroll-behavior: auto;
     }
 }
 

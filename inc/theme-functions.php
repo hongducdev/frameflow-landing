@@ -371,6 +371,73 @@ function frameflow_comment_list($comment, $args, $depth)
         }
 
         /**
+         * Whether an attachment is a GIF (keep original file so animation is not flattened).
+         *
+         * @param int $attach_id Attachment ID.
+         * @return bool
+         */
+        function frameflow_attachment_is_gif($attach_id)
+        {
+            return ! empty($attach_id) && get_post_mime_type($attach_id) === 'image/gif';
+        }
+
+        /**
+         * Force original GIF file through pxl_get_image_by_size so crop/srcset cannot freeze animation.
+         *
+         * @param array $data      Image payload.
+         * @param int   $attach_id Attachment ID.
+         * @param array $params    Request params.
+         * @return array
+         */
+        function frameflow_keep_gif_animation($data, $attach_id, $params = array())
+        {
+            if (! frameflow_attachment_is_gif($attach_id)) {
+                return $data;
+            }
+
+            $url = wp_get_attachment_url($attach_id);
+            if (! $url) {
+                return $data;
+            }
+
+            $class = '';
+            if (is_array($params) && ! empty($params['class'])) {
+                $class = $params['class'];
+            }
+
+            $alt = trim(wp_strip_all_tags(get_post_meta($attach_id, '_wp_attachment_image_alt', true)));
+            $meta = wp_get_attachment_metadata($attach_id);
+            $width = ! empty($meta['width']) ? (int) $meta['width'] : 0;
+            $height = ! empty($meta['height']) ? (int) $meta['height'] : 0;
+
+            $attr = array(
+                'src' => $url,
+                'alt' => $alt,
+                'class' => trim($class . ' no-lazyload'),
+            );
+            if ($width > 0) {
+                $attr['width'] = $width;
+            }
+            if ($height > 0) {
+                $attr['height'] = $height;
+            }
+
+            $html = '<img';
+            foreach ($attr as $name => $value) {
+                $html .= ' ' . esc_attr($name) . '="' . esc_attr($value) . '"';
+            }
+            $html .= ' />';
+
+            if (! is_array($data)) {
+                $data = array();
+            }
+            $data['thumbnail'] = $html;
+            $data['url'] = $url;
+
+            return $data;
+        }
+
+        /**
          * Search Form
          */
         function frameflow_header_mobile_search_form()

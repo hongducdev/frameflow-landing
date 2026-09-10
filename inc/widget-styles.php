@@ -14,7 +14,6 @@ if (!defined('ABSPATH')) {
 function frameflow_widget_style_overrides()
 {
     return [
-        'pxl_icon_box_carousel' => 'pxl_icon_box',
         'pxl_post' => 'pxl_post',
     ];
 }

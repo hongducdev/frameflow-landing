@@ -192,15 +192,20 @@
             js: [scripts.wow],
             once: true, // init once globally
             onLoaded: function () {
+                // Trigger when the element is actually in view, not at the
+                // viewport edge. WOW offset is px from the bottom of the screen.
+                var wowOffset = Math.max(100, Math.round(window.innerHeight * 0.2));
+
                 // wow.min.js already constructs and inits a global `wow` on load.
                 // A second WOW() re-hides boxes the first instance already revealed
                 // (visibility:hidden + animation-name:none), which cancels Case Animate.
                 if (window.wow && typeof window.wow.sync === "function") {
+                    window.wow.config.offset = wowOffset;
                     window.wow.sync();
                     return;
                 }
                 if (typeof WOW === "function") {
-                    window.wow = new WOW({ animateClass: "animated", offset: 80 });
+                    window.wow = new WOW({ animateClass: "animated", offset: wowOffset });
                     window.wow.init();
                 }
             },

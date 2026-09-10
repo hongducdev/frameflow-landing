@@ -50,9 +50,11 @@ if ($gallery_interval < 500) {
                     if (! $img_id) {
                         continue;
                     }
+                    $item_is_gif = frameflow_attachment_is_gif($img_id);
+                    $item_is_distortion = ($is_distortion && ! $item_is_gif);
                     $img = pxl_get_image_by_size(array(
                         'attach_id' => $img_id,
-                        'thumb_size' => $image_size,
+                        'thumb_size' => $item_is_gif ? 'full' : $image_size,
                         'class' => 'no-lazyload',
                     ));
                     $thumbnail = $img['thumbnail'];
@@ -62,7 +64,7 @@ if ($gallery_interval < 500) {
                     ?>
                     <?php switch ($settings['image_type']) {
                         case 'bg': ?>
-                            <?php if ($is_distortion) : ?>
+                            <?php if ($item_is_distortion) : ?>
                                 <div class="pxl-item--bg bg-image wrap-img-distortion pxl-image-gallery-item<?php echo $is_active_item ? ' is-active' : ''; ?>">
                                     <?php if (! empty($settings['image_link']['url'])) { ?><a <?php pxl_print_html($widget->get_render_attribute_string('image_link')); ?>><?php } ?>
                                         <?php echo wp_kses_post($thumbnail); ?>
@@ -76,7 +78,7 @@ if ($gallery_interval < 500) {
                         default: ?>
                             <?php
                             $item_image_classes = array('pxl-item--image', 'pxl-image-gallery-item');
-                            if ($is_distortion) {
+                            if ($item_is_distortion) {
                                 $item_image_classes[] = 'wrap-img-distortion';
                             }
                             if ($is_active_item) {
@@ -86,7 +88,7 @@ if ($gallery_interval < 500) {
                             <div class="<?php echo esc_attr(implode(' ', $item_image_classes)); ?>">
                                 <?php if (! empty($settings['image_link']['url'])) { ?><a <?php pxl_print_html($widget->get_render_attribute_string('image_link')); ?>><?php } ?>
                                     <?php echo wp_kses_post($thumbnail); ?>
-                                    <?php if ($is_distortion) : ?>
+                                    <?php if ($item_is_distortion) : ?>
                                         <div class="wrap-distort-canvas"></div>
                                     <?php endif; ?>
                                 <?php if (! empty($settings['image_link']['url'])) { ?></a><?php } ?>
@@ -102,16 +104,17 @@ if ($gallery_interval < 500) {
             if ($source_type == 'f_img' && has_post_thumbnail()) {
                 $img_id = get_post_thumbnail_id(get_the_ID());
             }
+            $is_gif = frameflow_attachment_is_gif($img_id);
             $img  = pxl_get_image_by_size(array(
                 'attach_id'  => $img_id,
-                'thumb_size' => $image_size,
+                'thumb_size' => $is_gif ? 'full' : $image_size,
                 'class' => 'no-lazyload'
             ));
             $thumbnail    = $img['thumbnail'];
             $thumbnail_url    = $img['url'];
             $img_style      = isset($settings['img_style']) ? $settings['img_style'] : '';
-            $is_distortion  = ($img_style === 'distortion')
-                || (($settings['img_effect'] ?? '') === 'pxl-image-distortion');
+            $is_distortion  = ! $is_gif && (($img_style === 'distortion')
+                || (($settings['img_effect'] ?? '') === 'pxl-image-distortion'));
             ?>
 
             <?php switch ($settings['image_type']) {

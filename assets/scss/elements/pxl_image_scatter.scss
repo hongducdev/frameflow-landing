@@ -5,9 +5,47 @@ Figma: Frameflow Copy / all image (3524:699)
 --------------------------------------------------*/
 .elementor-widget-pxl_image_scatter {
     max-width: 100%;
+    overflow: hidden;
 
     .elementor-widget-container {
         max-width: 100%;
+        overflow: hidden;
+    }
+
+    // Stay in-flow. Elementor "Position: Absolute" collapses the column,
+    // escapes section overflow clipping, and breaks backdrop-filter.
+    &.elementor-absolute {
+        position: relative !important;
+        inset: auto !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        height: auto !important;
+    }
+}
+
+// Clip rotated cards at the hero edge so they don't paint over the next section.
+// Desktop only — on mobile this also slices the top tilted card.
+@media (min-width: 768px) {
+    .elementor-top-section:has(.pxl-image-scatter),
+    .e-con.e-parent:has(.pxl-image-scatter) {
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 768px) {
+    .elementor-column:has(.pxl-image-scatter),
+    .e-con:has(.pxl-image-scatter) {
+        min-width: 0;
+    }
+
+    // Figma group is 1015px on a 1920 artboard. Parent section clips overflow.
+    .elementor-widget-pxl_image_scatter {
+        width: 52.8646vw;
+        max-width: none;
+        min-width: 100%;
     }
 }
 
@@ -17,65 +55,72 @@ Figma: Frameflow Copy / all image (3524:699)
     --scatter-glass: rgba(255, 255, 255, 0.05);
     --scatter-blur: 25px;
     --scatter-pad: 10px;
-    --scatter-card-w: 46.34%;
+    --scatter-card-w: 46.3377%;
     --scatter-ratio: 470.48 / 275.708;
 
     position: relative;
     width: 100%;
     max-width: 100%;
+    overflow: hidden;
 
     &__stage {
         position: relative;
         width: 100%;
         max-width: 100%;
-        aspect-ratio: 1015 / 778;
+        aspect-ratio: 1015 / 698;
         overflow: hidden;
+        // Transforms + backdrop-filter can paint past overflow:hidden in some engines.
+        clip-path: inset(0);
     }
 
     &__card {
-        --scatter-x: 27.44%;
-        --scatter-y: 11.38%;
+        --scatter-cx: 50.611%;
+        --scatter-cy: 23.86%;
         --scatter-rotate: -7.3deg;
         --scatter-z: 1;
 
         position: absolute;
-        left: var(--scatter-x);
-        top: var(--scatter-y);
+        left: var(--scatter-cx);
+        top: var(--scatter-cy);
         z-index: var(--scatter-z);
         width: var(--scatter-card-w);
+        aspect-ratio: var(--scatter-ratio);
+        transform: translate(-50%, -50%);
         pointer-events: none;
 
+        // Centers of Figma AABBs inside "all image" 1015.323 × 698.317.
+        // Unrotated box is placed on that center, then rotated around it.
         &:nth-child(5n + 1) {
-            --scatter-x: 27.44%;
-            --scatter-y: 11.38%;
+            --scatter-cx: 50.611%;
+            --scatter-cy: 23.86%;
             --scatter-rotate: -7.3deg;
             --scatter-z: 1;
         }
 
         &:nth-child(5n + 2) {
-            --scatter-x: 12.54%;
-            --scatter-y: 29.85%;
+            --scatter-cx: 32.705%;
+            --scatter-cy: 53.0%;
             --scatter-rotate: 6.36deg;
             --scatter-z: 2;
         }
 
         &:nth-child(5n + 3) {
-            --scatter-x: 52.88%;
-            --scatter-y: 25.77%;
+            --scatter-cx: 76.051%;
+            --scatter-cy: 44.357%;
             --scatter-rotate: -3.48deg;
             --scatter-z: 3;
         }
 
         &:nth-child(5n + 4) {
-            --scatter-x: 2.42%;
-            --scatter-y: 48.08%;
+            --scatter-cx: 23.949%;
+            --scatter-cy: 73.297%;
             --scatter-rotate: 3.47deg;
             --scatter-z: 4;
         }
 
         &:nth-child(5n + 5) {
-            --scatter-x: 45.99%;
-            --scatter-y: 59.7%;
+            --scatter-cx: 69.157%;
+            --scatter-cy: 74.846%;
             --scatter-rotate: -9.74deg;
             --scatter-z: 5;
         }
@@ -92,7 +137,6 @@ Figma: Frameflow Copy / all image (3524:699)
         position: relative;
         width: 100%;
         aspect-ratio: var(--scatter-ratio);
-        padding: var(--scatter-pad);
         box-sizing: border-box;
         transform: rotate(var(--scatter-rotate));
         transform-origin: center center;
@@ -116,11 +160,14 @@ Figma: Frameflow Copy / all image (3524:699)
     }
 
     &__frame img {
-        position: relative;
+        position: absolute;
+        top: var(--scatter-pad);
+        left: var(--scatter-pad);
         z-index: 1;
         display: block;
-        width: 100%;
-        height: 100%;
+        width: calc(100% - (var(--scatter-pad) * 2));
+        height: calc(100% - (var(--scatter-pad) * 2));
+        max-width: none;
         object-fit: cover;
         object-position: top center;
         border-radius: calc(var(--scatter-radius) - 2px);
@@ -181,17 +228,37 @@ Figma: Frameflow Copy / all image (3524:699)
         opacity: 1 !important;
     }
 
+    .elementor-widget-pxl_image_scatter {
+        overflow: hidden;
+    }
+
     .elementor-widget-pxl_image_scatter .elementor-widget-container,
-    .pxl-image-scatter,
-    .pxl-image-scatter__stage {
+    .pxl-image-scatter {
         overflow: hidden;
         max-width: 100%;
     }
 
     .pxl-image-scatter {
-        --scatter-pad: 6px;
-        --scatter-card-w: 56%;
+        --scatter-pad: 5px;
+        --scatter-card-w: 44%;
         min-height: 200px;
+    }
+
+    .pxl-image-scatter__stage {
+        // Tall stage + no clip-path so the top rotated card keeps its corner.
+        aspect-ratio: 1015 / 900;
+        overflow: hidden;
+        clip-path: none;
+    }
+
+    .pxl-image-scatter__card {
+        // Remap desktop centers into the taller mobile stage with top headroom.
+        top: calc(var(--scatter-cy) * 0.78 + 14%);
+    }
+
+    .pxl-image-scatter__card:nth-child(5n + 1) {
+        // Backmost card was the one getting sliced at y=0.
+        top: 34%;
     }
 
     .pxl-image-scatter__card,

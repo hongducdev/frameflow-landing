@@ -399,6 +399,13 @@ function frameflow_scripts()
         $frameflow_version->get('Version'),
         true,
     );
+    wp_enqueue_script(
+        'pxl-smooth-anchor',
+        get_template_directory_uri() . '/assets/js/smooth-anchor.js',
+        ['jquery'],
+        (string) filemtime(get_template_directory() . '/assets/js/smooth-anchor.js'),
+        true,
+    );
 
     wp_localize_script('pxl-main', 'main_data', [
         'ajax_url' => admin_url('admin-ajax.php'),
