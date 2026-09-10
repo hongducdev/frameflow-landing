@@ -53,7 +53,13 @@
         frameflowNotifyPageReady()
     }
 
-    $(window).on("load", function () {
+    var frameflowWindowLoaded = false
+
+    function frameflowOnWindowLoaded() {
+        if (frameflowWindowLoaded) {
+            return
+        }
+        frameflowWindowLoaded = true
         setTimeout(frameflowDismissLoader, 60)
         $(".pxl-swiper-slider, .pxl-header-mobile-elementor").css("opacity", "1")
         pxl_window_width = $(window).width()
@@ -79,7 +85,12 @@
         }, 400)
         frameflowInitWaterEffect()
         setTimeout(frameflowInitWaterEffect, 400)
-    })
+    }
+
+    $(window).on("load", frameflowOnWindowLoaded)
+    if (document.readyState === "complete") {
+        setTimeout(frameflowOnWindowLoaded, 0)
+    }
 
     $(window).on("pageshow", function (e) {
         if (!e.originalEvent || !e.originalEvent.persisted) {
@@ -669,8 +680,7 @@
             $(".pxl-grid-filter").removeClass("active")
         })
 
-        /* Lightbox Popup — chỉ init nếu magnific-popup script đã được load sẵn.
-         * Nếu chưa, pxl-lazy-loader.js sẽ load và init khi user scroll đến element. */
+        /* Lightbox Popup */
         if (typeof $.fn.magnificPopup === "function") {
             $(".pxl-action-popup").magnificPopup({
                 type: "iframe",

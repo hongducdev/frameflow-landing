@@ -420,7 +420,7 @@ function frameflow_widget_lazy_load_enabled()
         return false;
     }
 
-    return (bool) apply_filters('frameflow_widget_lazy_load_enabled', true);
+    return (bool) apply_filters('frameflow_widget_lazy_load_enabled', false);
 }
 
 function frameflow_get_eager_widget_style_document_ids()

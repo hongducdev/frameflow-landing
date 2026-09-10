@@ -398,6 +398,14 @@
         });
     }
 
+    function markLoaderJsReady() {
+        if (typeof window.frameflowMarkLoaderJsReady === "function") {
+            window.frameflowMarkLoaderJsReady();
+            return;
+        }
+        window.frameflowLoaderJsReady = true;
+    }
+
     // In Elementor editor/preview, skip lazy loading entirely so preview is correct
     if (frameflowIsElementorContext()) {
         // Load everything immediately in editor
@@ -411,6 +419,7 @@
                 }
             });
         });
+        markLoaderJsReady();
         return;
     }
 
@@ -483,8 +492,7 @@
     }
 
     function withElementorInitPatch(run) {
-        // Lazy widgets only activate after window load / site loader, so
-        // Elementor has already initialized by then.
+        // Widget scripts may load after Elementor has already fired init.
         if (isElementorFrontendReady()) {
             _elementorFrontendReady = true;
         }
@@ -515,8 +523,20 @@
         elementorFrontend.elementsHandler.runReadyTrigger(el);
     }
 
-    function activateLazyWidget(el) {
+    function activateLazyWidget(el, callback) {
+        var notified = false;
+        function finish() {
+            if (notified) {
+                return;
+            }
+            notified = true;
+            if (typeof callback === "function") {
+                callback();
+            }
+        }
+
         if (!el || el.getAttribute("data-pxl-lazy-done") === "1") {
+            finish();
             return;
         }
         el.setAttribute("data-pxl-lazy-done", "1");
@@ -548,6 +568,7 @@
                         ScrollTrigger.refresh();
                     }
                     el.classList.add("pxl-lazy-widget--ready");
+                    finish();
                 });
             });
         }
@@ -592,13 +613,80 @@
         );
 
         widgets.forEach(function (el) {
+            if (el.getAttribute("data-pxl-lazy-done") === "1") {
+                return;
+            }
             observer.observe(el);
         });
     }
 
-    // Kick off once DOM is ready, but wait out the site loader so
-    // WOW/GSAP entrance effects do not finish behind the overlay.
-    $(function () {
+    function pageHasElementor() {
+        return !!(
+            document.querySelector(".elementor, .elementor-element") ||
+            window.elementorFrontend ||
+            window.elementor
+        );
+    }
+
+    function whenElementorReady(done) {
+        if (!pageHasElementor() || isElementorFrontendReady()) {
+            done();
+            return;
+        }
+
+        var finished = false;
+        function finish() {
+            if (finished) {
+                return;
+            }
+            finished = true;
+            done();
+        }
+
+        $(window).one("elementor/frontend/init", finish);
+        setTimeout(finish, 4000);
+    }
+
+    function isInPreloadRange(el) {
+        var rect = el.getBoundingClientRect();
+        var viewport = window.innerHeight || document.documentElement.clientHeight || 0;
+        return rect.bottom >= -300 && rect.top <= viewport + 300;
+    }
+
+    function preloadVisibleLazyWidgets(done) {
+        var widgets = Array.prototype.slice.call(
+            document.querySelectorAll(".pxl-lazy-widget")
+        );
+        var visible = widgets.filter(isInPreloadRange);
+
+        if (!visible.length) {
+            done();
+            return;
+        }
+
+        var remaining = visible.length;
+        var settled = false;
+        function one() {
+            remaining--;
+            if (remaining <= 0 && !settled) {
+                settled = true;
+                done();
+            }
+        }
+
+        setTimeout(function () {
+            if (!settled) {
+                settled = true;
+                done();
+            }
+        }, 6000);
+
+        visible.forEach(function (el) {
+            activateLazyWidget(el, one);
+        });
+    }
+
+    function startLazyObservers() {
         window.frameflowOnPageReady(function () {
             if (!("IntersectionObserver" in window)) {
                 rules.forEach(function (rule) {
@@ -612,6 +700,17 @@
                 setupObserver(rule);
             });
             setupLazyWidgets();
+        });
+    }
+
+    // Load in-viewport widget JS before dismissing the site loader.
+    // WOW/GSAP entrance effects still wait for frameflowOnPageReady.
+    $(function () {
+        whenElementorReady(function () {
+            preloadVisibleLazyWidgets(function () {
+                markLoaderJsReady();
+                startLazyObservers();
+            });
         });
     });
 

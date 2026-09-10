@@ -109,28 +109,28 @@ function frameflow_scripts()
         $frameflow_version = wp_get_theme(get_template());
     }
 
-    /* Popup Libs — register only, lazy loader will enqueue on demand */
-    wp_register_style(
+    /* Popup Libs */
+    wp_enqueue_style(
         'magnific-popup',
         get_template_directory_uri() . '/assets/css/libs/magnific-popup.css',
         [],
         '1.1.0',
     );
-    wp_register_script(
+    wp_enqueue_script(
         'magnific-popup',
         get_template_directory_uri() . '/assets/js/libs/magnific-popup.min.js',
         ['jquery'],
         '1.1.0',
         ['in_footer' => true, 'strategy' => 'defer'],
     );
-    /* Wow Libs — register only, lazy loader will enqueue on demand */
-    wp_register_style(
+    /* Wow Libs */
+    wp_enqueue_style(
         'wow-animate',
         get_template_directory_uri() . '/assets/css/libs/animate.min.css',
         [],
         '1.1.0',
     );
-    wp_register_script(
+    wp_enqueue_script(
         'wow-animate',
         get_template_directory_uri() . '/assets/js/libs/wow.min.js',
         ['jquery'],
@@ -165,7 +165,7 @@ function frameflow_scripts()
         ['in_footer' => true, 'strategy' => 'defer'],
     );
 
-    /* Counter Effect — register only, lazy loader will enqueue on demand */
+    /* Counter Effect */
     wp_register_script(
         'pxl-counter-slide',
         get_template_directory_uri() . '/assets/js/libs/counter-slide.min.js',
@@ -215,7 +215,7 @@ function frameflow_scripts()
         true,
     );
 
-    /* Parallax Move Mouse — register only, lazy loader will enqueue on demand */
+    /* Parallax Move Mouse */
     wp_register_script(
         'pxl-parallax-move-mouse',
         get_template_directory_uri() . '/assets/js/libs/parallax-move-mouse.min.js',
@@ -224,7 +224,7 @@ function frameflow_scripts()
         true,
     );
 
-    /* Particles Background Libs — register only, lazy loader will enqueue on demand */
+    /* Particles Background Libs */
     wp_register_script(
         'particles-background',
         get_template_directory_uri() . '/assets/js/libs/particles.min.js',
@@ -415,26 +415,6 @@ function frameflow_scripts()
         'footer_fixed_selector_main' => trim(
             (string) frameflow()->get_opt('footer_fixed_selector_main', ''),
         ),
-    ]);
-
-    /* Lazy Script Loader */
-    wp_enqueue_script(
-        'pxl-lazy-loader',
-        get_template_directory_uri() . '/assets/js/pxl-lazy-loader.min.js',
-        ['jquery', 'pxl-main'],
-        $frameflow_version->get('Version'),
-        true,
-    );
-    wp_localize_script('pxl-lazy-loader', 'pxl_lazy_scripts', [
-        'wow' => get_template_directory_uri() . '/assets/js/libs/wow.min.js',
-        'wow_css' => get_template_directory_uri() . '/assets/css/libs/animate.min.css',
-        'magnific' => get_template_directory_uri() . '/assets/js/libs/magnific-popup.min.js',
-        'magnific_css' => get_template_directory_uri() . '/assets/css/libs/magnific-popup.css',
-        'counter' => get_template_directory_uri() . '/assets/js/libs/counter-slide.min.js',
-        'particles' => get_template_directory_uri() . '/assets/js/libs/particles.min.js',
-        'stellar' => get_template_directory_uri() . '/assets/js/libs/stellar-parallax.min.js',
-        'parallax_mouse' =>
-            get_template_directory_uri() . '/assets/js/libs/parallax-move-mouse.min.js',
     ]);
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
