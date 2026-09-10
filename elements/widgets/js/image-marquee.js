@@ -177,16 +177,30 @@
         })
     }
 
+    function runWhenPageReady(fn) {
+        if (typeof window.frameflowOnPageReady === "function") {
+            window.frameflowOnPageReady(fn)
+        } else {
+            fn()
+        }
+    }
+
     $(window).on("elementor/frontend/init", function () {
         elementorFrontend.hooks.addAction(
             "frontend/element_ready/pxl_image_marquee.default",
-            pxl_widget_image_marquee_handler,
+            function ($scope) {
+                runWhenPageReady(function () {
+                    pxl_widget_image_marquee_handler($scope, $)
+                })
+            },
         )
     })
 
     $(function () {
-        $(".elementor-widget-pxl_image_marquee").each(function () {
-            pxl_widget_image_marquee_handler($(this), $)
+        runWhenPageReady(function () {
+            $(".elementor-widget-pxl_image_marquee").each(function () {
+                pxl_widget_image_marquee_handler($(this), $)
+            })
         })
     })
 })(jQuery)

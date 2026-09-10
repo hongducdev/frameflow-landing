@@ -149,7 +149,8 @@
     }
 
     /**
-     * Load multiple scripts sequentially and fire `done` when all are loaded.
+     * Load multiple scripts sequentially (preserve WP dependency order)
+     * and fire `done` when all are loaded.
      * @param {string[]} urls
      * @param {function} done
      */
@@ -158,14 +159,15 @@
             if (typeof done === "function") done();
             return;
         }
-        var remaining = urls.length;
-        function onOne() {
-            remaining--;
-            if (remaining === 0 && typeof done === "function") done();
+        var index = 0;
+        function next() {
+            if (index >= urls.length) {
+                if (typeof done === "function") done();
+                return;
+            }
+            loadScript(urls[index++], next);
         }
-        urls.forEach(function (url) {
-            loadScript(url, onOne);
-        });
+        next();
     }
 
     // -------------------------------------------------------------------------
@@ -445,7 +447,18 @@
         });
     }
 
-    var _elementorFrontendReady = false;
+    function isElementorFrontendReady() {
+        return !!(
+            window.elementorFrontend &&
+            elementorFrontend.hooks &&
+            typeof elementorFrontend.hooks.addAction === "function" &&
+            elementorFrontend.elementsHandler
+        );
+    }
+
+    // Elementor may fire `elementor/frontend/init` before this file runs.
+    // Detect existing readiness instead of only listening for a future event.
+    var _elementorFrontendReady = isElementorFrontendReady();
     var _origOn = null;
     var _patchDepth = 0;
 
@@ -456,12 +469,13 @@
     function patchedOn(types) {
         var fn = arguments[arguments.length - 1];
         if (
-            _elementorFrontendReady &&
+            (_elementorFrontendReady || isElementorFrontendReady()) &&
             this[0] === window &&
             typeof types === "string" &&
             types.indexOf("elementor/frontend/init") !== -1 &&
             typeof fn === "function"
         ) {
+            _elementorFrontendReady = true;
             fn.call(window);
             return this;
         }
@@ -469,6 +483,11 @@
     }
 
     function withElementorInitPatch(run) {
+        // Lazy widgets only activate after window load / site loader, so
+        // Elementor has already initialized by then.
+        if (isElementorFrontendReady()) {
+            _elementorFrontendReady = true;
+        }
         _patchDepth++;
         if (_patchDepth === 1) {
             _origOn = $.fn.on;
@@ -483,6 +502,17 @@
                 }
             }
         });
+    }
+
+    function runElementorReadyTrigger(el) {
+        if (
+            !window.elementorFrontend ||
+            !elementorFrontend.elementsHandler ||
+            typeof elementorFrontend.elementsHandler.runReadyTrigger !== "function"
+        ) {
+            return;
+        }
+        elementorFrontend.elementsHandler.runReadyTrigger(el);
     }
 
     function activateLazyWidget(el) {
@@ -504,26 +534,22 @@
         });
 
         function afterAssets() {
-            var needsReadyTrigger =
-                urls.length > 0 ||
-                !!el.querySelector(
-                    ".wow, .pxl-split-text, .TextOutlineAnimation, .text-scroll-reveal"
-                );
-            if (
-                needsReadyTrigger &&
-                window.elementorFrontend &&
-                elementorFrontend.elementsHandler &&
-                typeof elementorFrontend.elementsHandler.runReadyTrigger === "function"
-            ) {
-                elementorFrontend.elementsHandler.runReadyTrigger(el);
-            }
-            if (
-                window.ScrollTrigger &&
-                typeof ScrollTrigger.refresh === "function"
-            ) {
-                ScrollTrigger.refresh();
-            }
-            el.classList.add("pxl-lazy-widget--ready");
+            // Always re-run Elementor handlers after CSS/JS arrive.
+            // CSS-only lazy widgets (e.g. marquees with eager JS) otherwise keep
+            // the broken first-pass init measured before stylesheet paint.
+            // Double rAF waits for layout after injected CSS applies.
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    runElementorReadyTrigger(el);
+                    if (
+                        window.ScrollTrigger &&
+                        typeof ScrollTrigger.refresh === "function"
+                    ) {
+                        ScrollTrigger.refresh();
+                    }
+                    el.classList.add("pxl-lazy-widget--ready");
+                });
+            });
         }
 
         loadCss(css, function () {

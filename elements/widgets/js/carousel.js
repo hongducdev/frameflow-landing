@@ -496,18 +496,20 @@
                     thumb_carousel_settings["loop"] = true
                 }
 
-                slide_thumbs = new Swiper(
-                    $this.find(".pxl-swiper-thumbs")[0],
-                    thumb_carousel_settings
-                )
+                var thumbsEl = $this.find(".pxl-swiper-thumbs")[0]
+                if (thumbsEl && thumbsEl.swiper && typeof thumbsEl.swiper.destroy === "function") {
+                    thumbsEl.swiper.destroy(true, true)
+                }
+                slide_thumbs = new Swiper(thumbsEl, thumb_carousel_settings)
                 carousel_settings["thumbs"] = { swiper: slide_thumbs }
             }
             // End Swiper Thumbnail
 
-            var swiper = new Swiper(
-                $this.find(".pxl-swiper-container")[0],
-                carousel_settings
-            )
+            var containerEl = $this.find(".pxl-swiper-container")[0]
+            if (containerEl && containerEl.swiper && typeof containerEl.swiper.destroy === "function") {
+                containerEl.swiper.destroy(true, true)
+            }
+            var swiper = new Swiper(containerEl, carousel_settings)
 
             // Ensure autoplay with reverse direction works correctly after initialization
             if (
