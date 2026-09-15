@@ -225,7 +225,15 @@
     $(window).on("elementor/frontend/init", function () {
         elementorFrontend.hooks.addAction(
             "frontend/element_ready/pxl_image_fan.default",
-            pxl_widget_image_fan_handler
+            function ($scope) {
+                if (typeof window.frameflowOnPageReady === "function") {
+                    window.frameflowOnPageReady(function () {
+                        pxl_widget_image_fan_handler($scope)
+                    })
+                    return
+                }
+                pxl_widget_image_fan_handler($scope)
+            }
         )
     })
 })(jQuery)

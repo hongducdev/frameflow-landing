@@ -31,6 +31,37 @@
             $(document).one("frameflow/loader/done", fn)
         }
 
+    function frameflowInitWow() {
+        var offset = Math.max(100, Math.round(window.innerHeight * 0.2))
+        var instance = window.wow
+
+        if (instance && typeof instance.init === "function") {
+            if (instance.config) {
+                instance.config.offset = offset
+            }
+            if (!instance.interval) {
+                instance.init()
+            } else if (typeof instance.scrollCallback === "function") {
+                instance.scrolled = true
+                instance.scrollCallback()
+            }
+            return
+        }
+
+        if (typeof WOW !== "function") {
+            return
+        }
+
+        window.wow = new WOW({
+            animateClass: "animated",
+            offset: offset,
+            mobile: true,
+            live: true,
+            resetAnimation: true,
+        })
+        window.wow.init()
+    }
+
     function frameflowNotifyPageReady() {
         if (window.frameflowPageReady) {
             return
@@ -39,6 +70,7 @@
         if (document.body) {
             document.body.classList.remove("pxl-is-loading")
         }
+        frameflowInitWow()
         $(document).trigger("frameflow/loader/done")
         if (typeof gsap !== "undefined" && gsap.ticker && typeof gsap.ticker.wake === "function") {
             gsap.ticker.wake()
@@ -328,13 +360,55 @@
                 /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
                     navigator.userAgent
                 ) || window.innerWidth <= 768
-            if (isMobile) {
+            var reduceMotion =
+                window.matchMedia &&
+                window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            if (isMobile || reduceMotion) {
                 $rowsParticles.hide()
                 return
             }
 
-            $rowsParticles.each(function () {
-                var $el = $(this)
+            var pauseParticles = function ($el) {
+                var ctx = $el.data("pxlParticlesCtx")
+                if (!ctx || $el.data("pxlParticlesPaused")) return
+                $el.data("pxlParticlesPaused", true)
+                ctx.particles.move.enable = false
+                if (
+                    ctx.fn.drawAnimFrame &&
+                    typeof window.cancelRequestAnimFrame === "function"
+                ) {
+                    window.cancelRequestAnimFrame(ctx.fn.drawAnimFrame)
+                }
+                ctx.fn.drawAnimFrame = null
+            }
+
+            var resumeParticles = function ($el) {
+                var ctx = $el.data("pxlParticlesCtx")
+                if (
+                    !ctx ||
+                    !$el.data("pxlParticlesPaused") ||
+                    typeof window.requestAnimFrame !== "function"
+                ) {
+                    return
+                }
+                ctx.particles.move.enable = true
+                if (!ctx.fn.drawAnimFrame) {
+                    ctx.fn.drawAnimFrame = window.requestAnimFrame(
+                        ctx.fn.vendors.draw
+                    )
+                }
+                $el.data("pxlParticlesPaused", false)
+            }
+
+            var initParticles = function ($el) {
+                if ($el.data("pxlParticlesReady")) {
+                    if ($el.data("pxlParticlesInView") && !document.hidden) {
+                        resumeParticles($el)
+                    }
+                    return
+                }
+                $el.data("pxlParticlesReady", true)
+
                 particlesJS($el.attr("id"), {
                     particles: {
                         number: { value: $el.data("number") },
@@ -353,7 +427,56 @@
                             out_mode: "out",
                         },
                     },
-                    retina_detect: true,
+                    retina_detect: false,
+                })
+
+                var instance =
+                    window.pJSDom && window.pJSDom[window.pJSDom.length - 1]
+                var ctx = instance && instance.pJS
+                if (!ctx || !ctx.fn || !ctx.particles) return
+                $el.data("pxlParticlesCtx", ctx)
+
+                if (document.hidden || !$el.data("pxlParticlesInView")) {
+                    pauseParticles($el)
+                }
+            }
+
+            $rowsParticles.each(function () {
+                var $el = $(this)
+
+                if (!("IntersectionObserver" in window)) {
+                    $el.data("pxlParticlesInView", true)
+                    initParticles($el)
+                    return
+                }
+
+                var observer = new IntersectionObserver(
+                    function (entries) {
+                        entries.forEach(function (entry) {
+                            var inView = entry.isIntersecting
+                            $el.data("pxlParticlesInView", inView)
+                            if (inView) {
+                                initParticles($el)
+                            } else if ($el.data("pxlParticlesReady")) {
+                                pauseParticles($el)
+                            }
+                        })
+                    },
+                    { rootMargin: "200px 0px" }
+                )
+                observer.observe(this)
+                $el.data("pxlParticlesObserver", observer)
+            })
+
+            $(document).on("visibilitychange.pxlParticles", function () {
+                $rowsParticles.each(function () {
+                    var $el = $(this)
+                    if (!$el.data("pxlParticlesReady")) return
+                    if (document.hidden || !$el.data("pxlParticlesInView")) {
+                        pauseParticles($el)
+                    } else {
+                        resumeParticles($el)
+                    }
                 })
             })
         }, 400)

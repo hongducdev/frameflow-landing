@@ -159,7 +159,15 @@
     $(window).on("elementor/frontend/init", function () {
         elementorFrontend.hooks.addAction(
             "frontend/element_ready/pxl_image_scatter.default",
-            pxl_widget_image_scatter_handler
+            function ($scope) {
+                if (typeof window.frameflowOnPageReady === "function") {
+                    window.frameflowOnPageReady(function () {
+                        pxl_widget_image_scatter_handler($scope)
+                    })
+                    return
+                }
+                pxl_widget_image_scatter_handler($scope)
+            }
         )
     })
 

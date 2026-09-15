@@ -130,6 +130,10 @@ function frameflow_scripts()
         [],
         '1.1.0',
     );
+    wp_add_inline_style(
+        'wow-animate',
+        'body.pxl-is-loading .wow,body.pxl-is-loading .wow.animated,body.pxl-is-loading .animated,body.pxl-is-loading .pxl-animate,body.pxl-is-loading .TextOutlineAnimation{-webkit-animation-play-state:paused!important;animation-play-state:paused!important;}',
+    );
     wp_enqueue_script(
         'wow-animate',
         get_template_directory_uri() . '/assets/js/libs/wow.min.js',

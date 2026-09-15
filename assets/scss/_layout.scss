@@ -2061,7 +2061,10 @@ body:not(.elementor-editor-active) .pxl-section-parallax-overflow {
 
 body.pxl-is-loading {
     .wow,
-    .TextOutlineAnimation {
+    .wow.animated,
+    .TextOutlineAnimation,
+    .pxl-animate,
+    .animated {
         animation-play-state: paused !important;
     }
 }

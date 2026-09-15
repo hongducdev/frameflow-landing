@@ -22,6 +22,15 @@ if (!function_exists('frameflow_register_element_scripts')) {
     {
         $theme = wp_get_theme(get_template());
         wp_register_script('gsap', get_template_directory_uri() . '/assets/js/libs/gsap.min.js', array('jquery'), '3.5.0', true);
+        static $frameflow_gsap_loader_guard = false;
+        if (!$frameflow_gsap_loader_guard) {
+            $frameflow_gsap_loader_guard = true;
+            wp_add_inline_script(
+                'gsap',
+                'if(document.body&&document.body.classList.contains("pxl-is-loading")&&window.gsap&&gsap.ticker&&typeof gsap.ticker.sleep==="function"){gsap.ticker.sleep();}',
+                'after'
+            );
+        }
         wp_register_script('pxl-scroll-trigger', get_template_directory_uri() . '/assets/js/libs/scroll-trigger.min.js', array('jquery'), '3.10.5', true);
         wp_register_script('pxl-splitText', get_template_directory_uri() . '/assets/js/libs/split-text.min.js', array('jquery'), '3.6.1', true);
         wp_register_script('frameflow-draggable', get_template_directory_uri() . '/assets/js/libs/Draggable.min.js', ['jquery'], $theme->get('Version'), true);

@@ -1,6 +1,7 @@
 (function ($) {
     var pxl_widget_counter_handler = function ($scope, $) {
-        setTimeout(function () {
+        var run = function () {
+            setTimeout(function () {
             elementorFrontend.waypoint(
                 $scope.find(".pxl-counter--value:not(.effect-slide)"),
                 function () {
@@ -45,6 +46,13 @@
                 },
             );
         }, 300);
+        };
+
+        if (typeof window.frameflowOnPageReady === "function") {
+            window.frameflowOnPageReady(run);
+        } else {
+            run();
+        }
     };
 
     $(window).on("elementor/frontend/init", function () {
