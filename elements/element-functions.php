@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Elementor widget helpers for Frameflow.
  *
