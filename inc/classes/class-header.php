@@ -6,6 +6,8 @@ if (!class_exists('Frameflow_Header')) {
     {
         public function getHeader()
         {
+            // 404 page renders a full-screen layout without header
+            if (is_404()) return;
 
             $header_layout = (int)frameflow()->get_opt('header_layout');
             $header_layout_sticky = (int)frameflow()->get_opt('header_layout_sticky');
