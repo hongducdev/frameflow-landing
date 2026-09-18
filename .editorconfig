@@ -1,0 +1,8 @@
+# Charset only — never UTF-8 with BOM.
+# A BOM before "<?php" is emitted as output, which breaks WordPress redirects
+# and login cookies (see check-bom.cjs).
+# Line endings are intentionally NOT set here so existing CRLF files stay as they are.
+root = true
+
+[*]
+charset = utf-8

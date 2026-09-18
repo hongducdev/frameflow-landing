@@ -1,11 +1,22 @@
 const fs = require("fs");
 const path = require("path");
 const archiver = require("archiver");
+const { scan } = require("./check-bom.cjs");
 
 const themeDir = __dirname;
 const themeName = path.basename(themeDir);
 const distDir = path.join(themeDir, "dist");
 const zipPath = path.join(distDir, `${themeName}.zip`);
+
+// Never ship a BOM: it breaks WordPress redirects and makes the browser fall
+// back to Quirks mode. See check-bom.cjs for details.
+const bom = scan([themeDir]);
+if (bom.found.length) {
+    console.error(`Build stopped — ${bom.found.length} file(s) start with a UTF-8 BOM:`);
+    bom.found.forEach((file) => console.error(`  - ${path.relative(themeDir, file)}`));
+    console.error("Remove the 3 leading bytes (EF BB BF) and run the build again.");
+    process.exit(1);
+}
 
 if (!fs.existsSync(distDir)) {
     fs.mkdirSync(distDir);
@@ -36,6 +47,8 @@ const ignore = [
     "yarn.lock",
     "bun.lockb",
     "build-zip.cjs",
+    "check-bom.cjs",
+    "**/*.bom-bak",
     "vite.config.*",
     "postcss.config.*",
     "tailwind.config.*",

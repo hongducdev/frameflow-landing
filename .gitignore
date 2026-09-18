@@ -44,3 +44,6 @@ composer.lock
 # Build zip
 dist/
 docs/
+
+# BOM backups (left behind by server-side cleanup)
+*.bom-bak
